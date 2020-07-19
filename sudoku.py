@@ -1,5 +1,4 @@
-import sys
-sys.path.append('C:\\Users\\Ana Julija\\Documents\\FMF\\programiranje\\sudoku\\Controller\\LoadSudoku')
-print(sys.path)
+import Controller.LoadSudoku.load_sudoku as loadsudoku
 
-import load_sudoku
+if __name__ == '__main__':
+    loadsudoku.load_sudoku(loadsudoku.FILE_PUZZLE_NAME)
