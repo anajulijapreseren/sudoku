@@ -17,8 +17,9 @@ def load_sudoku(sudoku_file_name):
             quiz_temp, solution_temp = line.split(",")
             for j, q_s in enumerate(zip(quiz_temp, solution_temp)):
                 q, s = q_s
-                quiz[1, j] = q
-                solution[1, j] = s
+                quiz[0, j] = q
+                solution[0, j] = s
             break
     quiz = quiz.reshape((-1, 9, 9))
     solution = solution.reshape((-1, 9, 9))
+    print("samneki")
