@@ -5,6 +5,12 @@ import random
 NUM_PUZZELS = 1000000 # number of sudoku puzzles in file puzzle name
 FILE_PUZZLE_NAME = "sudoku.csv"
 
+# loads sudoku quiz and solution
+# input:
+# - sudoku file name with N predefined sudokus
+# output:
+# - quiz, array 9x9 of ciphers
+# - solution, array 9x9 of ciphers
 def load_sudoku(sudoku_file_name):
     # determine random sudoku quiz number to load
     random.seed(a=None, version=2)
@@ -22,4 +28,4 @@ def load_sudoku(sudoku_file_name):
             break
     quiz = quiz.reshape((-1, 9, 9))
     solution = solution.reshape((-1, 9, 9))
-    print("samneki")
+    return quiz, solution
