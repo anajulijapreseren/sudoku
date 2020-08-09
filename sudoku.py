@@ -6,6 +6,8 @@ import bottle
 from bottle import route
 from bottle import static_file
 
+import json
+
 #host css files which are invoked implicitly by html files.
 @route('/View/<cssFile>')
 def serve_css_files(cssFile):
@@ -24,6 +26,10 @@ def serve_js_files(jsFile):
 def index(): 
     return bottle.template('View/sudoku.html')
 
+@bottle.get('/newsudoku')
+def new_sudoku():
+    return json.dumps({"sudoku" : sudokuGUI})
+
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
     # TODO - define log name to be in the current module directory
@@ -36,10 +42,7 @@ if __name__ == '__main__':
     logging.info("Sudoku quiz and solution loaded.")
 
     # transform sudoku to GUI format of quiz
-    # old stuff sudokuGUI = transformsudoku.transform_sudoku_for_GUI(sudoku_tuple[0])
-    sudokuGUI = sudoku_tuple[0]
-    if sudokuGUI[len(sudokuGUI)-1]=='0':
-        sudokuGUI[len(sudokuGUI)-1]="undefined"
+    sudokuGUI = transformsudoku.transform_sudoku_for_GUI(sudoku_tuple[0])
 
     # start bottle
     logging.info("Starting bottle. Why not flask?")   

@@ -52,18 +52,25 @@
 	</div>
 
 	<script>
-		var board = [
-			 ,5, , , ,2,3,8,
-			, ,1, , , ,4, , ,5
-			, ,2, , ,5, , , ,
-			,5, ,7,8, , ,2,1,
-			,4,6, ,2,3,7, ,5,8
-			, ,9,8, , ,5,4, ,7
-			, , , , ,6, , ,4,
-			,1, , ,9, , , ,6,
-			, ,7,3,4, , , ,9,undefined
-		]
+		// var board = [
+		// 	 ,5, , , ,2,3,8,
+		// 	, ,1, , , ,4, , ,5
+		// 	, ,2, , ,5, , , ,
+		// 	,5, ,7,8, , ,2,1,
+		// 	,4,6, ,2,3,7, ,5,8
+		// 	, ,9,8, , ,5,4, ,7
+		// 	, , , , ,6, , ,4,
+		// 	,1, , ,9, , , ,6,
+		// 	, ,7,3,4, , , ,9,undefined
+		// ]
+		var board = [];
 		//NOTE: if last cell of board is empty 'undefined' has to be used as value!
+
+		$.get("/newsudoku", function(data){
+			var json = JSON.parse(data);
+			board = json["sudoku"];
+			console.log(board);
+		});
 
 		var mySudokuJS = $("#sudoku").sudokuJS({
 			board: board
