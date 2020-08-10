@@ -68,16 +68,18 @@
 
 		$.get("/newsudoku", function(data){
 			var json = JSON.parse(data);
+			console.log("Got JSON: "+String(json));
 			board = json["sudoku"];
-			console.log(board);
-		});
+			console.log("From sudoku.html: "+board);
 
-		var mySudokuJS = $("#sudoku").sudokuJS({
+			var mySudokuJS = $("#sudoku").sudokuJS({
 			board: board
+			});
+
+			$(".js-solve-step-btn").on("click", mySudokuJS.solveStep);
+			$(".js-solve-all-btn").on("click", mySudokuJS.solveAll);
 		});
 
-		$(".js-solve-step-btn").on("click", mySudokuJS.solveStep);
-		$(".js-solve-all-btn").on("click", mySudokuJS.solveAll);
 	</script>
 	</body>
 </html>

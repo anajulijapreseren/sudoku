@@ -1433,6 +1433,9 @@
 		 * -----------------------------------------------------------------*/
 		var keyboardNumberInput = function(input, id){
 			var val = parseInt(input.val());
+			log("Zmajski input: "+val);
+			log("celica:"+id);
+			$.post("/numentry", JSON.stringify({ "cellId": id, "number": val }))
 			if(editingCandidates){
 				toggleCandidateOnCell(val, id);
 				// reset value on board
