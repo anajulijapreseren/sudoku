@@ -35,8 +35,11 @@ def new_sudoku():
     logging.info("Sudoku quiz and solution loaded.")
 
     # transform sudoku to GUI format of quiz
+    global sudokuGUI
+    global sudokuSolution
     sudokuGUI = transformsudoku.transform_sudoku_for_GUI(sudoku_tuple[0])
-    
+    sudokuSolution = transformsudoku.transform_sudoku_for_GUI(sudoku_tuple[1])
+   
     return json.dumps({"sudoku" : sudokuGUI})
 
 @bottle.post('/numentry')
@@ -45,6 +48,26 @@ def num_entry():
     jsondata = json.loads(postdata)
     cellId = jsondata["cellId"]
     num = jsondata["number"]
+    # let´s update sudokuGUI with entered value
+    sudokuGUI[cellId] = num
+
+ # endpoint to verify the solution, does current state matches the solution
+@bottle.get('/checksolution') 
+def check_solution():
+    checked_list = []
+    finished = False
+    if sudokuGUI == sudokuSolution:
+        finished = True
+    else:
+        for i in range(0,loadsudoku.SUDOKU_ELEMENTS):
+            if sudokuGUI[i] == sudokuSolution[i]:
+                checked_list.append(1)
+            else:
+                checked_list.append(0)
+    return json.dumps({"finished" : finished, "list" : checked_list})
+
+
+
 
 
 if __name__ == '__main__':

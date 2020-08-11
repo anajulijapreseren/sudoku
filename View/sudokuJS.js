@@ -1761,6 +1761,19 @@
 		/**
 		* PUBLIC methods
 		* ----------------- */
+		var checkAll = function(){
+			$.get("/checksolution", function(data){
+				var json = JSON.parse(data);
+				if (json["finished"] == true){
+					// show user that he has done his job
+					log("Yay!")
+				} else {
+					// fill the sudoku grid with colours to indicate which cells are wrong
+					log("Oh my god, this is so wrong!")
+				}
+			});
+		};
+
 		var solveAll = function(){
 			solveMode = SOLVE_MODE_ALL;
 			var canContinue = true;
@@ -1802,6 +1815,7 @@
 		};
 
 		return {
+			checkAll : checkAll,
 			solveAll : solveAll,
 			solveStep : solveStep,
 			analyzeBoard : analyzeBoard,

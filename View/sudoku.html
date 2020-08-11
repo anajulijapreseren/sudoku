@@ -47,8 +47,9 @@
 		</div>
 
 		<!--solve buttons-->
-		Solve: <button type="button" class="js-solve-step-btn">One Step</button>
-		<button type="button" class="js-solve-all-btn">All</button>
+		Check: <button type="button" class="js-check-btn">Gimme check!</button>
+		<!-- Solve: <button type="button" class="js-solve-step-btn">One Step</button>
+		<button type="button" class="js-solve-all-btn">All</button> -->
 	</div>
 
 	<script>
@@ -76,8 +77,9 @@
 			board: board
 			});
 
-			$(".js-solve-step-btn").on("click", mySudokuJS.solveStep);
-			$(".js-solve-all-btn").on("click", mySudokuJS.solveAll);
+			$(".js-check-btn").on("click", mySudokuJS.checkAll);
+			// $(".js-solve-step-btn").on("click", mySudokuJS.solveStep);
+			// $(".js-solve-all-btn").on("click", mySudokuJS.solveAll);
 		});
 
 	</script>
