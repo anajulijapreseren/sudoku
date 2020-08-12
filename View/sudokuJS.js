@@ -307,6 +307,29 @@
 					"</div>";
 		};
 
+		/* markBoardCellError
+		* check the value in Board Cell and if it is not correct, mark it as error
+		* -----------------------------------------------------------------*/
+		var markBoardCellError = function(boardCell, id){
+			var val = (boardCell.val === null) ? "" : boardCell.val;
+			//var candidates = boardCell.candidates || [];
+			//var candidatesString = buildCandidatesString(candidates);
+			// var maxlength = (boardSize < 10) ? " maxlength='1'" : "";
+			//var temp = housesWithCell(id);
+			//var alreadyExistingCellInHouseWithDigit = houses[id][temp[id]][indexInHouse(val, houses[id][temp[id]])];
+
+			
+			$("#input-"+id)
+			.addClass("board-cell--error");
+			
+
+			// return "<div class='sudoku-board-cell'>" +
+			// 			//want to use type=number, but then have to prevent chrome scrolling and up down key behaviors..
+			// 			"<input type='text' pattern='\\d*' novalidate id='input-"+id+"' value='"+val+"'"+maxlength+">" +
+			// 			"<div id='input-"+id+"-candidates' class='candidates'>" + candidatesString + "</div>" +
+			// 		"</div>";
+		};
+
 
 		/* buildCandidatesString
 		 * -----------------------------------------------------------------*/
@@ -1687,13 +1710,13 @@
 		var generateBoard = function(diff, callback){
 			if($boardInputs)
 				clearBoard();
-      if (contains(DIFFICULTIES, diff)) {
-        difficulty = diff
-      } else if (boardSize >= 9) {
-        difficulty = DIFFICULTY_MEDIUM
-      } else {
-        difficulty = DIFFICULTY_EASY
-      }
+			if (contains(DIFFICULTIES, diff)) {
+				difficulty = diff
+			} else if (boardSize >= 9) {
+				difficulty = DIFFICULTY_MEDIUM
+			} else {
+				difficulty = DIFFICULTY_EASY
+			}
 			generatingMode = true;
 			solveMode = SOLVE_MODE_ALL;
 
@@ -1767,12 +1790,25 @@
 				if (json["finished"] == true){
 					// show user that he has done his job
 					log("Yay!")
+					alert("Congrats!")
 				} else {
 					// fill the sudoku grid with colours to indicate which cells are wrong
-					log("Oh my god, this is so wrong!")
+					alert("Oh my god, this is so wrong!")
+					for (var i = 0; i < 81; i++) {
+						if (json["list"][i] == 0) {
+							markBoardCellError(board, i);
+						}
+					}
 				}
 			});
 		};
+
+		var clearChecks = function(board){
+			for (var id = 0; id < 81; id++) {
+				if($("#input-"+id).hasClass("board-cell--error"))
+					$boardInputs.removeClass("board-cell--error");
+			}
+		}
 
 		var solveAll = function(){
 			solveMode = SOLVE_MODE_ALL;
@@ -1816,6 +1852,7 @@
 
 		return {
 			checkAll : checkAll,
+			clearChecks: clearChecks,
 			solveAll : solveAll,
 			solveStep : solveStep,
 			analyzeBoard : analyzeBoard,

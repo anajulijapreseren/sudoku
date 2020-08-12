@@ -48,6 +48,7 @@
 
 		<!--solve buttons-->
 		Check: <button type="button" class="js-check-btn">Gimme check!</button>
+		Clear: <button type="button" class="js-clear-btn">Clear check</button>
 		<!-- Solve: <button type="button" class="js-solve-step-btn">One Step</button>
 		<button type="button" class="js-solve-all-btn">All</button> -->
 	</div>
@@ -78,6 +79,7 @@
 			});
 
 			$(".js-check-btn").on("click", mySudokuJS.checkAll);
+			$(".js-clear-btn").on("click", mySudokuJS.clearChecks);
 			// $(".js-solve-step-btn").on("click", mySudokuJS.solveStep);
 			// $(".js-solve-all-btn").on("click", mySudokuJS.solveAll);
 		});
