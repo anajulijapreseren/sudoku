@@ -1,3 +1,4 @@
+// Adapted from:
 // sudokuJS v0.4.4
 // https://github.com/pocketjoso/sudokuJS
 // Author: Jonas Ohlsson
