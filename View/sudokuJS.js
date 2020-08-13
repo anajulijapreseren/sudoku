@@ -1456,9 +1456,6 @@
 		 * -----------------------------------------------------------------*/
 		var keyboardNumberInput = function(input, id){
 			var val = parseInt(input.val());
-			log("Zmajski input: "+val);
-			log("celica:"+id);
-			$.post("/numentry", JSON.stringify({ "cellId": id, "number": val }))
 			if(editingCandidates){
 				toggleCandidateOnCell(val, id);
 				// reset value on board
@@ -1472,6 +1469,9 @@
 
 
 			if (val > 0) { //invalidates Nan
+				log("Zmajski input: "+val);
+				log("celica:"+id);
+				$.post("/numentry", JSON.stringify({ "cellId": id, "number": val }))
 				//check that this doesn't make board incorrect
 				var temp = housesWithCell(id);
 				//for each type of house
