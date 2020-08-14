@@ -168,7 +168,6 @@
 
 			//save important board elements
 			$boardInputs = $board.find("input");
-			// $boardInputCandidates = $board.find(".candidates");
 		};
 
 		/* renderBoardCell
@@ -196,38 +195,22 @@
 			
 		};
 
-
-		/* buildCandidatesString
-		 * -----------------------------------------------------------------*/
-		// var buildCandidatesString = function(candidatesList){
-		// 	var s="";
-		// 	for(var i=1; i<boardSize+1; i++){
-		// 		if(contains(candidatesList,i))
-		// 			s+= "<div>"+i+"</div> ";
-		// 		else
-		// 			s+= "<div>&nbsp;</div> ";
-		// 	}
-		// 	return s;
-		// };
-
 		/* updateUIBoard -
 		 * --------------
 		 *  updates the board with our latest values
 		 * -----------------------------------------------------------------*/
 		 var updateUIBoard = function(paintNew){
-			//log("re painting every input on board..");
 			$boardInputs
 				.removeClass("highlight-val")
 				.each(function(i,v){
 					var $input = $(this);
 					var newVal = board[i].val;
-					//if(newVal && parseInt($input.val()) !== newVal) {
+	
 						$input.val(newVal);
 						if(paintNew)
 							$input.addClass("highlight-val");
-					//}
+					
 					var $candidates = $input.siblings(".candidates");
-					// $candidates.html(buildCandidatesString(board[i].candidates));
 
 				});
 		};
@@ -239,18 +222,15 @@
 		 * -----------------------------------------------------------------*/
 		 var updateUIBoardCell = function(cellIndex, opts){
 			opts = opts || {};
-			//if(!(opts.mode && opts.mode === "only-candidates")){
 				var newVal = board[cellIndex].val;
-
-				//$boardInputs.removeClass("highlight-val");
 
 				//shouldn't always add hightlight-val class
 				$("#input-"+cellIndex)
 					.val(newVal)
 					.addClass("highlight-val");
-			//}
+		
 			$("#input-"+cellIndex+"-candidates")
-				// .html(buildCandidatesString(board[cellIndex].candidates));
+				
 		};
 
 
@@ -292,33 +272,6 @@
 			return cellsUpdated;
 		};
 
-		// var resetBoardVariables = function() {
-		// 	usedStrategies = [];
-		// };
-
-
-		/* clearBoard
-		-----------------------------------------------------------------*/
-		// var clearBoard = function(){
-		// 	resetBoardVariables();
-
-		// 	//reset board variable
-		// 	var cands = boardNumbers.slice(0);
-		// 	for(var i=0; i <boardSize*boardSize;i++){
-		// 		board[i] = {
-		// 			val: null,
-		// 			candidates: cands.slice()
-		// 		};
-		// 	}
-
-		// 	//reset UI
-		// 	$boardInputs
-		// 		.removeClass("highlight-val")
-		// 		.val("");
-
-		// 	updateUIBoard(false);
-		// };
-
 		var getNullCandidatesList = function() {
 			var l = [];
 			for (var i=0; i < boardSize; i++){
@@ -335,8 +288,6 @@
 			for(var i=0; i <boardSize*boardSize;i++){
 				if(board[i].val === null){
 					board[i].candidates = resetCandidatesList.slice(); //otherwise same list (not reference!) on every cell
-					// if(updateUI !== false)
-					// 	$("#input-"+i+"-candidates").html(buildCandidatesString(resetCandidatesList));
 				} else if(updateUI !== false) {
 						$("#input-"+i+"-candidates").html("");
 				}
@@ -357,27 +308,25 @@
 			return false;
 		};
 
-
-
 		 /* housesWithCell
 		 * --------------
 		 *  returns houses that a cell belongs to
 		 * -----------------------------------------------------------------*/
-		 var housesWithCell = function(cellIndex){
-			var boxSideSize = Math.sqrt(boardSize);
-			var houses = [];
-			//horisontal row
-			var hrow = Math.floor(cellIndex/boardSize);
-			houses.push(hrow);
-			//vertical row
-			var vrow = Math.floor(cellIndex%boardSize);
-			houses.push(vrow);
-			//box
-			var box = (Math.floor(hrow/boxSideSize)*boxSideSize) + Math.floor(vrow/boxSideSize);
-			houses.push(box);
+		//  var housesWithCell = function(cellIndex){
+		// 	var boxSideSize = Math.sqrt(boardSize);
+		// 	var houses = [];
+		// 	//horisontal row
+		// 	var hrow = Math.floor(cellIndex/boardSize);
+		// 	houses.push(hrow);
+		// 	//vertical row
+		// 	var vrow = Math.floor(cellIndex%boardSize);
+		// 	houses.push(vrow);
+		// 	//box
+		// 	var box = (Math.floor(hrow/boxSideSize)*boxSideSize) + Math.floor(vrow/boxSideSize);
+		// 	houses.push(box);
 
-			return houses;
-		};
+		// 	return houses;
+		// };
 
 		 /* numbersTaken
 		 * --------------
@@ -409,7 +358,6 @@
 				for(var j=0; j < boardSize; j++){
 					var house = houses[i][j];
 					var candidatesToRemove = numbersTaken(house);
-					//log(candidatesToRemove);
 
 					// for each cell..
 					for (var k=0; k < boardSize; k++){
@@ -422,52 +370,50 @@
 			return false;
 		}
 
-
 		/* visualElimination
 		 * --------------
 		 * Looks for houses where a digit only appears in one slot
 		 * -meaning we know the digit goes in that slot.
 		 * -- returns effectedCells - the updated cell(s), or false
 		 * -----------------------------------------------------------------*/
-		function visualElimination(){
-			//log("visualElimination");
-			//for each type of house..(hor row / vert row / box)
-			var hlength = houses.length;
-			for(var i=0; i < hlength; i++){
+		// function visualElimination(){
+		// 	//for each type of house..(hor row / vert row / box)
+		// 	var hlength = houses.length;
+		// 	for(var i=0; i < hlength; i++){
 
-				//for each such house
-				for(var j=0; j < boardSize; j++){
-					var house = houses[i][j];
-					var digits = numbersLeft(house);
+		// 		//for each such house
+		// 		for(var j=0; j < boardSize; j++){
+		// 			var house = houses[i][j];
+		// 			var digits = numbersLeft(house);
 
-					//for each digit left for that house
-					for (var k=0; k < digits.length; k++){
-						var digit = digits[k];
-						var possibleCells = [];
+		// 			//for each digit left for that house
+		// 			for (var k=0; k < digits.length; k++){
+		// 				var digit = digits[k];
+		// 				var possibleCells = [];
 
-						//for each cell in house
-						for(var l=0; l < boardSize; l++){
-							var cell = house[l];
-							var boardCell = board[cell];
-							//if the digit only appears as a candidate in one slot, that's where it has to go
-							if (contains(boardCell.candidates, digit)){
-								possibleCells.push(cell);
-								if(possibleCells.length > 1)
-									break; //no we can't tell anything in this case
-							}
-						}
+		// 				//for each cell in house
+		// 				for(var l=0; l < boardSize; l++){
+		// 					var cell = house[l];
+		// 					var boardCell = board[cell];
+		// 					//if the digit only appears as a candidate in one slot, that's where it has to go
+		// 					if (contains(boardCell.candidates, digit)){
+		// 						possibleCells.push(cell);
+		// 						if(possibleCells.length > 1)
+		// 							break; //no we can't tell anything in this case
+		// 					}
+		// 				}
 
-						if(possibleCells.length === 1){
-							var cellIndex = possibleCells[0];
+		// 				if(possibleCells.length === 1){
+		// 					var cellIndex = possibleCells[0];
 
-							return [cellIndex]; //one step at the time
-						}
-					}
+		// 					return [cellIndex]; //one step at the time
+		// 				}
+		// 			}
 
-				}
-			}
-			return false;
-		}
+		// 		}
+		// 	}
+		// 	return false;
+		// }
 		
 
 		/* keyboardNumberInput - update our board model
@@ -482,11 +428,10 @@
 				log("celica:"+id);
 				$.post("/numentry", JSON.stringify({ "cellId": id, "number": val }))
 				//check that this doesn't make board incorrect
-				var temp = housesWithCell(id);
+				// var temp = housesWithCell(id);
 			
 
-				//remove candidates..
-				// input.siblings(".candidates").html(buildCandidatesString(candidates));
+				//remove candidates.
 				//update board
 				board[id].candidates = candidates;
 				board[id].val = val;
@@ -507,7 +452,6 @@
 			}
 		};
 
-	
 		/*
 		 * init/API/events
 		 *-----------*/
@@ -585,7 +529,6 @@
 		return {
 			checkAll : checkAll,
 			clearChecks: clearChecks,
-			// clearBoard : clearBoard,
 			getBoard : getBoard,
 			setBoard : setBoard,
 		};
