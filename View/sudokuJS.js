@@ -16,13 +16,13 @@
 		 * constants
 		 *-----------*/
 
-		var SOLVE_MODE_STEP = "step";
+		// var SOLVE_MODE_STEP = "step";
 
 		/*
 		 * variables
 		 *-----------*/
 		opts = opts || {};
-		var solveMode = SOLVE_MODE_STEP,
+		// var solveMode = SOLVE_MODE_STEP,
 
 		/*board variable gets enhanced into list of objects on init:
 			,{
@@ -31,7 +31,7 @@
 					]
 			}
 		*/
-			board = [],
+		var	board = [],
 			boardSize,
 			boardNumbers, // array of 1-9 by default, generated in initBoard
 
@@ -186,21 +186,21 @@
 		 * --------------
 		 *  updates the board with our latest values
 		 * -----------------------------------------------------------------*/
-		 var updateUIBoard = function(paintNew){
-			$boardInputs
-				.removeClass("highlight-val")
-				.each(function(i,v){
-					var $input = $(this);
-					var newVal = board[i].val;
+		//  var updateUIBoard = function(paintNew){
+		// 	$boardInputs
+		// 		// .removeClass("highlight-val")
+		// 		// .each(function(i,v){
+		// 			// var $input = $(this);
+		// 			// var newVal = board[i].val;
 	
-						$input.val(newVal);
-						if(paintNew)
-							$input.addClass("highlight-val");
+		// 				// $input.val(newVal);
+		// 				// if(paintNew)
+		// 				// 	$input.addClass("highlight-val");
 					
-					var $candidates = $input.siblings(".candidates");
+		// 			// var $candidates = $input.siblings(".candidates");
 
-				});
-		};
+		// 		// });
+		// };
 
 
 		/* updateUIBoardCell -
@@ -234,7 +234,7 @@
 					cellUpdated = true;
 				}
 			}
-			if(cellUpdated && solveMode === SOLVE_MODE_STEP)
+			// if(cellUpdated && solveMode === SOLVE_MODE_STEP)
 				updateUIBoardCell(cell, {mode: "only-candidates"});
 		};
 
@@ -250,21 +250,6 @@
 				}
 			}
 		};
-
-		/* indexInHouse
-		 * --------------
-		 *  returns index (0-9) for digit in house, false if not in house
-		 *  NOTE: careful evaluating returned index is IN row, as 0==false.
-		 * -----------------------------------------------------------------*/
-		//  var indexInHouse = function(digit,house){
-		// 	for(var i=0; i < boardSize; i++){
-		// 		if(board[house[i]].val===digit)
-		// 			return i;
-		// 	}
-		// 	//not in house
-		// 	return false;
-		// };
-
 
 		 /* numbersTaken
 		 * --------------
@@ -398,24 +383,9 @@
 			}
 		}
 
-		// var getBoard = function(){
-		// 	return board;
-		// };
-
-		// var setBoard = function(newBoard){
-      	// 	clearBoard(); // if any pre-existing
-		// 	board = newBoard;
-		// 	initBoard();
-		// 	// visualEliminationOfCandidates();
-		// 	updateUIBoard(false);
-		// };
-
-
 		return {
 			checkAll : checkAll,
 			clearChecks: clearChecks,
-			// getBoard : getBoard,
-			// setBoard : setBoard,
 		};
 	};
 
