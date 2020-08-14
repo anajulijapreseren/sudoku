@@ -20,20 +20,20 @@
 		 * constants
 		 *-----------*/
 
-		var DIFFICULTY_EASY = "easy";
-		var DIFFICULTY_MEDIUM = "medium";
-		var DIFFICULTY_HARD = "hard";
-		var DIFFICULTY_VERY_HARD = "very hard";
+		// var DIFFICULTY_EASY = "easy";
+		// var DIFFICULTY_MEDIUM = "medium";
+		// var DIFFICULTY_HARD = "hard";
+		// var DIFFICULTY_VERY_HARD = "very hard";
 
 		var SOLVE_MODE_STEP = "step";
 		var SOLVE_MODE_ALL = "all";
 
-		var DIFFICULTIES = [
-			DIFFICULTY_EASY,
-			DIFFICULTY_MEDIUM,
-			DIFFICULTY_HARD,
-			DIFFICULTY_VERY_HARD
-		];
+		// var DIFFICULTIES = [
+		// 	DIFFICULTY_EASY,
+		// 	DIFFICULTY_MEDIUM,
+		// 	DIFFICULTY_HARD,
+		// 	DIFFICULTY_VERY_HARD
+		// ];
 
 		/*
 		 * variables
@@ -54,28 +54,28 @@
 		/*
 		the score reflects how much increased difficulty the board gets by having the pattern rather than an already solved cell
 		*/
-			strategies = [
-				{title: "openSingles", fn:	openSingles, score : 0.1	},
-				 //harder for human to spot
-				{title: "singleCandidate", fn:	singleCandidate, score : 9	},
-				{title: "visualElimination", fn:	visualElimination, score : 8	},
-				//only eliminates one candidate, should have lower score?
-				{title: "nakedPair", fn:	nakedPair, score : 50	},
-				{title: "pointingElimination", fn:	pointingElimination, score : 80	},
-				//harder for human to spot
-				{title: "hiddenPair", fn:	hiddenPair, score :	90	},
-				{title: "nakedTriplet", fn:	nakedTriplet, score :	100 },
-				//never gets used unless above strats are turned off?
-				{title: "hiddenTriplet", fn:	hiddenTriplet, score :	140	},
-				//never gets used unless above strats are turned off?
-				{title: "nakedQuad", fn:	nakedQuad, score :	150 },
-				//never gets used unless above strats are turned off?
-				{title: "hiddenQuad", fn:	hiddenQuad, score :	280	}
-			],
+			// strategies = [
+			// 	{title: "openSingles", fn:	openSingles, score : 0.1	},
+			// 	 //harder for human to spot
+			// 	{title: "singleCandidate", fn:	singleCandidate, score : 9	},
+			// 	{title: "visualElimination", fn:	visualElimination, score : 8	},
+			// 	//only eliminates one candidate, should have lower score?
+			// 	{title: "nakedPair", fn:	nakedPair, score : 50	},
+			// 	{title: "pointingElimination", fn:	pointingElimination, score : 80	},
+			// 	//harder for human to spot
+			// 	{title: "hiddenPair", fn:	hiddenPair, score :	90	},
+			// 	{title: "nakedTriplet", fn:	nakedTriplet, score :	100 },
+			// 	//never gets used unless above strats are turned off?
+			// 	{title: "hiddenTriplet", fn:	hiddenTriplet, score :	140	},
+			// 	//never gets used unless above strats are turned off?
+			// 	{title: "nakedQuad", fn:	nakedQuad, score :	150 },
+			// 	//never gets used unless above strats are turned off?
+			// 	{title: "hiddenQuad", fn:	hiddenQuad, score :	280	}
+			// ],
 
 
 		//nr of times each strategy has been used for solving this board - used to calculate difficulty score
-			usedStrategies = [],
+			// usedStrategies = [],
 
 		/*board variable gets enhanced into list of objects on init:
 			,{
@@ -147,32 +147,32 @@
 		 *  TYPE: solely based on strategies required to solve board (i.e. single count per strategy)
 		 *  SCORE: distinguish between boards of same difficulty.. based on point system. Needs work.
 		 * -----------------------------------------------------------------*/
-		var calcBoardDifficulty = function(usedStrategies){
-			var boardDiff = {};
-			if(usedStrategies.length < 3)
-				boardDiff.level = DIFFICULTY_EASY;
-			else if(usedStrategies.length < 4)
-				boardDiff.level = DIFFICULTY_MEDIUM;
-			else
-				boardDiff.level = DIFFICULTY_HARD;
+		// var calcBoardDifficulty = function(usedStrategies){
+		// 	var boardDiff = {};
+		// 	if(usedStrategies.length < 3)
+		// 		boardDiff.level = DIFFICULTY_EASY;
+		// 	else if(usedStrategies.length < 4)
+		// 		boardDiff.level = DIFFICULTY_MEDIUM;
+		// 	else
+		// 		boardDiff.level = DIFFICULTY_HARD;
 
-			var totalScore = 0;
-			for(var i=0; i < strategies.length; i++){
-				var freq = usedStrategies[i];
-				if(!freq)
-					continue; //undefined or 0, won't effect score
-				var stratObj = strategies[i];
-				totalScore += freq * stratObj.score;
-			}
-			boardDiff.score = totalScore;
-			//log("totalScore: "+totalScore);
+		// 	var totalScore = 0;
+		// 	for(var i=0; i < strategies.length; i++){
+		// 		var freq = usedStrategies[i];
+		// 		if(!freq)
+		// 			continue; //undefined or 0, won't effect score
+		// 		var stratObj = strategies[i];
+		// 		totalScore += freq * stratObj.score;
+		// 	}
+		// 	boardDiff.score = totalScore;
+		// 	//log("totalScore: "+totalScore);
 
-			if(totalScore > 750)
-			// if(totalScore > 2200)
-				boardDiff.level = DIFFICULTY_VERY_HARD;
+		// 	if(totalScore > 750)
+		// 	// if(totalScore > 2200)
+		// 		boardDiff.level = DIFFICULTY_VERY_HARD;
 
-			return boardDiff;
-		};
+		// 	return boardDiff;
+		// };
 
 
 		/* isBoardFinished
@@ -579,18 +579,18 @@
 		 * --------------
 		 *  returns unused numbers in a house
 		 * -----------------------------------------------------------------*/
-		 var numbersLeft = function(house){
-			var numbers = boardNumbers.slice();
-			for(var i=0; i < house.length; i++){
-				for(var j=0; j < numbers.length; j++){
-					//remove all numbers that are already being used
-					if(numbers[j] === board[house[i]].val)
-						numbers.splice(j,1);
-				}
-			}
-			//return remaining numbers
-			return numbers;
-		};
+		//  var numbersLeft = function(house){
+		// 	var numbers = boardNumbers.slice();
+		// 	for(var i=0; i < house.length; i++){
+		// 		for(var j=0; j < numbers.length; j++){
+		// 			//remove all numbers that are already being used
+		// 			if(numbers[j] === board[house[i]].val)
+		// 				numbers.splice(j,1);
+		// 		}
+		// 	}
+		// 	//return remaining numbers
+		// 	return numbers;
+		// };
 
 
 		 /* numbersTaken
@@ -613,31 +613,31 @@
 		 * --------------
 		 *  returns list of candidates for cell (with null's removed)
 		 * -----------------------------------------------------------------*/
-		 var candidatesLeft = function(cellIndex){
-			var t = [];
-			var candidates = board[cellIndex].candidates;
-			for (var i=0; i < candidates.length; i++){
-				if (candidates[i] !== null)
-					t.push(candidates[i]);
-			}
-			return t;
-		};
+		//  var candidatesLeft = function(cellIndex){
+		// 	var t = [];
+		// 	var candidates = board[cellIndex].candidates;
+		// 	for (var i=0; i < candidates.length; i++){
+		// 		if (candidates[i] !== null)
+		// 			t.push(candidates[i]);
+		// 	}
+		// 	return t;
+		// };
 
 
 		 /* cellsForCandidate
 		 * --------------
 		 *  returns list of possible cells (cellIndex) for candidate (in a house)
 		 * -----------------------------------------------------------------*/
-		 var cellsForCandidate = function(candidate,house){
-			var t = [];
-			for(var i=0; i < house.length; i++){
-				var cell = board[house[i]];
-				var candidates = cell.candidates;
-				if(contains(candidates, candidate))
-					t.push(house[i]);
-			}
-			return t;
-		};
+		//  var cellsForCandidate = function(candidate,house){
+		// 	var t = [];
+		// 	for(var i=0; i < house.length; i++){
+		// 		var cell = board[house[i]];
+		// 		var candidates = cell.candidates;
+		// 		if(contains(candidates, candidate))
+		// 			t.push(house[i]);
+		// 	}
+		// 	return t;
+		// };
 
 
 
@@ -646,63 +646,63 @@
 		 *  checks for houses with just one empty cell - fills it in board variable if so
 		 * -- returns effectedCells - the updated cell(s), or false
 		 * -----------------------------------------------------------------*/
-		function openSingles(){
-			//log("looking for openSingles");
+		// function openSingles(){
+		// 	//log("looking for openSingles");
 
-			//for each type of house..(hor row / vert row / box)
-			var hlength = houses.length;
-			for(var i=0; i < hlength; i++){
+		// 	//for each type of house..(hor row / vert row / box)
+		// 	var hlength = houses.length;
+		// 	for(var i=0; i < hlength; i++){
 
-				//for each such house
-				var housesCompleted = 0; //if goes up to 9, sudoku is finished
+		// 		//for each such house
+		// 		var housesCompleted = 0; //if goes up to 9, sudoku is finished
 
-				for(var j=0; j < boardSize; j++){
-					var emptyCells = [];
+		// 		for(var j=0; j < boardSize; j++){
+		// 			var emptyCells = [];
 
-					// for each cell..
-					for (var k=0; k < boardSize; k++){
+		// 			// for each cell..
+		// 			for (var k=0; k < boardSize; k++){
 
-						var boardIndex = houses[i][j][k];
-						if(board[boardIndex].val === null) {
-							emptyCells.push({house: houses[i][j], cell: boardIndex});
-							if(emptyCells.length > 1) {
-								//log("more than one empty cell, house area :["+i+"]["+j+"]");
-								break;
-							}
-						}
-					}
-					//one empty cell found
-					if(emptyCells.length === 1){
-						var emptyCell = emptyCells[0];
-						//grab number to fill in in cell
-						var val = numbersLeft(emptyCell.house);
-						if(val.length > 1) {
-							//log("openSingles found more than one answer for: "+emptyCell.cell+" .. board incorrect!");
-							boardError = true; //to force solve all loop to stop
-							return -1; //error
-						}
+		// 				var boardIndex = houses[i][j][k];
+		// 				if(board[boardIndex].val === null) {
+		// 					emptyCells.push({house: houses[i][j], cell: boardIndex});
+		// 					if(emptyCells.length > 1) {
+		// 						//log("more than one empty cell, house area :["+i+"]["+j+"]");
+		// 						break;
+		// 					}
+		// 				}
+		// 			}
+		// 			//one empty cell found
+		// 			if(emptyCells.length === 1){
+		// 				var emptyCell = emptyCells[0];
+		// 				//grab number to fill in in cell
+		// 				var val = numbersLeft(emptyCell.house);
+		// 				if(val.length > 1) {
+		// 					//log("openSingles found more than one answer for: "+emptyCell.cell+" .. board incorrect!");
+		// 					boardError = true; //to force solve all loop to stop
+		// 					return -1; //error
+		// 				}
 
-						//log("fill in single empty cell " + emptyCell.cell+", val: "+val);
+		// 				//log("fill in single empty cell " + emptyCell.cell+", val: "+val);
 
-						setBoardCell(emptyCell.cell, val[0]); //does not update UI
-						if(solveMode===SOLVE_MODE_STEP)
-							uIBoardHighlightCandidate(emptyCell.cell, val[0]);
+		// 				setBoardCell(emptyCell.cell, val[0]); //does not update UI
+		// 				if(solveMode===SOLVE_MODE_STEP)
+		// 					uIBoardHighlightCandidate(emptyCell.cell, val[0]);
 
-						return [emptyCell.cell];
-					}
-					//no empty ells..
-					if(emptyCells.length === 0) {
-						housesCompleted++;
-						//log(i+" "+j+": "+housesCompleted);
-						if(housesCompleted === boardSize){
-							boardFinished = true;
-							return -1; //special case, done
-						}
-					}
-				}
-			}
-			return false;
-		}
+		// 				return [emptyCell.cell];
+		// 			}
+		// 			//no empty ells..
+		// 			if(emptyCells.length === 0) {
+		// 				housesCompleted++;
+		// 				//log(i+" "+j+": "+housesCompleted);
+		// 				if(housesCompleted === boardSize){
+		// 					boardFinished = true;
+		// 					return -1; //special case, done
+		// 				}
+		// 			}
+		// 		}
+		// 	}
+		// 	return false;
+		// }
 
 
 		/* visualEliminationOfCandidates
@@ -839,113 +839,113 @@
 		 * same as above, but row instead of box, and vice versa.
 		 * -- returns effectedCells - the updated cell(s), or false
 		 * -----------------------------------------------------------------*/
-		function pointingElimination(){
-			var effectedCells = false;
+		// function pointingElimination(){
+		// 	var effectedCells = false;
 
-			//for each type of house..(hor row / vert row / box)
-			var hlength = houses.length;
-			for(var a=0; a < hlength; a++){
-				var houseType = a;
+		// 	//for each type of house..(hor row / vert row / box)
+		// 	var hlength = houses.length;
+		// 	for(var a=0; a < hlength; a++){
+		// 		var houseType = a;
 
-				for(var i=0; i < boardSize; i++){
-					var house = houses[houseType][i];
+		// 		for(var i=0; i < boardSize; i++){
+		// 			var house = houses[houseType][i];
 
-					//for each digit left for this house
-					var digits = numbersLeft(house);
-					for(var j=0; j< digits.length; j++){
-						var digit = digits[j];
-						//check if digit (candidate) only appears in one row (if checking boxes),
-						//, or only in one box (if checking rows)
+		// 			//for each digit left for this house
+		// 			var digits = numbersLeft(house);
+		// 			for(var j=0; j< digits.length; j++){
+		// 				var digit = digits[j];
+		// 				//check if digit (candidate) only appears in one row (if checking boxes),
+		// 				//, or only in one box (if checking rows)
 
-						var sameAltHouse = true; //row if checking box, and vice versa
-						var houseId = -1;
-						//when point checking from box, need to compare both kind of rows
-						//that box cells are also part of, so use houseTwoId as well
-						var houseTwoId = -1;
-						var sameAltTwoHouse = true;
-						var cellsWithCandidate = [];
-						//var cellDistance = null;
+		// 				var sameAltHouse = true; //row if checking box, and vice versa
+		// 				var houseId = -1;
+		// 				//when point checking from box, need to compare both kind of rows
+		// 				//that box cells are also part of, so use houseTwoId as well
+		// 				var houseTwoId = -1;
+		// 				var sameAltTwoHouse = true;
+		// 				var cellsWithCandidate = [];
+		// 				//var cellDistance = null;
 
-						//for each cell
-						for(var k=0; k < house.length; k++){
-							var cell = house[k];
+		// 				//for each cell
+		// 				for(var k=0; k < house.length; k++){
+		// 					var cell = house[k];
 
-							if (contains(board[cell].candidates,digit)) {
-								var cellHouses = housesWithCell(cell);
-								var newHouseId = (houseType ===2) ? cellHouses[0] : cellHouses[2];
-								var newHouseTwoId = (houseType ===2) ? cellHouses[1] : cellHouses[2];
+		// 					if (contains(board[cell].candidates,digit)) {
+		// 						var cellHouses = housesWithCell(cell);
+		// 						var newHouseId = (houseType ===2) ? cellHouses[0] : cellHouses[2];
+		// 						var newHouseTwoId = (houseType ===2) ? cellHouses[1] : cellHouses[2];
 
-								//if(cellsWithCandidate.length > 0){ //why thice the same?
-
-
-									if(cellsWithCandidate.length > 0){
-										if(newHouseId !== houseId){
-											sameAltHouse = false;
-										}
-										if(houseTwoId !== newHouseTwoId){
-											sameAltTwoHouse = false;
-										}
-										if(sameAltHouse === false && sameAltTwoHouse === false){
-											break; //not in same altHouse (box/row)
-										}
-
-									}
-								//}
-								houseId = newHouseId;
-								houseTwoId = newHouseTwoId;
-								cellsWithCandidate.push(cell);
-							}
-						}
-						if((sameAltHouse === true || sameAltTwoHouse === true ) && cellsWithCandidate.length > 0){
-							//log("sameAltHouse..");
-							//we still need to check that this actually eliminates something, i.e. these possible cells can't be only in house
-
-							//first figure out what kind of house we are talking about..
-							var h = housesWithCell(cellsWithCandidate[0]);
-							var altHouseType = 2;
-							if(houseType ===2){
-								if(sameAltHouse)
-									altHouseType = 0;
-								else
-									altHouseType = 1;
-							}
+		// 						//if(cellsWithCandidate.length > 0){ //why thice the same?
 
 
-							var altHouse = houses[altHouseType][h[altHouseType]];
-							var cellsEffected = [];
+		// 							if(cellsWithCandidate.length > 0){
+		// 								if(newHouseId !== houseId){
+		// 									sameAltHouse = false;
+		// 								}
+		// 								if(houseTwoId !== newHouseTwoId){
+		// 									sameAltTwoHouse = false;
+		// 								}
+		// 								if(sameAltHouse === false && sameAltTwoHouse === false){
+		// 									break; //not in same altHouse (box/row)
+		// 								}
 
-							//log("houses["+houseType+"]["+h[houseType]+"].length: "+houses[houseType][h[houseType]].length);
+		// 							}
+		// 						//}
+		// 						houseId = newHouseId;
+		// 						houseTwoId = newHouseTwoId;
+		// 						cellsWithCandidate.push(cell);
+		// 					}
+		// 				}
+		// 				if((sameAltHouse === true || sameAltTwoHouse === true ) && cellsWithCandidate.length > 0){
+		// 					//log("sameAltHouse..");
+		// 					//we still need to check that this actually eliminates something, i.e. these possible cells can't be only in house
 
-							//need to remove cellsWithCandidate - from cells to remove from
-							for (var x=0; x< altHouse.length; x++){
-								if(!contains(cellsWithCandidate, altHouse[x])) {
-									cellsEffected.push(altHouse[x]);
-								}
-							}
-							//log("houses["+houseType+"]["+h[houseType]+"].length: "+houses[houseType][h[houseType]].length);
-
-							//remove all candidates on altHouse, outside of house
-							var cellsUpdated = removeCandidatesFromCells(cellsEffected, [digit]);
-
-							if(cellsUpdated.length > 0){
-								// log("pointing: digit "+digit+", from houseType: "+houseType);
-
-								if(solveMode === SOLVE_MODE_STEP)
-									highLightCandidatesOnCells([digit], cellsWithCandidate);
+		// 					//first figure out what kind of house we are talking about..
+		// 					var h = housesWithCell(cellsWithCandidate[0]);
+		// 					var altHouseType = 2;
+		// 					if(houseType ===2){
+		// 						if(sameAltHouse)
+		// 							altHouseType = 0;
+		// 						else
+		// 							altHouseType = 1;
+		// 					}
 
 
-								onlyUpdatedCandidates = true;
+		// 					var altHouse = houses[altHouseType][h[altHouseType]];
+		// 					var cellsEffected = [];
 
-								//return cellsUpdated.concat(cellsWithCandidate);
-								//only return cells where we actually update candidates
-								return cellsUpdated;
-							}
-						}
-					}
-				}
-			}
-			return false;
-		}
+		// 					//log("houses["+houseType+"]["+h[houseType]+"].length: "+houses[houseType][h[houseType]].length);
+
+		// 					//need to remove cellsWithCandidate - from cells to remove from
+		// 					for (var x=0; x< altHouse.length; x++){
+		// 						if(!contains(cellsWithCandidate, altHouse[x])) {
+		// 							cellsEffected.push(altHouse[x]);
+		// 						}
+		// 					}
+		// 					//log("houses["+houseType+"]["+h[houseType]+"].length: "+houses[houseType][h[houseType]].length);
+
+		// 					//remove all candidates on altHouse, outside of house
+		// 					var cellsUpdated = removeCandidatesFromCells(cellsEffected, [digit]);
+
+		// 					if(cellsUpdated.length > 0){
+		// 						// log("pointing: digit "+digit+", from houseType: "+houseType);
+
+		// 						if(solveMode === SOLVE_MODE_STEP)
+		// 							highLightCandidatesOnCells([digit], cellsWithCandidate);
+
+
+		// 						onlyUpdatedCandidates = true;
+
+		// 						//return cellsUpdated.concat(cellsWithCandidate);
+		// 						//only return cells where we actually update candidates
+		// 						return cellsUpdated;
+		// 					}
+		// 				}
+		// 			}
+		// 		}
+		// 	}
+		// 	return false;
+		// }
 
 
 
@@ -956,142 +956,142 @@
 		 *
 		 * -- returns effectedCells - the updated cell(s), or false
 		 * -----------------------------------------------------------------*/
-		function nakedCandidates(n){
+		// function nakedCandidates(n){
 
-			//for each type of house..(hor row / vert row / box)
-			var hlength = houses.length;
-			for(var i=0; i < hlength; i++){
+		// 	//for each type of house..(hor row / vert row / box)
+		// 	var hlength = houses.length;
+		// 	for(var i=0; i < hlength; i++){
 
-				//for each such house
-				for(var j=0; j < boardSize; j++){
-					//log("["+i+"]"+"["+j+"]");
-					var house = houses[i][j];
-					if(numbersLeft(house).length <= n) //can't eliminate any candidates
-						continue;
-					var combineInfo = []; //{cell: x, candidates: []}, {} ..
-					//combinedCandidates,cellsWithCandidate;
-					var minIndexes = [-1];
-					//log("--------------");
-					//log("house: ["+i+"]["+j+"]");
-
-
-					//checks every combo of n candidates in house, returns pattern, or false
-					var result = checkCombinedCandidates(house, 0);
-					if(result !== false)
-						return result;
-				}
-			}
-			return false; //pattern not found
-
-			function checkCombinedCandidates(house, startIndex){
-				//log("startIndex: "+startIndex);
-				for(var i=Math.max(startIndex, minIndexes[startIndex]); i < boardSize-n+startIndex; i++){
-					//log(i);
-
-					//never check this cell again, in this loop
-					minIndexes[startIndex] = i+1;
-					//or in a this loop deeper down in recursions
-					minIndexes[startIndex+1] = i+1;
-
-					//if(startIndex === 0){
-					//	combinedCandidates = [];
-					//	cellsWithCandidate = []; //reset
-					//}
-					var cell = house[i];
-					var cellCandidates = candidatesLeft(cell);
-
-					if(cellCandidates.length === 0 || cellCandidates.length > n)
-						continue;
+		// 		//for each such house
+		// 		for(var j=0; j < boardSize; j++){
+		// 			//log("["+i+"]"+"["+j+"]");
+		// 			var house = houses[i][j];
+		// 			if(numbersLeft(house).length <= n) //can't eliminate any candidates
+		// 				continue;
+		// 			var combineInfo = []; //{cell: x, candidates: []}, {} ..
+		// 			//combinedCandidates,cellsWithCandidate;
+		// 			var minIndexes = [-1];
+		// 			//log("--------------");
+		// 			//log("house: ["+i+"]["+j+"]");
 
 
-					//try adding this cell and it's cellCandidates,
-					//but first need to check that that doesn't make (unique) amount of
-					//candidates in combineInfo > n
+		// 			//checks every combo of n candidates in house, returns pattern, or false
+		// 			var result = checkCombinedCandidates(house, 0);
+		// 			if(result !== false)
+		// 				return result;
+		// 		}
+		// 	}
+		// 	return false; //pattern not found
 
-					//if this is the first item we add, we don't need this check (above one is enough)
-					if(combineInfo.length > 0){
-						var temp = cellCandidates.slice();
-						for(var a =0; a < combineInfo.length; a++){
-							var candidates = combineInfo[a].candidates;
-							for(var b=0; b < candidates.length; b++){
-								if(!contains(temp,candidates[b]))
-									temp.push(candidates[b]);
-							}
-						}
-						if(temp.length > n){
-							continue; //combined candidates spread over > n cells, won't work
-						}
+		// 	function checkCombinedCandidates(house, startIndex){
+		// 		//log("startIndex: "+startIndex);
+		// 		for(var i=Math.max(startIndex, minIndexes[startIndex]); i < boardSize-n+startIndex; i++){
+		// 			//log(i);
 
-					}
+		// 			//never check this cell again, in this loop
+		// 			minIndexes[startIndex] = i+1;
+		// 			//or in a this loop deeper down in recursions
+		// 			minIndexes[startIndex+1] = i+1;
 
-					combineInfo.push({cell: cell, candidates: cellCandidates});
+		// 			//if(startIndex === 0){
+		// 			//	combinedCandidates = [];
+		// 			//	cellsWithCandidate = []; //reset
+		// 			//}
+		// 			var cell = house[i];
+		// 			var cellCandidates = candidatesLeft(cell);
 
-
-					if(startIndex < n-1) {
-						//still need to go deeper into combo
-						var r = checkCombinedCandidates(house, startIndex+1);
-						//when we come back, check if that's because we found answer.
-						//if so, return with it, otherwise, keep looking
-						if (r !== false)
-							return r;
-					}
-
-					//check if we match our pattern
-					//if we have managed to combine n-1 cells,
-					//(we already know that combinedCandidates is > n)
-					//then we found a match!
-					if(combineInfo.length === n){
-						//now we need to check whether this eliminates any candidates
+		// 			if(cellCandidates.length === 0 || cellCandidates.length > n)
+		// 				continue;
 
 
-						//now we need to check whether this eliminates any candidates
+		// 			//try adding this cell and it's cellCandidates,
+		// 			//but first need to check that that doesn't make (unique) amount of
+		// 			//candidates in combineInfo > n
 
-						var cellsWithCandidates = [];
-						var combinedCandidates = []; //not unique either..
-						for(var x=0; x< combineInfo.length;x++){
-							cellsWithCandidates.push(combineInfo[x].cell);
-							combinedCandidates = combinedCandidates.concat(combineInfo[x].candidates);
-						}
+		// 			//if this is the first item we add, we don't need this check (above one is enough)
+		// 			if(combineInfo.length > 0){
+		// 				var temp = cellCandidates.slice();
+		// 				for(var a =0; a < combineInfo.length; a++){
+		// 					var candidates = combineInfo[a].candidates;
+		// 					for(var b=0; b < candidates.length; b++){
+		// 						if(!contains(temp,candidates[b]))
+		// 							temp.push(candidates[b]);
+		// 					}
+		// 				}
+		// 				if(temp.length > n){
+		// 					continue; //combined candidates spread over > n cells, won't work
+		// 				}
+
+		// 			}
+
+		// 			combineInfo.push({cell: cell, candidates: cellCandidates});
+
+
+		// 			if(startIndex < n-1) {
+		// 				//still need to go deeper into combo
+		// 				var r = checkCombinedCandidates(house, startIndex+1);
+		// 				//when we come back, check if that's because we found answer.
+		// 				//if so, return with it, otherwise, keep looking
+		// 				if (r !== false)
+		// 					return r;
+		// 			}
+
+		// 			//check if we match our pattern
+		// 			//if we have managed to combine n-1 cells,
+		// 			//(we already know that combinedCandidates is > n)
+		// 			//then we found a match!
+		// 			if(combineInfo.length === n){
+		// 				//now we need to check whether this eliminates any candidates
+
+
+		// 				//now we need to check whether this eliminates any candidates
+
+		// 				var cellsWithCandidates = [];
+		// 				var combinedCandidates = []; //not unique either..
+		// 				for(var x=0; x< combineInfo.length;x++){
+		// 					cellsWithCandidates.push(combineInfo[x].cell);
+		// 					combinedCandidates = combinedCandidates.concat(combineInfo[x].candidates);
+		// 				}
 
 
 
-						//get all cells in house EXCEPT cellsWithCandidates
-						var cellsEffected = [];
-						for (var y=0; y< boardSize; y++){
-							if(!contains(cellsWithCandidates, house[y])) {
-								cellsEffected.push(house[y]);
-							}
-						}
+		// 				//get all cells in house EXCEPT cellsWithCandidates
+		// 				var cellsEffected = [];
+		// 				for (var y=0; y< boardSize; y++){
+		// 					if(!contains(cellsWithCandidates, house[y])) {
+		// 						cellsEffected.push(house[y]);
+		// 					}
+		// 				}
 
-						//remove all candidates on house, except the on cells matched in pattern
-						var cellsUpdated = removeCandidatesFromCells(cellsEffected, combinedCandidates);
+		// 				//remove all candidates on house, except the on cells matched in pattern
+		// 				var cellsUpdated = removeCandidatesFromCells(cellsEffected, combinedCandidates);
 
-						//if it does remove candidates, we're succeded!
-						if(cellsUpdated.length > 0){
-							//log("nakedCandidates: ");
-							//log(combinedCandidates);
+		// 				//if it does remove candidates, we're succeded!
+		// 				if(cellsUpdated.length > 0){
+		// 					//log("nakedCandidates: ");
+		// 					//log(combinedCandidates);
 
-							if(solveMode === SOLVE_MODE_STEP)
-								highLightCandidatesOnCells(combinedCandidates, cellsWithCandidates);
+		// 					if(solveMode === SOLVE_MODE_STEP)
+		// 						highLightCandidatesOnCells(combinedCandidates, cellsWithCandidates);
 
-							onlyUpdatedCandidates = true;
-							//return cellsWithCandidates.concat(cellsUpdated);
+		// 					onlyUpdatedCandidates = true;
+		// 					//return cellsWithCandidates.concat(cellsUpdated);
 
-							//return cells we actually update, duplicates removed
-							return uniqueArray(cellsUpdated);
-						}
-					}
-				}
-				if(startIndex > 0) {
-					//if we added a value to our combo check, but failed to find pattern, we now need drop that value and go back up in chain and continue to check..
-					if(combineInfo.length > startIndex-1){
-						//log("nakedCans: need to pop last added values..");
-						combineInfo.pop();
-					}
-				}
-				return false;
-			}
-		}
+		// 					//return cells we actually update, duplicates removed
+		// 					return uniqueArray(cellsUpdated);
+		// 				}
+		// 			}
+		// 		}
+		// 		if(startIndex > 0) {
+		// 			//if we added a value to our combo check, but failed to find pattern, we now need drop that value and go back up in chain and continue to check..
+		// 			if(combineInfo.length > startIndex-1){
+		// 				//log("nakedCans: need to pop last added values..");
+		// 				combineInfo.pop();
+		// 			}
+		// 		}
+		// 		return false;
+		// 	}
+		// }
 
 
 		/* nakedPair
@@ -1099,27 +1099,27 @@
 		 * see nakedCandidateElimination for explanation
 		 * -- returns effectedCells - the updated cell(s), or false
 		 * -----------------------------------------------------------------*/
-		function nakedPair(){
-			return nakedCandidates(2);
-		}
+		// function nakedPair(){
+		// 	return nakedCandidates(2);
+		// }
 
 		/* nakedTriplet
 		 * --------------
 		 * see nakedCandidateElimination for explanation
 		 * -- returns effectedCells - the updated cell(s), or false
 		 * -----------------------------------------------------------------*/
-		function nakedTriplet(){
-			return nakedCandidates(3);
-		}
+		// function nakedTriplet(){
+		// 	return nakedCandidates(3);
+		// }
 
 		/* nakedQuad
 		 * --------------
 		 * see nakedCandidateElimination for explanation
 		 * -- returns effectedCells - the updated cell(s), or false
 		 * -----------------------------------------------------------------*/
-		function nakedQuad(){
-			return nakedCandidates(4);
-		}
+		// function nakedQuad(){
+		// 	return nakedCandidates(4);
+		// }
 
 
 
@@ -1131,130 +1131,130 @@
 		 *
 		 * -- returns effectedCells - the updated cell(s), or false
 		 * -----------------------------------------------------------------*/
-		function hiddenLockedCandidates(n){
+		// function hiddenLockedCandidates(n){
 
-			//for each type of house..(hor row / vert row / box)
-			var hlength = houses.length;
-			for(var i=0; i < hlength; i++){
+		// 	//for each type of house..(hor row / vert row / box)
+		// 	var hlength = houses.length;
+		// 	for(var i=0; i < hlength; i++){
 
-				//for each such house
-				for(var j=0; j < boardSize; j++){
-					var house = houses[i][j];
-					if(numbersLeft(house).length <= n) //can't eliminate any candidates
-						continue;
-					var combineInfo = []; //{candate: x, cellsWithCandidate: []}, {} ..
-					//combinedCandidates,cellsWithCandidate;
-					var minIndexes = [-1];
-					//log("--------------");
-					//log("house: ["+i+"]["+j+"]");
+		// 		//for each such house
+		// 		for(var j=0; j < boardSize; j++){
+		// 			var house = houses[i][j];
+		// 			if(numbersLeft(house).length <= n) //can't eliminate any candidates
+		// 				continue;
+		// 			var combineInfo = []; //{candate: x, cellsWithCandidate: []}, {} ..
+		// 			//combinedCandidates,cellsWithCandidate;
+		// 			var minIndexes = [-1];
+		// 			//log("--------------");
+		// 			//log("house: ["+i+"]["+j+"]");
 
-					//checks every combo of n candidates in house, returns pattern, or false
-					var result = checkLockedCandidates(house, 0);
-					if(result !== false)
-						return result;
-				}
-			}
-			return false; //pattern not found
+		// 			//checks every combo of n candidates in house, returns pattern, or false
+		// 			var result = checkLockedCandidates(house, 0);
+		// 			if(result !== false)
+		// 				return result;
+		// 		}
+		// 	}
+		// 	return false; //pattern not found
 
-			function checkLockedCandidates(house, startIndex){
-				//log("startIndex: "+startIndex);
-				for(var i=Math.max(startIndex, minIndexes[startIndex]); i <= boardSize-n+startIndex; i++){
+		// 	function checkLockedCandidates(house, startIndex){
+		// 		//log("startIndex: "+startIndex);
+		// 		for(var i=Math.max(startIndex, minIndexes[startIndex]); i <= boardSize-n+startIndex; i++){
 
-					//log(i);
-					//never check this cell again, in this loop
-					minIndexes[startIndex] = i+1;
-					//or in a this loop deeper down in recursions
-					minIndexes[startIndex+1] = i+1;
+		// 			//log(i);
+		// 			//never check this cell again, in this loop
+		// 			minIndexes[startIndex] = i+1;
+		// 			//or in a this loop deeper down in recursions
+		// 			minIndexes[startIndex+1] = i+1;
 
-					var candidate = i+1;
-					//log(candidate);
-
-
-					var possibleCells = cellsForCandidate(candidate,house);
-
-					if(possibleCells.length === 0 || possibleCells.length > n)
-						continue;
-
-					//try adding this candidate and it's possible cells,
-					//but first need to check that that doesn't make (unique) amount of
-					//possible cells in combineInfo > n
-					if(combineInfo.length > 0){
-						var temp = possibleCells.slice();
-						for(var a =0; a < combineInfo.length; a++){
-							var cells = combineInfo[a].cells;
-							for(var b=0; b < cells.length; b++){
-								if(!contains(temp,cells[b]))
-									temp.push(cells[b]);
-							}
-						}
-						if(temp.length > n){
-							//log("combined candidates spread over > n cells");
-							continue; //combined candidates spread over > n cells, won't work
-						}
-
-					}
-
-					combineInfo.push({candidate: candidate, cells: possibleCells});
-
-					if(startIndex < n-1) {
-						//still need to go deeper into combo
-						var r = checkLockedCandidates(house, startIndex+1);
-						//when we come back, check if that's because we found answer.
-						//if so, return with it, otherwise, keep looking
-						if (r !== false)
-							return r;
-					}
-					//check if we match our pattern
-					//if we have managed to combine n-1 candidates,
-					//(we already know that cellsWithCandidates is <= n)
-					//then we found a match!
-					if(combineInfo.length === n){
-
-						//now we need to check whether this eliminates any candidates
-
-						var combinedCandidates = []; //not unique now...
-						var cellsWithCandidates = []; //not unique either..
-						for(var x=0; x< combineInfo.length;x++){
-							combinedCandidates.push(combineInfo[x].candidate);
-							cellsWithCandidates = cellsWithCandidates.concat(combineInfo[x].cells);
-						}
+		// 			var candidate = i+1;
+		// 			//log(candidate);
 
 
-						var candidatesToRemove = [];
-						for(var c=0; c<boardSize; c++){
-							if(!contains(combinedCandidates, c+1))
-								candidatesToRemove.push(c+1);
-						}
-						//log("candidates to remove:")
-						//log(candidatesToRemove);
+		// 			var possibleCells = cellsForCandidate(candidate,house);
 
-						//remove all other candidates from cellsWithCandidates
-						var cellsUpdated = removeCandidatesFromCells(cellsWithCandidates, candidatesToRemove);
+		// 			if(possibleCells.length === 0 || possibleCells.length > n)
+		// 				continue;
 
-						//if it does remove candidates, we're succeded!
-						if(cellsUpdated.length > 0){
-							//log("hiddenLockedCandidates: ");
-							//log(combinedCandidates);
+		// 			//try adding this candidate and it's possible cells,
+		// 			//but first need to check that that doesn't make (unique) amount of
+		// 			//possible cells in combineInfo > n
+		// 			if(combineInfo.length > 0){
+		// 				var temp = possibleCells.slice();
+		// 				for(var a =0; a < combineInfo.length; a++){
+		// 					var cells = combineInfo[a].cells;
+		// 					for(var b=0; b < cells.length; b++){
+		// 						if(!contains(temp,cells[b]))
+		// 							temp.push(cells[b]);
+		// 					}
+		// 				}
+		// 				if(temp.length > n){
+		// 					//log("combined candidates spread over > n cells");
+		// 					continue; //combined candidates spread over > n cells, won't work
+		// 				}
 
-							if(solveMode === SOLVE_MODE_STEP)
-								highLightCandidatesOnCells(combinedCandidates, cellsWithCandidates);
+		// 			}
 
-							onlyUpdatedCandidates = true;
+		// 			combineInfo.push({candidate: candidate, cells: possibleCells});
 
-							//filter out duplicates
-							return uniqueArray(cellsWithCandidates);
-						}
-					}
-				}
-				if(startIndex > 0) {
-					//if we added a value to our combo check, but failed to find pattern, we now need drop that value and go back up in chain and continu to check..
-					if(combineInfo.length > startIndex-1){
-						combineInfo.pop();
-					}
-				}
-				return false;
-			}
-		}
+		// 			if(startIndex < n-1) {
+		// 				//still need to go deeper into combo
+		// 				var r = checkLockedCandidates(house, startIndex+1);
+		// 				//when we come back, check if that's because we found answer.
+		// 				//if so, return with it, otherwise, keep looking
+		// 				if (r !== false)
+		// 					return r;
+		// 			}
+		// 			//check if we match our pattern
+		// 			//if we have managed to combine n-1 candidates,
+		// 			//(we already know that cellsWithCandidates is <= n)
+		// 			//then we found a match!
+		// 			if(combineInfo.length === n){
+
+		// 				//now we need to check whether this eliminates any candidates
+
+		// 				var combinedCandidates = []; //not unique now...
+		// 				var cellsWithCandidates = []; //not unique either..
+		// 				for(var x=0; x< combineInfo.length;x++){
+		// 					combinedCandidates.push(combineInfo[x].candidate);
+		// 					cellsWithCandidates = cellsWithCandidates.concat(combineInfo[x].cells);
+		// 				}
+
+
+		// 				var candidatesToRemove = [];
+		// 				for(var c=0; c<boardSize; c++){
+		// 					if(!contains(combinedCandidates, c+1))
+		// 						candidatesToRemove.push(c+1);
+		// 				}
+		// 				//log("candidates to remove:")
+		// 				//log(candidatesToRemove);
+
+		// 				//remove all other candidates from cellsWithCandidates
+		// 				var cellsUpdated = removeCandidatesFromCells(cellsWithCandidates, candidatesToRemove);
+
+		// 				//if it does remove candidates, we're succeded!
+		// 				if(cellsUpdated.length > 0){
+		// 					//log("hiddenLockedCandidates: ");
+		// 					//log(combinedCandidates);
+
+		// 					if(solveMode === SOLVE_MODE_STEP)
+		// 						highLightCandidatesOnCells(combinedCandidates, cellsWithCandidates);
+
+		// 					onlyUpdatedCandidates = true;
+
+		// 					//filter out duplicates
+		// 					return uniqueArray(cellsWithCandidates);
+		// 				}
+		// 			}
+		// 		}
+		// 		if(startIndex > 0) {
+		// 			//if we added a value to our combo check, but failed to find pattern, we now need drop that value and go back up in chain and continu to check..
+		// 			if(combineInfo.length > startIndex-1){
+		// 				combineInfo.pop();
+		// 			}
+		// 		}
+		// 		return false;
+		// 	}
+		// }
 
 
 
@@ -1263,9 +1263,9 @@
 		 * see hiddenLockedCandidates for explanation
 		 * -- returns effectedCells - the updated cell(s), or false
 		 * -----------------------------------------------------------------*/
-		function hiddenPair(){
-			return hiddenLockedCandidates(2);
-		}
+		// function hiddenPair(){
+		// 	return hiddenLockedCandidates(2);
+		// }
 
 
 		/* hiddenTriplet
@@ -1273,18 +1273,18 @@
 		 * see hiddenLockedCandidates for explanation
 		 * -- returns effectedCells - the updated cell(s), or false
 		 * -----------------------------------------------------------------*/
-		function hiddenTriplet(){
-			return hiddenLockedCandidates(3);
-		}
+		// function hiddenTriplet(){
+		// 	return hiddenLockedCandidates(3);
+		// }
 
 		/* hiddenQuad
 		 * --------------
 		 * see hiddenLockedCandidates for explanation
 		 * -- returns effectedCells - the updated cell(s), or false
 		 * -----------------------------------------------------------------*/
-		function hiddenQuad(){
-			return hiddenLockedCandidates(4);
-		}
+		// function hiddenQuad(){
+		// 	return hiddenLockedCandidates(4);
+		// }
 
 
 
@@ -1296,121 +1296,121 @@
 		 *		calls itself with i++
 		 *  returns canContinue true|false - only relevant for solveMode "all"
 		 * -----------------------------------------------------------------*/
-		var nrSolveLoops = 0;
-		var effectedCells = false;
+		// var nrSolveLoops = 0;
+		// var effectedCells = false;
 
-		var solveFn = function(i){
-			//log(i);
-			if(boardFinished) {
-				if(!gradingMode) {
-					updateUIBoard(false);
-					//log("finished!");
-					//log("usedStrats:")
-					//log(usedStrategies);
+		// var solveFn = function(i){
+		// 	//log(i);
+		// 	if(boardFinished) {
+		// 		if(!gradingMode) {
+		// 			updateUIBoard(false);
+		// 			//log("finished!");
+		// 			//log("usedStrats:")
+		// 			//log(usedStrategies);
 
-					//callback
-					if(typeof opts.boardFinishedFn === "function"){
-						opts.boardFinishedFn({
-							difficultyInfo: calcBoardDifficulty(usedStrategies)
-						});
-					}
-				}
+		// 			//callback
+		// 			if(typeof opts.boardFinishedFn === "function"){
+		// 				opts.boardFinishedFn({
+		// 					difficultyInfo: calcBoardDifficulty(usedStrategies)
+		// 				});
+		// 			}
+		// 		}
 
-				return false; //we're done!
+		// 		return false; //we're done!
 
-			} else if (solveMode === SOLVE_MODE_STEP){
-				//likely that we're updating twice if !candidatesShowing && !onlyUpdatedCandidates,
-				//but we can't tell if user just toggled candidatesShowing.. so have to do it here (again).
-				if(effectedCells && effectedCells !== -1){
-					//update candidates and/or new numbers
-					//remove highlights from last step
-					$boardInputs.removeClass("highlight-val");
-					$(".candidate--highlight").removeClass("candidate--highlight");
-					//update board with new effected cell(s) info
-					for(var j=0; j < effectedCells.length; j++){
-						updateUIBoardCell(effectedCells[j]);
-					}
-				}
-			}
+		// 	} else if (solveMode === SOLVE_MODE_STEP){
+		// 		//likely that we're updating twice if !candidatesShowing && !onlyUpdatedCandidates,
+		// 		//but we can't tell if user just toggled candidatesShowing.. so have to do it here (again).
+		// 		if(effectedCells && effectedCells !== -1){
+		// 			//update candidates and/or new numbers
+		// 			//remove highlights from last step
+		// 			$boardInputs.removeClass("highlight-val");
+		// 			$(".candidate--highlight").removeClass("candidate--highlight");
+		// 			//update board with new effected cell(s) info
+		// 			for(var j=0; j < effectedCells.length; j++){
+		// 				updateUIBoardCell(effectedCells[j]);
+		// 			}
+		// 		}
+		// 	}
 
-			nrSolveLoops++;
-			var strat = strategies[i].fn;
-			//log("use strat nr:" +i);
-			effectedCells = strat();
+		// 	nrSolveLoops++;
+		// 	var strat = strategies[i].fn;
+		// 	//log("use strat nr:" +i);
+		// 	effectedCells = strat();
 
-			if(effectedCells === false){
-				if(strategies.length > i+1) {
-					return solveFn(i+1);
-				} else {
-					if(typeof opts.boardErrorFn === "function" && !generatingMode)
-						opts.boardErrorFn({msg: "no more strategies"});
+		// 	if(effectedCells === false){
+		// 		if(strategies.length > i+1) {
+		// 			return solveFn(i+1);
+		// 		} else {
+		// 			if(typeof opts.boardErrorFn === "function" && !generatingMode)
+		// 				opts.boardErrorFn({msg: "no more strategies"});
 
-					if(!gradingMode && !generatingMode && solveMode===SOLVE_MODE_ALL)
-						updateUIBoard(false);
-					return false;
-				}
+		// 			if(!gradingMode && !generatingMode && solveMode===SOLVE_MODE_ALL)
+		// 				updateUIBoard(false);
+		// 			return false;
+		// 		}
 
-			} else if (boardError){
-				if(typeof opts.boardErrorFn === "function")
-					opts.boardErrorFn({msg: "Board incorrect"});
+		// 	} else if (boardError){
+		// 		if(typeof opts.boardErrorFn === "function")
+		// 			opts.boardErrorFn({msg: "Board incorrect"});
 
-				if(solveMode === SOLVE_MODE_ALL) {
-					updateUIBoard(false); //show user current state of board... how much they need to reset for it to work again.
-				}
+		// 		if(solveMode === SOLVE_MODE_ALL) {
+		// 			updateUIBoard(false); //show user current state of board... how much they need to reset for it to work again.
+		// 		}
 
-				return false; //we can't do no more solving
+		// 		return false; //we can't do no more solving
 
-			} else if(solveMode===SOLVE_MODE_STEP){
-				// if user clicked solve step, and we're only going to fill in a new value (not messing with candidates) - then show user straight away
-				//callback
-				if(typeof opts.boardUpdatedFn === "function") {
-					opts.boardUpdatedFn({cause: strategies[i].title, cellsUpdated: effectedCells});
-				}
+		// 	} else if(solveMode===SOLVE_MODE_STEP){
+		// 		// if user clicked solve step, and we're only going to fill in a new value (not messing with candidates) - then show user straight away
+		// 		//callback
+		// 		if(typeof opts.boardUpdatedFn === "function") {
+		// 			opts.boardUpdatedFn({cause: strategies[i].title, cellsUpdated: effectedCells});
+		// 		}
 
-				//check if this finished the board
-				if(isBoardFinished()){
-					boardFinished = true;
-					//callback
-					if(typeof opts.boardFinishedFn === "function"){
-						opts.boardFinishedFn({
-							difficultyInfo: calcBoardDifficulty(usedStrategies)
-						});
-					}
-					//paint the last cell straight away
-					if(candidatesShowing)
-						updateUIBoard(false);
-				}
+		// 		//check if this finished the board
+		// 		if(isBoardFinished()){
+		// 			boardFinished = true;
+		// 			//callback
+		// 			if(typeof opts.boardFinishedFn === "function"){
+		// 				opts.boardFinishedFn({
+		// 					difficultyInfo: calcBoardDifficulty(usedStrategies)
+		// 				});
+		// 			}
+		// 			//paint the last cell straight away
+		// 			if(candidatesShowing)
+		// 				updateUIBoard(false);
+		// 		}
 
 
 
-				//if a new number was filled in, show this on board
-				if(!candidatesShowing && !onlyUpdatedCandidates &&
-					effectedCells && effectedCells !== -1){
-					//remove highlights from last step
-					$boardInputs.removeClass("highlight-val");
-					$(".candidate--highlight").removeClass("candidate--highlight");
-					//update board with new effected cell(s) info
-					for(var k=0; k < effectedCells.length; k++){
-						updateUIBoardCell(effectedCells[k]);
-					}
-				}
-			}
+		// 		//if a new number was filled in, show this on board
+		// 		if(!candidatesShowing && !onlyUpdatedCandidates &&
+		// 			effectedCells && effectedCells !== -1){
+		// 			//remove highlights from last step
+		// 			$boardInputs.removeClass("highlight-val");
+		// 			$(".candidate--highlight").removeClass("candidate--highlight");
+		// 			//update board with new effected cell(s) info
+		// 			for(var k=0; k < effectedCells.length; k++){
+		// 				updateUIBoardCell(effectedCells[k]);
+		// 			}
+		// 		}
+		// 	}
 
-			//we got an answer, using strategy i
-			if(typeof usedStrategies[i] === "undefined")
-				usedStrategies[i] = 0;
-			usedStrategies[i] = usedStrategies[i] + 1;
-			//if we only updated candidates, make sure they're showing
-			if(!gradingMode && !candidatesShowing && onlyUpdatedCandidates){// && i > 3){
-				showCandidates();
+		// 	//we got an answer, using strategy i
+		// 	if(typeof usedStrategies[i] === "undefined")
+		// 		usedStrategies[i] = 0;
+		// 	usedStrategies[i] = usedStrategies[i] + 1;
+		// 	//if we only updated candidates, make sure they're showing
+		// 	if(!gradingMode && !candidatesShowing && onlyUpdatedCandidates){// && i > 3){
+		// 		showCandidates();
 
-				//callback in case UI has toggle btn, so it can be updated
-				if(typeof opts.candidateShowToggleFn === "function")
-					opts.candidateShowToggleFn(true);
-			}
+		// 		//callback in case UI has toggle btn, so it can be updated
+		// 		if(typeof opts.candidateShowToggleFn === "function")
+		// 			opts.candidateShowToggleFn(true);
+		// 	}
 
-			return true; // can continue
-		};
+		// 	return true; // can continue
+		// };
 
 
 		/* keyboardMoveBoardFocus - puts focus on adjacent board cell
@@ -1466,7 +1466,6 @@
 			//log(id+": "+val +" entered.");
 
 			var candidates = getNullCandidatesList(); //[null,null....null];
-
 
 			if (val > 0) { //invalidates Nan
 				log("Zmajski input: "+val);
@@ -1552,49 +1551,49 @@
 		  * solves a copy of the current board(without updating the UI),
 		  * reports back: error|finished, usedStrategies and difficulty level and score
 		  * -----------------------------------------------------------------*/
-		 var analyzeBoard = function(){
-			gradingMode = true;
-			solveMode = SOLVE_MODE_ALL;
-			var usedStrategiesClone = JSON.parse(JSON.stringify(usedStrategies));
-			var boardClone = JSON.parse(JSON.stringify(board));
-			var canContinue = true;
-			while(canContinue) {
-				var startStrat = onlyUpdatedCandidates ? 2 : 0;
-				canContinue = solveFn(startStrat);
-			}
+		//  var analyzeBoard = function(){
+		// 	gradingMode = true;
+		// 	solveMode = SOLVE_MODE_ALL;
+		// 	var usedStrategiesClone = JSON.parse(JSON.stringify(usedStrategies));
+		// 	var boardClone = JSON.parse(JSON.stringify(board));
+		// 	var canContinue = true;
+		// 	while(canContinue) {
+		// 		var startStrat = onlyUpdatedCandidates ? 2 : 0;
+		// 		canContinue = solveFn(startStrat);
+		// 	}
 
-			var data = {};
-			if(boardError){
-				data.error = "Board incorrect";
-			}
-			else {
-				data.finished = boardFinished;
-				data.usedStrategies = [];
-				for (var i=0; i<usedStrategies.length; i++){
-					var strat = strategies[i];
-					//only return strategies that were actually used
-					if (typeof usedStrategies[i] !=="undefined"){
-						data.usedStrategies[i] = {
-							title: strat.title,
-							freq: usedStrategies[i]
-						};
-					}
-				}
+		// 	var data = {};
+		// 	if(boardError){
+		// 		data.error = "Board incorrect";
+		// 	}
+		// 	else {
+		// 		data.finished = boardFinished;
+		// 		data.usedStrategies = [];
+		// 		for (var i=0; i<usedStrategies.length; i++){
+		// 			var strat = strategies[i];
+		// 			//only return strategies that were actually used
+		// 			if (typeof usedStrategies[i] !=="undefined"){
+		// 				data.usedStrategies[i] = {
+		// 					title: strat.title,
+		// 					freq: usedStrategies[i]
+		// 				};
+		// 			}
+		// 		}
 
-				if (boardFinished) {
-					var boardDiff = calcBoardDifficulty(usedStrategies);
-					data.level = boardDiff.level;
-					data.score = boardDiff.score;
-				}
-			}
+		// 		if (boardFinished) {
+		// 			var boardDiff = calcBoardDifficulty(usedStrategies);
+		// 			data.level = boardDiff.level;
+		// 			data.score = boardDiff.score;
+		// 		}
+		// 	}
 
-			//restore everything to state (before solving)
-			resetBoardVariables();
-			usedStrategies  = usedStrategiesClone;
-			board = boardClone;
+		// 	//restore everything to state (before solving)
+		// 	resetBoardVariables();
+		// 	usedStrategies  = usedStrategiesClone;
+		// 	board = boardClone;
 
-			return data;
-		};
+		// 	return data;
+		// };
 
 
 		 var setBoardCellWithRandomCandidate = function(cellIndex, forceUIUpdate){
@@ -1646,27 +1645,27 @@
 			}
 		};
 
-		var easyEnough = function(data){
-			// console.log(data.level);
-			if(data.level === DIFFICULTY_EASY)
-				return true;
-			if(data.level === DIFFICULTY_MEDIUM)
-				return difficulty !== DIFFICULTY_EASY;
-			if(data.level === DIFFICULTY_HARD)
-				return difficulty !== DIFFICULTY_EASY && difficulty !== DIFFICULTY_MEDIUM;
-			if(data.level === DIFFICULTY_VERY_HARD)
-				return difficulty !== DIFFICULTY_EASY && difficulty !== DIFFICULTY_MEDIUM && difficulty !== DIFFICULTY_HARD;
-		};
-		var hardEnough = function(data) {
-			if(difficulty === DIFFICULTY_EASY)
-				return true;
-			if(difficulty === DIFFICULTY_MEDIUM)
-				return data.level !== DIFFICULTY_EASY;
-			if(difficulty === DIFFICULTY_HARD)
-				return data.level !== DIFFICULTY_EASY && data.level !== DIFFICULTY_MEDIUM;
-			if(difficulty === DIFFICULTY_VERY_HARD)
-				return data.level !== DIFFICULTY_EASY && data.level !== DIFFICULTY_MEDIUM && data.level !== DIFFICULTY_HARD;
-		};
+		// var easyEnough = function(data){
+		// 	// console.log(data.level);
+		// 	if(data.level === DIFFICULTY_EASY)
+		// 		return true;
+		// 	if(data.level === DIFFICULTY_MEDIUM)
+		// 		return difficulty !== DIFFICULTY_EASY;
+		// 	if(data.level === DIFFICULTY_HARD)
+		// 		return difficulty !== DIFFICULTY_EASY && difficulty !== DIFFICULTY_MEDIUM;
+		// 	if(data.level === DIFFICULTY_VERY_HARD)
+		// 		return difficulty !== DIFFICULTY_EASY && difficulty !== DIFFICULTY_MEDIUM && difficulty !== DIFFICULTY_HARD;
+		// };
+		// var hardEnough = function(data) {
+		// 	if(difficulty === DIFFICULTY_EASY)
+		// 		return true;
+		// 	if(difficulty === DIFFICULTY_MEDIUM)
+		// 		return data.level !== DIFFICULTY_EASY;
+		// 	if(difficulty === DIFFICULTY_HARD)
+		// 		return data.level !== DIFFICULTY_EASY && data.level !== DIFFICULTY_MEDIUM;
+		// 	if(difficulty === DIFFICULTY_VERY_HARD)
+		// 		return data.level !== DIFFICULTY_EASY && data.level !== DIFFICULTY_MEDIUM && data.level !== DIFFICULTY_HARD;
+		// };
 
 		var digCells = function(){
 			var cells = [];
@@ -1810,20 +1809,20 @@
 			}
 		}
 
-		var solveAll = function(){
-			solveMode = SOLVE_MODE_ALL;
-			var canContinue = true;
-			while(canContinue) {
-				var startStrat = onlyUpdatedCandidates ? 2 : 0;
-				canContinue = solveFn(startStrat);
-			}
-		};
+		// var solveAll = function(){
+		// 	solveMode = SOLVE_MODE_ALL;
+		// 	var canContinue = true;
+		// 	while(canContinue) {
+		// 		var startStrat = onlyUpdatedCandidates ? 2 : 0;
+		// 		canContinue = solveFn(startStrat);
+		// 	}
+		// };
 
-		var solveStep = function(){
-			solveMode = SOLVE_MODE_STEP;
-			var startStrat = onlyUpdatedCandidates ? 2 : 0;
-			solveFn(startStrat);
-		};
+		// var solveStep = function(){
+		// 	solveMode = SOLVE_MODE_STEP;
+		// 	var startStrat = onlyUpdatedCandidates ? 2 : 0;
+		// 	solveFn(startStrat);
+		// };
 
 		var getBoard = function(){
 			return board;
@@ -1853,9 +1852,9 @@
 		return {
 			checkAll : checkAll,
 			clearChecks: clearChecks,
-			solveAll : solveAll,
-			solveStep : solveStep,
-			analyzeBoard : analyzeBoard,
+			// solveAll : solveAll,
+			// solveStep : solveStep,
+			// analyzeBoard : analyzeBoard,
 			clearBoard : clearBoard,
 			getBoard : getBoard,
 			setBoard : setBoard,
