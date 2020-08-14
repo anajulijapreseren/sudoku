@@ -230,22 +230,10 @@
 		* -----------------------------------------------------------------*/
 		var markBoardCellError = function(boardCell, id){
 			var val = (boardCell.val === null) ? "" : boardCell.val;
-			//var candidates = boardCell.candidates || [];
-			//var candidatesString = buildCandidatesString(candidates);
-			// var maxlength = (boardSize < 10) ? " maxlength='1'" : "";
-			//var temp = housesWithCell(id);
-			//var alreadyExistingCellInHouseWithDigit = houses[id][temp[id]][indexInHouse(val, houses[id][temp[id]])];
-
 			
 			$("#input-"+id)
 			.addClass("board-cell--error");
 			
-
-			// return "<div class='sudoku-board-cell'>" +
-			// 			//want to use type=number, but then have to prevent chrome scrolling and up down key behaviors..
-			// 			"<input type='text' pattern='\\d*' novalidate id='input-"+id+"' value='"+val+"'"+maxlength+">" +
-			// 			"<div id='input-"+id+"-candidates' class='candidates'>" + candidatesString + "</div>" +
-			// 		"</div>";
 		};
 
 
@@ -261,17 +249,6 @@
 			}
 			return s;
 		};
-
-
-		/* updateUI
-		 * --------------
-		 *  updates the UI
-		 * -----------------------------------------------------------------
-		var updateUI = function(opts){
-			var opts = opts || {};
-			var paintNew = (typeof opts.paintNew !== "undefined") ? opts.paintNew : true;
-			updateUIBoard(paintNew);
-		}*/
 
 		/* updateUIBoard -
 		 * --------------
@@ -317,22 +294,6 @@
 				.html(buildCandidatesString(board[cellIndex].candidates));
 		};
 
-		/* uIBoardHighlightRemoveCandidate
-		 * --------------
-		 *  highlight candidate in cell that is about to be removed
-		 * -----------------------------------------------------------------*/
-		// var uIBoardHighlightRemoveCandidate = function(cellIndex, digit){
-		// 	$("#input-"+cellIndex+"-candidates div:nth-of-type("+digit+")").addClass("candidate--to-remove");
-		// };
-
-		/* uIBoardHighlightCandidate -
-		 * --------------
-		 *  highight candidate in cell that helps eliminate another candidate
-		 * -----------------------------------------------------------------*/
-		// var uIBoardHighlightCandidate = function(cellIndex, digit){
-		// 	$("#input-"+cellIndex+"-candidates div:nth-of-type("+digit+")").addClass("candidate--highlight");
-		// };
-
 
 		/* removeCandidatesFromCell
 		-----------------------------------------------------------------*/
@@ -377,19 +338,6 @@
 			}
 			return cellsUpdated;
 		};
-
-		// var highLightCandidatesOnCells = function(candidates, cells){
-		// 	for(var i=0; i < cells.length; i++){
-		// 		var cellCandidates = board[cells[i]].candidates;
-
-		// 		for(var j=0; j < cellCandidates.length; j++){
-		// 			if(contains(candidates, cellCandidates[j]))
-		// 				uIBoardHighlightCandidate(cells[i],cellCandidates[j]);
-		// 		}
-
-		// 	}
-		// };
-
 
 		var resetBoardVariables = function() {
 			boardFinished = false;
@@ -720,20 +668,6 @@
 				board[id].candidates = candidates;
 				board[id].val = val;
 
-				//check if that finished board
-				// if(isBoardFinished()){
-				// 	boardFinished = true;
-				// 	log("user finished board!");
-				// 	if(typeof opts.boardFinishedFn === "function"){
-				// 		opts.boardFinishedFn({
-				// 			//we rate the board via what strategies was used to solve it
-				// 			//we don't have this info if user solved it, unless we
-				// 			//always analyze board on init.. but that could be slow.
-
-				// 			//difficultyInfo: null
-				// 		});
-				// 	}
-				// }
 			} else {
 				boardError = false; //reset, in case they fixed board - otherwise, we'll find the error again
 				val = null;
@@ -760,12 +694,6 @@
 			onlyUpdatedCandidates = false;
 		};
 
-		/* toggleShowCandidates
-		 * -----------------------------------------------------------------*/
-		// var toggleShowCandidates = function(){
-		// 	$board.toggleClass("showCandidates");
-		// 	candidatesShowing = !candidatesShowing;
-		// };
 
 		 var setBoardCellWithRandomCandidate = function(cellIndex, forceUIUpdate){
 			// CHECK still valid
@@ -790,111 +718,110 @@
 			return true;
 		};
 
-		var generateBoardAnswerRecursively = function(cellIndex){
-			if((cellIndex+1) > (boardSize*boardSize)){
-				//done
-				invalidCandidates = [];
-				return true;
-			}
-			if(setBoardCellWithRandomCandidate(cellIndex)){
-				generateBoardAnswerRecursively(cellIndex + 1);
-			} else {
-				if(cellIndex <= 0)
-					return false;
-				var lastIndex = cellIndex - 1;
-				invalidCandidates[lastIndex] = invalidCandidates[lastIndex] || [];
-				invalidCandidates[lastIndex].push(board[lastIndex].val);
-				// set val back to null
-				setBoardCell(lastIndex, null);
-				// reset candidates, only in model.
-				resetCandidates(false);
-				// reset invalid candidates for cellIndex
-				invalidCandidates[cellIndex] = [];
-				// then try again
-				generateBoardAnswerRecursively(lastIndex);
-				return false;
-			}
-		};
+		// var generateBoardAnswerRecursively = function(cellIndex){
+		// 	if((cellIndex+1) > (boardSize*boardSize)){
+		// 		//done
+		// 		invalidCandidates = [];
+		// 		return true;
+		// 	}
+		// 	if(setBoardCellWithRandomCandidate(cellIndex)){
+		// 		generateBoardAnswerRecursively(cellIndex + 1);
+		// 	} else {
+		// 		if(cellIndex <= 0)
+		// 			return false;
+		// 		var lastIndex = cellIndex - 1;
+		// 		invalidCandidates[lastIndex] = invalidCandidates[lastIndex] || [];
+		// 		invalidCandidates[lastIndex].push(board[lastIndex].val);
+		// 		// set val back to null
+		// 		setBoardCell(lastIndex, null);
+		// 		// reset candidates, only in model.
+		// 		resetCandidates(false);
+		// 		// reset invalid candidates for cellIndex
+		// 		invalidCandidates[cellIndex] = [];
+		// 		// then try again
+		// 		generateBoardAnswerRecursively(lastIndex);
+		// 		return false;
+		// 	}
+		// };
 
-		var digCells = function(){
-			var cells = [];
-			var given = boardSize*boardSize;
-			var minGiven = 17;
-			if(difficulty === DIFFICULTY_EASY){
-				minGiven = 40;
-			} else if(difficulty === DIFFICULTY_MEDIUM){
-				minGiven = 30;
-			}
-      if (boardSize < 9) {
-        minGiven = 4
-      }
-			for (var i=0; i < boardSize*boardSize; i++){
-				cells.push(i);
-			}
+	// 	var digCells = function(){
+	// 		var cells = [];
+	// 		var given = boardSize*boardSize;
+	// 		var minGiven = 17;
+	// 		if(difficulty === DIFFICULTY_EASY){
+	// 			minGiven = 40;
+	// 		} else if(difficulty === DIFFICULTY_MEDIUM){
+	// 			minGiven = 30;
+	// 		}
+    //   if (boardSize < 9) {
+    //     minGiven = 4
+    //   }
+	// 		for (var i=0; i < boardSize*boardSize; i++){
+	// 			cells.push(i);
+	// 		}
 
-			while(cells.length > 0 && given > minGiven){
-				var randIndex = Math.round ( Math.random() * (cells.length - 1));
-				var cellIndex = cells.splice(randIndex,1);
-				var val = board[cellIndex].val;
+	// 		while(cells.length > 0 && given > minGiven){
+	// 			var randIndex = Math.round ( Math.random() * (cells.length - 1));
+	// 			var cellIndex = cells.splice(randIndex,1);
+	// 			var val = board[cellIndex].val;
 
-				// remove value from this cell
-				setBoardCell(cellIndex, null);
-				// reset candidates, only in model.
-				resetCandidates(false);
+	// 			// remove value from this cell
+	// 			setBoardCell(cellIndex, null);
+	// 			// reset candidates, only in model.
+	// 			resetCandidates(false);
 
-				var data = analyzeBoard();
-				if (data.finished !== false && easyEnough(data)) {
-					given--;
-				} else {
-					// reset - don't dig this cell
-					setBoardCell(cellIndex, val);
-				}
+	// 			var data = analyzeBoard();
+	// 			if (data.finished !== false && easyEnough(data)) {
+	// 				given--;
+	// 			} else {
+	// 				// reset - don't dig this cell
+	// 				setBoardCell(cellIndex, val);
+	// 			}
 
-			}
-		};
+	// 		}
+	// 	};
 
     // generates board puzzle, i.e. the answers for this round
     // requires that a board for boardSize has already been initiated
-		var generateBoard = function(diff, callback){
-			if($boardInputs)
-				clearBoard();
-			if (contains(DIFFICULTIES, diff)) {
-				difficulty = diff
-			} else if (boardSize >= 9) {
-				difficulty = DIFFICULTY_MEDIUM
-			} else {
-				difficulty = DIFFICULTY_EASY
-			}
-			generatingMode = true;
-			// solveMode = SOLVE_MODE_ALL;
+		// var generateBoard = function(diff, callback){
+		// 	if($boardInputs)
+		// 		clearBoard();
+		// 	if (contains(DIFFICULTIES, diff)) {
+		// 		difficulty = diff
+		// 	} else if (boardSize >= 9) {
+		// 		difficulty = DIFFICULTY_MEDIUM
+		// 	} else {
+		// 		difficulty = DIFFICULTY_EASY
+		// 	}
+		// 	generatingMode = true;
 
-			// the board generated will possibly not be hard enough
-			// (if you asked for "hard", you most likely get "medium")
-			generateBoardAnswerRecursively(0);
+		// 	// the board generated will possibly not be hard enough
+		// 	// (if you asked for "hard", you most likely get "medium")
+		// 	generateBoardAnswerRecursively(0);
 
-			// attempt one - save the answer, and try digging multiple times.
-			var boardAnswer = board.slice();
+		// 	// attempt one - save the answer, and try digging multiple times.
+		// 	var boardAnswer = board.slice();
 
-			var boardTooEasy = true;
+		// 	var boardTooEasy = true;
 
-			while(boardTooEasy){
-				digCells();
-				var data = analyzeBoard();
-				if(hardEnough(data))
-					boardTooEasy = false;
-				else
-					board = boardAnswer;
-			}
-			solveMode = SOLVE_MODE_STEP;
-			if($boardInputs)
-				updateUIBoard();
+		// 	while(boardTooEasy){
+		// 		digCells();
+		// 		var data = analyzeBoard();
+		// 		if(hardEnough(data))
+		// 			boardTooEasy = false;
+		// 		else
+		// 			board = boardAnswer;
+		// 	}
+		// 	solveMode = SOLVE_MODE_STEP;
+		// 	if($boardInputs)
+		// 		updateUIBoard();
 
-			visualEliminationOfCandidates();
+		// 	visualEliminationOfCandidates();
 
-			if(typeof callback === 'function'){
-				callback();
-			}
-		};
+		// 	if(typeof callback === 'function'){
+		// 		callback();
+		// 	}
+		// };
 
 
 		/*
@@ -970,15 +897,6 @@
 			updateUIBoard(false);
 		};
 
-		// var hideCandidates = function(){
-		// 	$board.removeClass("showCandidates");
-		// 	candidatesShowing = false;
-		// };
-		// var showCandidates = function(){
-		// 	$board.addClass("showCandidates");
-		// 	candidatesShowing = true;
-		// };
-
 		var setEditingCandidates = function(newVal){
 			editingCandidates = newVal;
 		};
@@ -989,10 +907,8 @@
 			clearBoard : clearBoard,
 			getBoard : getBoard,
 			setBoard : setBoard,
-			//hideCandidates : hideCandidates,
-			//showCandidates : showCandidates,
 			setEditingCandidates: setEditingCandidates,
-			generateBoard : generateBoard
+			//generateBoard : generateBoard
 		};
 	};
 
