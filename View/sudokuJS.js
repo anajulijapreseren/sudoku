@@ -1,3 +1,4 @@
+// based on:
 // sudokuJS v0.4.4
 // https://github.com/pocketjoso/sudokuJS
 // Author: Jonas Ohlsson
@@ -5,11 +6,6 @@
 
 (function (window, $, undefined) {
 	'use strict';
-	/*TODO:
-		--possible additions--
-		toggle edit candidates
-		undo/redo
-	*/
 
 	/**
 	* Define a jQuery plugin
@@ -22,7 +18,6 @@
 
 		var SOLVE_MODE_STEP = "step";
 		var SOLVE_MODE_ALL = "all";
-
 
 		/*
 		 * variables
@@ -61,16 +56,12 @@
 				[]
 			];
 
-
-
-
 		/*
 		 * selectors
 		 *-----------*/
 		 var $board = $(this),
 			$boardInputs, //created
 			$boardInputCandidates; //created
-
 
 
 		 /*
@@ -105,13 +96,13 @@
 
 		/* isBoardFinished
 		 * -----------------------------------------------------------------*/
-		var isBoardFinished = function(){
-			for (var i=0; i < boardSize*boardSize; i++){
-				if(board[i].val === null)
-					return false;
-			}
-			return true;
-		};
+		// var isBoardFinished = function(){
+		// 	for (var i=0; i < boardSize*boardSize; i++){
+		// 		if(board[i].val === null)
+		// 			return false;
+		// 	}
+		// 	return true;
+		// };
 
 
 		/* generateHouseIndexList
@@ -168,7 +159,7 @@
 		var initBoard = function(opts){
 			var alreadyEnhanced = (board[0] !== null && typeof board[0] === "object");
 			var nullCandidateList = [];
-      boardNumbers = [];
+      		boardNumbers = [];
 			boardSize = (!board.length && opts.boardSize) || Math.sqrt(board.length) || 9;
 			$board.attr("data-board-size", boardSize);
 			if(boardSize % 1 !== 0 || Math.sqrt(boardSize) % 1 !== 0) {
@@ -331,17 +322,17 @@
 		 * --------------
 		 *  highlight candidate in cell that is about to be removed
 		 * -----------------------------------------------------------------*/
-		var uIBoardHighlightRemoveCandidate = function(cellIndex, digit){
-			$("#input-"+cellIndex+"-candidates div:nth-of-type("+digit+")").addClass("candidate--to-remove");
-		};
+		// var uIBoardHighlightRemoveCandidate = function(cellIndex, digit){
+		// 	$("#input-"+cellIndex+"-candidates div:nth-of-type("+digit+")").addClass("candidate--to-remove");
+		// };
 
 		/* uIBoardHighlightCandidate -
 		 * --------------
 		 *  highight candidate in cell that helps eliminate another candidate
 		 * -----------------------------------------------------------------*/
-		var uIBoardHighlightCandidate = function(cellIndex, digit){
-			$("#input-"+cellIndex+"-candidates div:nth-of-type("+digit+")").addClass("candidate--highlight");
-		};
+		// var uIBoardHighlightCandidate = function(cellIndex, digit){
+		// 	$("#input-"+cellIndex+"-candidates div:nth-of-type("+digit+")").addClass("candidate--highlight");
+		// };
 
 
 		/* removeCandidatesFromCell
@@ -378,27 +369,27 @@
 						c[candidate-1] = null; //NOTE: also deletes them from board variable
 						cellsUpdated.push(cells[i]); //will push same cell multiple times
 
-						if(solveMode===SOLVE_MODE_STEP){
-							//highlight candidate as to be removed on board
-							uIBoardHighlightRemoveCandidate(cells[i],candidate);
-						}
+						// if(solveMode===SOLVE_MODE_STEP){
+						// 	//highlight candidate as to be removed on board
+						// 	uIBoardHighlightRemoveCandidate(cells[i],candidate);
+						// }
 					}
 				}
 			}
 			return cellsUpdated;
 		};
 
-		var highLightCandidatesOnCells = function(candidates, cells){
-			for(var i=0; i < cells.length; i++){
-				var cellCandidates = board[cells[i]].candidates;
+		// var highLightCandidatesOnCells = function(candidates, cells){
+		// 	for(var i=0; i < cells.length; i++){
+		// 		var cellCandidates = board[cells[i]].candidates;
 
-				for(var j=0; j < cellCandidates.length; j++){
-					if(contains(candidates, cellCandidates[j]))
-						uIBoardHighlightCandidate(cells[i],cellCandidates[j]);
-				}
+		// 		for(var j=0; j < cellCandidates.length; j++){
+		// 			if(contains(candidates, cellCandidates[j]))
+		// 				uIBoardHighlightCandidate(cells[i],cellCandidates[j]);
+		// 		}
 
-			}
-		};
+		// 	}
+		// };
 
 
 		var resetBoardVariables = function() {
@@ -588,8 +579,8 @@
 
 							setBoardCell(cellIndex, digit); //does not update UI
 
-							if(solveMode===SOLVE_MODE_STEP)
-								uIBoardHighlightCandidate(cellIndex, digit);
+							// if(solveMode===SOLVE_MODE_STEP)
+							// 	uIBoardHighlightCandidate(cellIndex, digit);
 
 							onlyUpdatedCandidates = false;
 							return [cellIndex]; //one step at the time
@@ -632,8 +623,8 @@
 
 
 					setBoardCell(i, digit); //does not update UI
-					if(solveMode===SOLVE_MODE_STEP)
-						uIBoardHighlightCandidate(i, digit);
+					// if(solveMode===SOLVE_MODE_STEP)
+					// 	uIBoardHighlightCandidate(i, digit);
 
 					onlyUpdatedCandidates = false;
 					return [i]; //one step at the time
@@ -731,19 +722,19 @@
 				board[id].val = val;
 
 				//check if that finished board
-				if(isBoardFinished()){
-					boardFinished = true;
-					log("user finished board!");
-					if(typeof opts.boardFinishedFn === "function"){
-						opts.boardFinishedFn({
-							//we rate the board via what strategies was used to solve it
-							//we don't have this info if user solved it, unless we
-							//always analyze board on init.. but that could be slow.
+				// if(isBoardFinished()){
+				// 	boardFinished = true;
+				// 	log("user finished board!");
+				// 	if(typeof opts.boardFinishedFn === "function"){
+				// 		opts.boardFinishedFn({
+				// 			//we rate the board via what strategies was used to solve it
+				// 			//we don't have this info if user solved it, unless we
+				// 			//always analyze board on init.. but that could be slow.
 
-							//difficultyInfo: null
-						});
-					}
-				}
+				// 			//difficultyInfo: null
+				// 		});
+				// 	}
+				// }
 			} else {
 				boardError = false; //reset, in case they fixed board - otherwise, we'll find the error again
 				val = null;
