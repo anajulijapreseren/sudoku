@@ -13,16 +13,9 @@
     $.fn.sudokuJS = function(opts) {
 
 		/*
-		 * constants
-		 *-----------*/
-
-		// var SOLVE_MODE_STEP = "step";
-
-		/*
 		 * variables
 		 *-----------*/
 		opts = opts || {};
-		// var solveMode = SOLVE_MODE_STEP,
 
 		/*board variable gets enhanced into list of objects on init:
 			,{
@@ -118,10 +111,10 @@
 			boardSize = (!board.length && opts.boardSize) || Math.sqrt(board.length) || 9;
 			$board.attr("data-board-size", boardSize);
 	
-			for (var i=0; i < boardSize; i++){
-				boardNumbers.push(i+1);
-				nullCandidateList.push(null);
-			}
+			// for (var i=0; i < boardSize; i++){
+			// 	boardNumbers.push(i+1);
+			// 	nullCandidateList.push(null);
+			// }
 			generateHouseIndexList();
 
 			if(!alreadyEnhanced){
@@ -181,26 +174,6 @@
 			.addClass("board-cell--error");
 			
 		};
-
-		/* updateUIBoard -
-		 * --------------
-		 *  updates the board with our latest values
-		 * -----------------------------------------------------------------*/
-		//  var updateUIBoard = function(paintNew){
-		// 	$boardInputs
-		// 		// .removeClass("highlight-val")
-		// 		// .each(function(i,v){
-		// 			// var $input = $(this);
-		// 			// var newVal = board[i].val;
-	
-		// 				// $input.val(newVal);
-		// 				// if(paintNew)
-		// 				// 	$input.addClass("highlight-val");
-					
-		// 			// var $candidates = $input.siblings(".candidates");
-
-		// 		// });
-		// };
 
 
 		/* updateUIBoardCell -
