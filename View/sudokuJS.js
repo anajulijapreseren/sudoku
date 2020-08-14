@@ -23,16 +23,6 @@
 		 *-----------*/
 		opts = opts || {};
 		var solveMode = SOLVE_MODE_STEP,
-				// difficulty = "unknown",
-				// candidatesShowing = false,
-				// editingCandidates = false,
-				// boardFinished = false,
-				// boardError = false,
-				// onlyUpdatedCandidates = false,
-				// gradingMode = false, //solving without updating UI
-				//generatingMode = false, //silence board unsolvable errors
-				// invalidCandidates = [], //used by the generateBoard function
-
 
 		/*board variable gets enhanced into list of objects on init:
 			,{
@@ -59,8 +49,8 @@
 		 * selectors
 		 *-----------*/
 		 var $board = $(this),
-			$boardInputs, //created
-			$boardInputCandidates; //created
+			$boardInputs; //created
+			// $boardInputCandidates; //created
 
 
 		 /*
@@ -83,24 +73,14 @@
 			return false;
 		};
 
-		var uniqueArray = function(a) {
-			var temp = {};
-			for (var i = 0; i < a.length; i++)
-				temp[a[i]] = true;
-			var r = [];
-			for (var k in temp)
-				r.push(k);
-			return r;
-		};
-
-		/* isBoardFinished
-		 * -----------------------------------------------------------------*/
-		// var isBoardFinished = function(){
-		// 	for (var i=0; i < boardSize*boardSize; i++){
-		// 		if(board[i].val === null)
-		// 			return false;
-		// 	}
-		// 	return true;
+		// var uniqueArray = function(a) {
+		// 	var temp = {};
+		// 	for (var i = 0; i < a.length; i++)
+		// 		temp[a[i]] = true;
+		// 	var r = [];
+		// 	for (var k in temp)
+		// 		r.push(k);
+		// 	return r;
 		// };
 
 
@@ -161,12 +141,12 @@
       		boardNumbers = [];
 			boardSize = (!board.length && opts.boardSize) || Math.sqrt(board.length) || 9;
 			$board.attr("data-board-size", boardSize);
-			if(boardSize % 1 !== 0 || Math.sqrt(boardSize) % 1 !== 0) {
-				log("invalid boardSize: "+boardSize);
-				// if(typeof opts.boardErrorFn === "function")
-				// 	opts.boardErrorFn({msg: "invalid board size"});
-				return;
-			}
+			// if(boardSize % 1 !== 0 || Math.sqrt(boardSize) % 1 !== 0) {
+			// 	log("invalid boardSize: "+boardSize);
+			// 	// if(typeof opts.boardErrorFn === "function")
+			// 	// 	opts.boardErrorFn({msg: "invalid board size"});
+			// 	return;
+			// }
 			for (var i=0; i < boardSize; i++){
 				boardNumbers.push(i+1);
 				nullCandidateList.push(null);
@@ -208,7 +188,7 @@
 
 			//save important board elements
 			$boardInputs = $board.find("input");
-			$boardInputCandidates = $board.find(".candidates");
+			// $boardInputCandidates = $board.find(".candidates");
 		};
 
 		/* renderBoardCell
@@ -328,11 +308,6 @@
 					if(c[candidate-1] !== null) {
 						c[candidate-1] = null; //NOTE: also deletes them from board variable
 						cellsUpdated.push(cells[i]); //will push same cell multiple times
-
-						// if(solveMode===SOLVE_MODE_STEP){
-						// 	//highlight candidate as to be removed on board
-						// 	uIBoardHighlightRemoveCandidate(cells[i],candidate);
-						// }
 					}
 				}
 			}
@@ -340,11 +315,7 @@
 		};
 
 		var resetBoardVariables = function() {
-			// boardFinished = false;
-			// boardError = false;
-			// onlyUpdatedCandidates = false;
 			usedStrategies = [];
-			// gradingMode = false;
 		};
 
 
@@ -396,13 +367,13 @@
 
 		/* setBoardCell - does not update UI
 		-----------------------------------------------------------------*/
-		var setBoardCell = function(cellIndex, val){
-			var boardCell = board[cellIndex];
-			//update val
-			boardCell.val = val;
-			if(val !== null)
-				boardCell.candidates = getNullCandidatesList();
-		};
+		// var setBoardCell = function(cellIndex, val){
+		// 	var boardCell = board[cellIndex];
+		// 	//update val
+		// 	boardCell.val = val;
+		// 	if(val !== null)
+		// 		boardCell.candidates = getNullCandidatesList();
+		// };
 
 		/* indexInHouse
 		 * --------------
@@ -524,7 +495,7 @@
 							//log("only slot where "+digit+" appears in house. ");
 
 
-							setBoardCell(cellIndex, digit); //does not update UI
+							// setBoardCell(cellIndex, digit); //does not update UI
 
 							// if(solveMode===SOLVE_MODE_STEP)
 							// 	uIBoardHighlightCandidate(cellIndex, digit);
@@ -541,56 +512,48 @@
 
 		/* keyboardMoveBoardFocus - puts focus on adjacent board cell
 		 * -----------------------------------------------------------------*/
-		var keyboardMoveBoardFocus = function(currentId, keyCode){
-			var newId = currentId;
-			//right
-			if(keyCode ===39)
-				newId++;
-			//left
-			else if(keyCode === 37)
-				newId--;
-			//down
-			else if(keyCode ===40)
-				newId = newId + boardSize;
-			//up
-			else if(keyCode ===38)
-				newId = newId - boardSize;
+		// var keyboardMoveBoardFocus = function(currentId, keyCode){
+		// 	var newId = currentId;
+		// 	//right
+		// 	if(keyCode ===39)
+		// 		newId++;
+		// 	//left
+		// 	else if(keyCode === 37)
+		// 		newId--;
+		// 	//down
+		// 	else if(keyCode ===40)
+		// 		newId = newId + boardSize;
+		// 	//up
+		// 	else if(keyCode ===38)
+		// 		newId = newId - boardSize;
 
-			//out of bounds
-			if(newId < 0 || newId > (boardSize*boardSize))
-				return;
+		// 	//out of bounds
+		// 	if(newId < 0 || newId > (boardSize*boardSize))
+		// 		return;
 
-			//focus input
-			$("#input-"+newId).focus();
-		};
+		// 	//focus input
+		// 	$("#input-"+newId).focus();
+		// };
 
 
 		/* toggleCandidateOnCell - used for editingCandidates mode
 		 * -----------------------------------------------------------------*/
-		var toggleCandidateOnCell = function(candidate, cell){
-			var boardCell = board[cell];
-			if(boardCell.val){
-				return;  // don't modify candidates when a cell already has a number
-			}
-			var c = boardCell.candidates;
-			c[candidate-1] = c[candidate-1] === null ? candidate : null;
-			if(solveMode === SOLVE_MODE_STEP)
-				updateUIBoardCell(cell, {mode: "only-candidates"});
-		};
+		// var toggleCandidateOnCell = function(candidate, cell){
+		// 	var boardCell = board[cell];
+		// 	if(boardCell.val){
+		// 		return;  // don't modify candidates when a cell already has a number
+		// 	}
+		// 	var c = boardCell.candidates;
+		// 	c[candidate-1] = c[candidate-1] === null ? candidate : null;
+		// 	if(solveMode === SOLVE_MODE_STEP)
+		// 		updateUIBoardCell(cell, {mode: "only-candidates"});
+		// };
 
 		/* keyboardNumberInput - update our board model
 		 * -----------------------------------------------------------------*/
 		var keyboardNumberInput = function(input, id){
 			var val = parseInt(input.val());
-			// if(editingCandidates){
-			// 	toggleCandidateOnCell(val, id);
-			// 	// reset value on board
-			// 	input.val(board[id].val);
-			// 	return;
-			// }
-
-			//log(id+": "+val +" entered.");
-
+			
 			var candidates = getNullCandidatesList(); //[null,null....null];
 
 			if (val > 0) { //invalidates Nan
@@ -624,11 +587,11 @@
 			//log(board[1].candidates);
 
 			//HACK: remove all errors as soon as they fix one - the other cells just get emptied on board (in UI; already were null in model)
-			if($("#input-"+id).hasClass("board-cell--error"))
-				$boardInputs.removeClass("board-cell--error");
+			// if($("#input-"+id).hasClass("board-cell--error"))
+			// 	$boardInputs.removeClass("board-cell--error");
 
-			if(typeof opts.boardUpdatedFn === "function")
-				opts.boardUpdatedFn({cause: "user input", cellsUpdated: [id]});
+			// if(typeof opts.boardUpdatedFn === "function")
+			// 	opts.boardUpdatedFn({cause: "user input", cellsUpdated: [id]});
 
 			// onlyUpdatedCandidates = false;
 		};
@@ -707,9 +670,6 @@
 			updateUIBoard(false);
 		};
 
-		// var setEditingCandidates = function(newVal){
-		// 	editingCandidates = newVal;
-		// };
 
 		return {
 			checkAll : checkAll,
@@ -717,7 +677,6 @@
 			clearBoard : clearBoard,
 			getBoard : getBoard,
 			setBoard : setBoard,
-			// setEditingCandidates: setEditingCandidates,
 		};
 	};
 
