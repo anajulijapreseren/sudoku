@@ -545,40 +545,40 @@
 		 * Looks for cells with only one candidate
 		 * -- returns effectedCells - the updated cell(s), or false
 		 * -----------------------------------------------------------------*/
-		function singleCandidate(){
-			//before we start with candidate strategies, we need to update candidates from last round:
-			visualEliminationOfCandidates(); //TODO: a bit hackyy, should probably not be here
+		// function singleCandidate(){
+		// 	//before we start with candidate strategies, we need to update candidates from last round:
+		// 	visualEliminationOfCandidates(); //TODO: a bit hackyy, should probably not be here
 
-			//for each cell
+		// 	//for each cell
 
-			for(var i=0; i < board.length; i++){
-				var cell = board[i];
-				var candidates = cell.candidates;
+		// 	for(var i=0; i < board.length; i++){
+		// 		var cell = board[i];
+		// 		var candidates = cell.candidates;
 
-				//for each candidate for that cell
-				var possibleCandidates = [];
-				for (var j=0; j < candidates.length; j++){
-					if (candidates[j] !== null)
-						possibleCandidates.push(candidates[j]);
-					if(possibleCandidates.length >1)
-						break; //can't find answer here
-				}
-				if(possibleCandidates.length === 1){
-					var digit = possibleCandidates[0];
+		// 		//for each candidate for that cell
+		// 		var possibleCandidates = [];
+		// 		for (var j=0; j < candidates.length; j++){
+		// 			if (candidates[j] !== null)
+		// 				possibleCandidates.push(candidates[j]);
+		// 			if(possibleCandidates.length >1)
+		// 				break; //can't find answer here
+		// 		}
+		// 		if(possibleCandidates.length === 1){
+		// 			var digit = possibleCandidates[0];
 
-					//log("only one candidate in cell: "+digit+" in house. ");
+		// 			//log("only one candidate in cell: "+digit+" in house. ");
 
 
-					setBoardCell(i, digit); //does not update UI
-					// if(solveMode===SOLVE_MODE_STEP)
-					// 	uIBoardHighlightCandidate(i, digit);
+		// 			setBoardCell(i, digit); //does not update UI
+		// 			// if(solveMode===SOLVE_MODE_STEP)
+		// 			// 	uIBoardHighlightCandidate(i, digit);
 
-					onlyUpdatedCandidates = false;
-					return [i]; //one step at the time
-				}
-			}
-			return false;
-		}
+		// 			onlyUpdatedCandidates = false;
+		// 			return [i]; //one step at the time
+		// 		}
+		// 	}
+		// 	return false;
+		// }
 
 
 		/* keyboardMoveBoardFocus - puts focus on adjacent board cell
@@ -641,26 +641,7 @@
 				$.post("/numentry", JSON.stringify({ "cellId": id, "number": val }))
 				//check that this doesn't make board incorrect
 				var temp = housesWithCell(id);
-				//for each type of house
-				// for(var i=0; i < houses.length; i++){
-
-				// 	if(indexInHouse(val, houses[i][temp[i]])){
-				// 		//digit already in house - board incorrect with user input
-				// 		// log("board incorrect!");
-				// 		var alreadyExistingCellInHouseWithDigit = houses[i][temp[i]][indexInHouse(val, houses[i][temp[i]])];
-
-				// 		//this happens in candidate mode, if we highlight on ui board before entering value, and user then enters before us.
-				// 		if(alreadyExistingCellInHouseWithDigit === id)
-				// 			continue;
-
-				// 		$("#input-" + alreadyExistingCellInHouseWithDigit + ", #input-"+id)
-				// 			.addClass("board-cell--error");
-				// 		//make as incorrect in UI
-
-				// 		//input was incorrect, so don't update our board model
-				// 		return;
-				// 	}
-				// }
+			
 
 				//remove candidates..
 				input.siblings(".candidates").html(buildCandidatesString(candidates));
@@ -695,28 +676,28 @@
 		};
 
 
-		 var setBoardCellWithRandomCandidate = function(cellIndex, forceUIUpdate){
-			// CHECK still valid
-			visualEliminationOfCandidates();
-			// DRAW RANDOM CANDIDATE
-			// don't draw already invalidated candidates for cell
-			var invalids = invalidCandidates && invalidCandidates[cellIndex];
-			// TODO: don't use JS filter - not supported enough(?)
-			var candidates = board[cellIndex].candidates.filter(function(candidate){
-				if(!candidate || (invalids && contains(invalids, candidate)))
-					return false;
-				return candidate;
-			});
-			// if cell has 0 candidates - fail to set cell.
-			if(candidates.length === 0) {
-				return false;
-			}
-			var randIndex = Math.round ( Math.random() * (candidates.length - 1));
-			var randomCandidate = candidates[randIndex];
-			// UPDATE BOARD
-			setBoardCell(cellIndex, randomCandidate);
-			return true;
-		};
+		//  var setBoardCellWithRandomCandidate = function(cellIndex, forceUIUpdate){
+		// 	// CHECK still valid
+		// 	visualEliminationOfCandidates();
+		// 	// DRAW RANDOM CANDIDATE
+		// 	// don't draw already invalidated candidates for cell
+		// 	var invalids = invalidCandidates && invalidCandidates[cellIndex];
+		// 	// TODO: don't use JS filter - not supported enough(?)
+		// 	var candidates = board[cellIndex].candidates.filter(function(candidate){
+		// 		if(!candidate || (invalids && contains(invalids, candidate)))
+		// 			return false;
+		// 		return candidate;
+		// 	});
+		// 	// if cell has 0 candidates - fail to set cell.
+		// 	if(candidates.length === 0) {
+		// 		return false;
+		// 	}
+		// 	var randIndex = Math.round ( Math.random() * (candidates.length - 1));
+		// 	var randomCandidate = candidates[randIndex];
+		// 	// UPDATE BOARD
+		// 	setBoardCell(cellIndex, randomCandidate);
+		// 	return true;
+		// };
 
 	
 		/*
@@ -803,7 +784,6 @@
 			getBoard : getBoard,
 			setBoard : setBoard,
 			setEditingCandidates: setEditingCandidates,
-			//generateBoard : generateBoard
 		};
 	};
 
