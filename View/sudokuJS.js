@@ -17,13 +17,6 @@
 		 *-----------*/
 		opts = opts || {};
 
-		/*board variable gets enhanced into list of objects on init:
-			,{
-				val: null
-				,candidates: [
-					]
-			}
-		*/
 		var	board = [],
 			boardSize,
 			boardNumbers, // array of 1-9 by default, generated in initBoard
@@ -111,10 +104,6 @@
 			boardSize = (!board.length && opts.boardSize) || Math.sqrt(board.length) || 9;
 			$board.attr("data-board-size", boardSize);
 	
-			// for (var i=0; i < boardSize; i++){
-			// 	boardNumbers.push(i+1);
-			// 	nullCandidateList.push(null);
-			// }
 			generateHouseIndexList();
 
 			if(!alreadyEnhanced){
@@ -129,7 +118,6 @@
 				}
 			}
 		};
-
 
 		/* renderBoard
 		 * --------------
@@ -160,7 +148,6 @@
 			return "<div class='sudoku-board-cell'>" +
 						//want to use type=number, but then have to prevent chrome scrolling and up down key behaviors..
 						"<input type='text' pattern='\\d*' novalidate id='input-"+id+"' value='"+val+"'"+maxlength+">" +
-						// "<div id='input-"+id+"-candidates' class='candidates'>" + candidatesString + "</div>" +
 					"</div>";
 		};
 
@@ -193,7 +180,6 @@
 				
 		};
 
-
 		/* removeCandidatesFromCell
 		-----------------------------------------------------------------*/
 		var removeCandidatesFromCell = function(cell, candidates){
@@ -207,7 +193,6 @@
 					cellUpdated = true;
 				}
 			}
-			// if(cellUpdated && solveMode === SOLVE_MODE_STEP)
 				updateUIBoardCell(cell, {mode: "only-candidates"});
 		};
 
