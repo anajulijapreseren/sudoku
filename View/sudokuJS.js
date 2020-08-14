@@ -50,8 +50,6 @@
 		 *-----------*/
 		 var $board = $(this),
 			$boardInputs; //created
-			// $boardInputCandidates; //created
-
 
 		 /*
 		 * methods
@@ -72,17 +70,6 @@
 			}
 			return false;
 		};
-
-		// var uniqueArray = function(a) {
-		// 	var temp = {};
-		// 	for (var i = 0; i < a.length; i++)
-		// 		temp[a[i]] = true;
-		// 	var r = [];
-		// 	for (var k in temp)
-		// 		r.push(k);
-		// 	return r;
-		// };
-
 
 		/* generateHouseIndexList
 		 * -----------------------------------------------------------------*/
@@ -141,12 +128,7 @@
       		boardNumbers = [];
 			boardSize = (!board.length && opts.boardSize) || Math.sqrt(board.length) || 9;
 			$board.attr("data-board-size", boardSize);
-			// if(boardSize % 1 !== 0 || Math.sqrt(boardSize) % 1 !== 0) {
-			// 	log("invalid boardSize: "+boardSize);
-			// 	// if(typeof opts.boardErrorFn === "function")
-			// 	// 	opts.boardErrorFn({msg: "invalid board size"});
-			// 	return;
-			// }
+	
 			for (var i=0; i < boardSize; i++){
 				boardNumbers.push(i+1);
 				nullCandidateList.push(null);
@@ -173,8 +155,6 @@
 		 *  dynamically renders the board on the screen (into the DOM), based on board variable
 		 * -----------------------------------------------------------------*/
 		var renderBoard = function(){
-			//log("renderBoard");
-			//log(board);
 			var htmlString = "";
 			for(var i=0; i < boardSize*boardSize; i++){
 				htmlString += renderBoardCell(board[i], i);
@@ -183,7 +163,7 @@
 					htmlString += "<br>";
 				}
 			}
-			//log(htmlString);
+			
 			$board.append(htmlString);
 
 			//save important board elements
@@ -196,12 +176,12 @@
 		var renderBoardCell = function(boardCell, id){
 			var val = (boardCell.val === null) ? "" : boardCell.val;
 			var candidates = boardCell.candidates || [];
-			var candidatesString = buildCandidatesString(candidates);
+			// var candidatesString = buildCandidatesString(candidates);
 			var maxlength = (boardSize < 10) ? " maxlength='1'" : "";
 			return "<div class='sudoku-board-cell'>" +
 						//want to use type=number, but then have to prevent chrome scrolling and up down key behaviors..
 						"<input type='text' pattern='\\d*' novalidate id='input-"+id+"' value='"+val+"'"+maxlength+">" +
-						"<div id='input-"+id+"-candidates' class='candidates'>" + candidatesString + "</div>" +
+						// "<div id='input-"+id+"-candidates' class='candidates'>" + candidatesString + "</div>" +
 					"</div>";
 		};
 
@@ -219,16 +199,16 @@
 
 		/* buildCandidatesString
 		 * -----------------------------------------------------------------*/
-		var buildCandidatesString = function(candidatesList){
-			var s="";
-			for(var i=1; i<boardSize+1; i++){
-				if(contains(candidatesList,i))
-					s+= "<div>"+i+"</div> ";
-				else
-					s+= "<div>&nbsp;</div> ";
-			}
-			return s;
-		};
+		// var buildCandidatesString = function(candidatesList){
+		// 	var s="";
+		// 	for(var i=1; i<boardSize+1; i++){
+		// 		if(contains(candidatesList,i))
+		// 			s+= "<div>"+i+"</div> ";
+		// 		else
+		// 			s+= "<div>&nbsp;</div> ";
+		// 	}
+		// 	return s;
+		// };
 
 		/* updateUIBoard -
 		 * --------------
@@ -247,7 +227,7 @@
 							$input.addClass("highlight-val");
 					//}
 					var $candidates = $input.siblings(".candidates");
-					$candidates.html(buildCandidatesString(board[i].candidates));
+					// $candidates.html(buildCandidatesString(board[i].candidates));
 
 				});
 		};
@@ -259,7 +239,6 @@
 		 * -----------------------------------------------------------------*/
 		 var updateUIBoardCell = function(cellIndex, opts){
 			opts = opts || {};
-			//log("updateUIBoardCell: "+cellIndex);
 			//if(!(opts.mode && opts.mode === "only-candidates")){
 				var newVal = board[cellIndex].val;
 
@@ -271,7 +250,7 @@
 					.addClass("highlight-val");
 			//}
 			$("#input-"+cellIndex+"-candidates")
-				.html(buildCandidatesString(board[cellIndex].candidates));
+				// .html(buildCandidatesString(board[cellIndex].candidates));
 		};
 
 
@@ -297,7 +276,6 @@
 		 * ---returns list of cells where any candidats where removed
 		-----------------------------------------------------------------*/
 		var removeCandidatesFromCells = function(cells, candidates){
-			//log("removeCandidatesFromCells");
 			var cellsUpdated = [];
 			for (var i=0; i < cells.length; i++){
 				var c = board[cells[i]].candidates;
@@ -314,32 +292,32 @@
 			return cellsUpdated;
 		};
 
-		var resetBoardVariables = function() {
-			usedStrategies = [];
-		};
+		// var resetBoardVariables = function() {
+		// 	usedStrategies = [];
+		// };
 
 
 		/* clearBoard
 		-----------------------------------------------------------------*/
-		var clearBoard = function(){
-			resetBoardVariables();
+		// var clearBoard = function(){
+		// 	resetBoardVariables();
 
-			//reset board variable
-			var cands = boardNumbers.slice(0);
-			for(var i=0; i <boardSize*boardSize;i++){
-				board[i] = {
-					val: null,
-					candidates: cands.slice()
-				};
-			}
+		// 	//reset board variable
+		// 	var cands = boardNumbers.slice(0);
+		// 	for(var i=0; i <boardSize*boardSize;i++){
+		// 		board[i] = {
+		// 			val: null,
+		// 			candidates: cands.slice()
+		// 		};
+		// 	}
 
-			//reset UI
-			$boardInputs
-				.removeClass("highlight-val")
-				.val("");
+		// 	//reset UI
+		// 	$boardInputs
+		// 		.removeClass("highlight-val")
+		// 		.val("");
 
-			updateUIBoard(false);
-		};
+		// 	updateUIBoard(false);
+		// };
 
 		var getNullCandidatesList = function() {
 			var l = [];
@@ -357,23 +335,13 @@
 			for(var i=0; i <boardSize*boardSize;i++){
 				if(board[i].val === null){
 					board[i].candidates = resetCandidatesList.slice(); //otherwise same list (not reference!) on every cell
-					if(updateUI !== false)
-						$("#input-"+i+"-candidates").html(buildCandidatesString(resetCandidatesList));
+					// if(updateUI !== false)
+					// 	$("#input-"+i+"-candidates").html(buildCandidatesString(resetCandidatesList));
 				} else if(updateUI !== false) {
 						$("#input-"+i+"-candidates").html("");
 				}
 			}
 		};
-
-		/* setBoardCell - does not update UI
-		-----------------------------------------------------------------*/
-		// var setBoardCell = function(cellIndex, val){
-		// 	var boardCell = board[cellIndex];
-		// 	//update val
-		// 	boardCell.val = val;
-		// 	if(val !== null)
-		// 		boardCell.candidates = getNullCandidatesList();
-		// };
 
 		/* indexInHouse
 		 * --------------
@@ -492,15 +460,6 @@
 						if(possibleCells.length === 1){
 							var cellIndex = possibleCells[0];
 
-							//log("only slot where "+digit+" appears in house. ");
-
-
-							// setBoardCell(cellIndex, digit); //does not update UI
-
-							// if(solveMode===SOLVE_MODE_STEP)
-							// 	uIBoardHighlightCandidate(cellIndex, digit);
-
-							// onlyUpdatedCandidates = false;
 							return [cellIndex]; //one step at the time
 						}
 					}
@@ -509,45 +468,7 @@
 			}
 			return false;
 		}
-
-		/* keyboardMoveBoardFocus - puts focus on adjacent board cell
-		 * -----------------------------------------------------------------*/
-		// var keyboardMoveBoardFocus = function(currentId, keyCode){
-		// 	var newId = currentId;
-		// 	//right
-		// 	if(keyCode ===39)
-		// 		newId++;
-		// 	//left
-		// 	else if(keyCode === 37)
-		// 		newId--;
-		// 	//down
-		// 	else if(keyCode ===40)
-		// 		newId = newId + boardSize;
-		// 	//up
-		// 	else if(keyCode ===38)
-		// 		newId = newId - boardSize;
-
-		// 	//out of bounds
-		// 	if(newId < 0 || newId > (boardSize*boardSize))
-		// 		return;
-
-		// 	//focus input
-		// 	$("#input-"+newId).focus();
-		// };
-
-
-		/* toggleCandidateOnCell - used for editingCandidates mode
-		 * -----------------------------------------------------------------*/
-		// var toggleCandidateOnCell = function(candidate, cell){
-		// 	var boardCell = board[cell];
-		// 	if(boardCell.val){
-		// 		return;  // don't modify candidates when a cell already has a number
-		// 	}
-		// 	var c = boardCell.candidates;
-		// 	c[candidate-1] = c[candidate-1] === null ? candidate : null;
-		// 	if(solveMode === SOLVE_MODE_STEP)
-		// 		updateUIBoardCell(cell, {mode: "only-candidates"});
-		// };
+		
 
 		/* keyboardNumberInput - update our board model
 		 * -----------------------------------------------------------------*/
@@ -565,7 +486,7 @@
 			
 
 				//remove candidates..
-				input.siblings(".candidates").html(buildCandidatesString(candidates));
+				// input.siblings(".candidates").html(buildCandidatesString(candidates));
 				//update board
 				board[id].candidates = candidates;
 				board[id].val = val;
@@ -575,7 +496,7 @@
 				val = null;
 				//add back candidates to UI cell
 				candidates = boardNumbers.slice();
-				input.siblings(".candidates").html(buildCandidatesString(candidates));
+				// input.siblings(".candidates").html(buildCandidatesString(candidates));
 
 				//needs to happen before we resetCandidates below
 				board[id].val = val;
@@ -584,16 +505,6 @@
 				resetCandidates();
 				visualEliminationOfCandidates();
 			}
-			//log(board[1].candidates);
-
-			//HACK: remove all errors as soon as they fix one - the other cells just get emptied on board (in UI; already were null in model)
-			// if($("#input-"+id).hasClass("board-cell--error"))
-			// 	$boardInputs.removeClass("board-cell--error");
-
-			// if(typeof opts.boardUpdatedFn === "function")
-			// 	opts.boardUpdatedFn({cause: "user input", cellsUpdated: [id]});
-
-			// onlyUpdatedCandidates = false;
 		};
 
 	
@@ -674,7 +585,7 @@
 		return {
 			checkAll : checkAll,
 			clearChecks: clearChecks,
-			clearBoard : clearBoard,
+			// clearBoard : clearBoard,
 			getBoard : getBoard,
 			setBoard : setBoard,
 		};
