@@ -60,17 +60,6 @@
 			 console.log(msg);
 		}
 
-
-		//array contains function
-		// var contains = function(a, obj) {
-		// 	for (var i = 0; i < a.length; i++) {
-		// 		if (a[i] === obj) {
-		// 			return true;
-		// 		}
-		// 	}
-		// 	return false;
-		// };
-
 		/* generateHouseIndexList
 		 * -----------------------------------------------------------------*/
 		var generateHouseIndexList = function(){
@@ -249,36 +238,6 @@
 				updateUIBoardCell(cell, {mode: "only-candidates"});
 		};
 
-
-		/* removeCandidatesFromCells
-		 * ---returns list of cells where any candidats where removed
-		-----------------------------------------------------------------*/
-		// var removeCandidatesFromCells = function(cells, candidates){
-		// 	var cellsUpdated = [];
-		// 	for (var i=0; i < cells.length; i++){
-		// 		var c = board[cells[i]].candidates;
-
-		// 		for(var j=0; j < candidates.length; j++){
-		// 			var candidate = candidates[j];
-		// 			//-1 because candidate '1' is at index 0 etc.
-		// 			if(c[candidate-1] !== null) {
-		// 				c[candidate-1] = null; //NOTE: also deletes them from board variable
-		// 				cellsUpdated.push(cells[i]); //will push same cell multiple times
-		// 			}
-		// 		}
-		// 	}
-		// 	return cellsUpdated;
-		// };
-
-		// var getNullCandidatesList = function() {
-		// 	var l = [];
-		// 	for (var i=0; i < boardSize; i++){
-		// 		l.push(null);
-		// 	}
-		// 	return l;
-		// };
-
-
 		/* resetCandidates
 		-----------------------------------------------------------------*/
 		var resetCandidates = function(updateUI){
@@ -297,14 +256,14 @@
 		 *  returns index (0-9) for digit in house, false if not in house
 		 *  NOTE: careful evaluating returned index is IN row, as 0==false.
 		 * -----------------------------------------------------------------*/
-		 var indexInHouse = function(digit,house){
-			for(var i=0; i < boardSize; i++){
-				if(board[house[i]].val===digit)
-					return i;
-			}
-			//not in house
-			return false;
-		};
+		//  var indexInHouse = function(digit,house){
+		// 	for(var i=0; i < boardSize; i++){
+		// 		if(board[house[i]].val===digit)
+		// 			return i;
+		// 	}
+		// 	//not in house
+		// 	return false;
+		// };
 
 
 		 /* numbersTaken
@@ -353,28 +312,21 @@
 		 * -----------------------------------------------------------------*/
 		var keyboardNumberInput = function(input, id){
 			var val = parseInt(input.val());
-			
-			// var candidates = getNullCandidatesList(); //[null,null....null];
 
 			if (val > 0) { //invalidates Nan
 				log("Zmajski input: "+val);
 				log("celica:"+id);
 				$.post("/numentry", JSON.stringify({ "cellId": id, "number": val }))
 				//check that this doesn't make board incorrect
-				// var temp = housesWithCell(id);
 			
-
 				//remove candidates.
 				//update board
-				// board[id].candidates = candidates;
 				board[id].val = val;
 
 			} else {
 				// boardError = false; //reset, in case they fixed board - otherwise, we'll find the error again
 				val = null;
 				//add back candidates to UI cell
-				// candidates = boardNumbers.slice();
-				// input.siblings(".candidates").html(buildCandidatesString(candidates));
 
 				//needs to happen before we resetCandidates below
 				board[id].val = val;
@@ -446,24 +398,24 @@
 			}
 		}
 
-		var getBoard = function(){
-			return board;
-		};
+		// var getBoard = function(){
+		// 	return board;
+		// };
 
-		var setBoard = function(newBoard){
-      clearBoard(); // if any pre-existing
-			board = newBoard;
-			initBoard();
-			visualEliminationOfCandidates();
-			updateUIBoard(false);
-		};
+		// var setBoard = function(newBoard){
+      	// 	clearBoard(); // if any pre-existing
+		// 	board = newBoard;
+		// 	initBoard();
+		// 	// visualEliminationOfCandidates();
+		// 	updateUIBoard(false);
+		// };
 
 
 		return {
 			checkAll : checkAll,
 			clearChecks: clearChecks,
-			getBoard : getBoard,
-			setBoard : setBoard,
+			// getBoard : getBoard,
+			// setBoard : setBoard,
 		};
 	};
 
