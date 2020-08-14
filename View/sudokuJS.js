@@ -642,25 +642,25 @@
 				//check that this doesn't make board incorrect
 				var temp = housesWithCell(id);
 				//for each type of house
-				for(var i=0; i < houses.length; i++){
+				// for(var i=0; i < houses.length; i++){
 
-					if(indexInHouse(val, houses[i][temp[i]])){
-						//digit already in house - board incorrect with user input
-						// log("board incorrect!");
-						var alreadyExistingCellInHouseWithDigit = houses[i][temp[i]][indexInHouse(val, houses[i][temp[i]])];
+				// 	if(indexInHouse(val, houses[i][temp[i]])){
+				// 		//digit already in house - board incorrect with user input
+				// 		// log("board incorrect!");
+				// 		var alreadyExistingCellInHouseWithDigit = houses[i][temp[i]][indexInHouse(val, houses[i][temp[i]])];
 
-						//this happens in candidate mode, if we highlight on ui board before entering value, and user then enters before us.
-						if(alreadyExistingCellInHouseWithDigit === id)
-							continue;
+				// 		//this happens in candidate mode, if we highlight on ui board before entering value, and user then enters before us.
+				// 		if(alreadyExistingCellInHouseWithDigit === id)
+				// 			continue;
 
-						$("#input-" + alreadyExistingCellInHouseWithDigit + ", #input-"+id)
-							.addClass("board-cell--error");
-						//make as incorrect in UI
+				// 		$("#input-" + alreadyExistingCellInHouseWithDigit + ", #input-"+id)
+				// 			.addClass("board-cell--error");
+				// 		//make as incorrect in UI
 
-						//input was incorrect, so don't update our board model
-						return;
-					}
-				}
+				// 		//input was incorrect, so don't update our board model
+				// 		return;
+				// 	}
+				// }
 
 				//remove candidates..
 				input.siblings(".candidates").html(buildCandidatesString(candidates));
@@ -718,112 +718,7 @@
 			return true;
 		};
 
-		// var generateBoardAnswerRecursively = function(cellIndex){
-		// 	if((cellIndex+1) > (boardSize*boardSize)){
-		// 		//done
-		// 		invalidCandidates = [];
-		// 		return true;
-		// 	}
-		// 	if(setBoardCellWithRandomCandidate(cellIndex)){
-		// 		generateBoardAnswerRecursively(cellIndex + 1);
-		// 	} else {
-		// 		if(cellIndex <= 0)
-		// 			return false;
-		// 		var lastIndex = cellIndex - 1;
-		// 		invalidCandidates[lastIndex] = invalidCandidates[lastIndex] || [];
-		// 		invalidCandidates[lastIndex].push(board[lastIndex].val);
-		// 		// set val back to null
-		// 		setBoardCell(lastIndex, null);
-		// 		// reset candidates, only in model.
-		// 		resetCandidates(false);
-		// 		// reset invalid candidates for cellIndex
-		// 		invalidCandidates[cellIndex] = [];
-		// 		// then try again
-		// 		generateBoardAnswerRecursively(lastIndex);
-		// 		return false;
-		// 	}
-		// };
-
-	// 	var digCells = function(){
-	// 		var cells = [];
-	// 		var given = boardSize*boardSize;
-	// 		var minGiven = 17;
-	// 		if(difficulty === DIFFICULTY_EASY){
-	// 			minGiven = 40;
-	// 		} else if(difficulty === DIFFICULTY_MEDIUM){
-	// 			minGiven = 30;
-	// 		}
-    //   if (boardSize < 9) {
-    //     minGiven = 4
-    //   }
-	// 		for (var i=0; i < boardSize*boardSize; i++){
-	// 			cells.push(i);
-	// 		}
-
-	// 		while(cells.length > 0 && given > minGiven){
-	// 			var randIndex = Math.round ( Math.random() * (cells.length - 1));
-	// 			var cellIndex = cells.splice(randIndex,1);
-	// 			var val = board[cellIndex].val;
-
-	// 			// remove value from this cell
-	// 			setBoardCell(cellIndex, null);
-	// 			// reset candidates, only in model.
-	// 			resetCandidates(false);
-
-	// 			var data = analyzeBoard();
-	// 			if (data.finished !== false && easyEnough(data)) {
-	// 				given--;
-	// 			} else {
-	// 				// reset - don't dig this cell
-	// 				setBoardCell(cellIndex, val);
-	// 			}
-
-	// 		}
-	// 	};
-
-    // generates board puzzle, i.e. the answers for this round
-    // requires that a board for boardSize has already been initiated
-		// var generateBoard = function(diff, callback){
-		// 	if($boardInputs)
-		// 		clearBoard();
-		// 	if (contains(DIFFICULTIES, diff)) {
-		// 		difficulty = diff
-		// 	} else if (boardSize >= 9) {
-		// 		difficulty = DIFFICULTY_MEDIUM
-		// 	} else {
-		// 		difficulty = DIFFICULTY_EASY
-		// 	}
-		// 	generatingMode = true;
-
-		// 	// the board generated will possibly not be hard enough
-		// 	// (if you asked for "hard", you most likely get "medium")
-		// 	generateBoardAnswerRecursively(0);
-
-		// 	// attempt one - save the answer, and try digging multiple times.
-		// 	var boardAnswer = board.slice();
-
-		// 	var boardTooEasy = true;
-
-		// 	while(boardTooEasy){
-		// 		digCells();
-		// 		var data = analyzeBoard();
-		// 		if(hardEnough(data))
-		// 			boardTooEasy = false;
-		// 		else
-		// 			board = boardAnswer;
-		// 	}
-		// 	solveMode = SOLVE_MODE_STEP;
-		// 	if($boardInputs)
-		// 		updateUIBoard();
-
-		// 	visualEliminationOfCandidates();
-
-		// 	if(typeof callback === 'function'){
-		// 		callback();
-		// 	}
-		// };
-
-
+	
 		/*
 		 * init/API/events
 		 *-----------*/
