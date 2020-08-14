@@ -62,14 +62,14 @@
 
 
 		//array contains function
-		var contains = function(a, obj) {
-			for (var i = 0; i < a.length; i++) {
-				if (a[i] === obj) {
-					return true;
-				}
-			}
-			return false;
-		};
+		// var contains = function(a, obj) {
+		// 	for (var i = 0; i < a.length; i++) {
+		// 		if (a[i] === obj) {
+		// 			return true;
+		// 		}
+		// 	}
+		// 	return false;
+		// };
 
 		/* generateHouseIndexList
 		 * -----------------------------------------------------------------*/
@@ -143,7 +143,6 @@
 					board[j] = {
 						val: cellVal,
 						candidates: candidates
-						//title: "" possibl add in 'A1. B1...etc
 					};
 				}
 			}
@@ -175,7 +174,6 @@
 		var renderBoardCell = function(boardCell, id){
 			var val = (boardCell.val === null) ? "" : boardCell.val;
 			var candidates = boardCell.candidates || [];
-			// var candidatesString = buildCandidatesString(candidates);
 			var maxlength = (boardSize < 10) ? " maxlength='1'" : "";
 			return "<div class='sudoku-board-cell'>" +
 						//want to use type=number, but then have to prevent chrome scrolling and up down key behaviors..
@@ -255,30 +253,30 @@
 		/* removeCandidatesFromCells
 		 * ---returns list of cells where any candidats where removed
 		-----------------------------------------------------------------*/
-		var removeCandidatesFromCells = function(cells, candidates){
-			var cellsUpdated = [];
-			for (var i=0; i < cells.length; i++){
-				var c = board[cells[i]].candidates;
+		// var removeCandidatesFromCells = function(cells, candidates){
+		// 	var cellsUpdated = [];
+		// 	for (var i=0; i < cells.length; i++){
+		// 		var c = board[cells[i]].candidates;
 
-				for(var j=0; j < candidates.length; j++){
-					var candidate = candidates[j];
-					//-1 because candidate '1' is at index 0 etc.
-					if(c[candidate-1] !== null) {
-						c[candidate-1] = null; //NOTE: also deletes them from board variable
-						cellsUpdated.push(cells[i]); //will push same cell multiple times
-					}
-				}
-			}
-			return cellsUpdated;
-		};
+		// 		for(var j=0; j < candidates.length; j++){
+		// 			var candidate = candidates[j];
+		// 			//-1 because candidate '1' is at index 0 etc.
+		// 			if(c[candidate-1] !== null) {
+		// 				c[candidate-1] = null; //NOTE: also deletes them from board variable
+		// 				cellsUpdated.push(cells[i]); //will push same cell multiple times
+		// 			}
+		// 		}
+		// 	}
+		// 	return cellsUpdated;
+		// };
 
-		var getNullCandidatesList = function() {
-			var l = [];
-			for (var i=0; i < boardSize; i++){
-				l.push(null);
-			}
-			return l;
-		};
+		// var getNullCandidatesList = function() {
+		// 	var l = [];
+		// 	for (var i=0; i < boardSize; i++){
+		// 		l.push(null);
+		// 	}
+		// 	return l;
+		// };
 
 
 		/* resetCandidates
@@ -308,25 +306,6 @@
 			return false;
 		};
 
-		 /* housesWithCell
-		 * --------------
-		 *  returns houses that a cell belongs to
-		 * -----------------------------------------------------------------*/
-		//  var housesWithCell = function(cellIndex){
-		// 	var boxSideSize = Math.sqrt(boardSize);
-		// 	var houses = [];
-		// 	//horisontal row
-		// 	var hrow = Math.floor(cellIndex/boardSize);
-		// 	houses.push(hrow);
-		// 	//vertical row
-		// 	var vrow = Math.floor(cellIndex%boardSize);
-		// 	houses.push(vrow);
-		// 	//box
-		// 	var box = (Math.floor(hrow/boxSideSize)*boxSideSize) + Math.floor(vrow/boxSideSize);
-		// 	houses.push(box);
-
-		// 	return houses;
-		// };
 
 		 /* numbersTaken
 		 * --------------
@@ -370,58 +349,12 @@
 			return false;
 		}
 
-		/* visualElimination
-		 * --------------
-		 * Looks for houses where a digit only appears in one slot
-		 * -meaning we know the digit goes in that slot.
-		 * -- returns effectedCells - the updated cell(s), or false
-		 * -----------------------------------------------------------------*/
-		// function visualElimination(){
-		// 	//for each type of house..(hor row / vert row / box)
-		// 	var hlength = houses.length;
-		// 	for(var i=0; i < hlength; i++){
-
-		// 		//for each such house
-		// 		for(var j=0; j < boardSize; j++){
-		// 			var house = houses[i][j];
-		// 			var digits = numbersLeft(house);
-
-		// 			//for each digit left for that house
-		// 			for (var k=0; k < digits.length; k++){
-		// 				var digit = digits[k];
-		// 				var possibleCells = [];
-
-		// 				//for each cell in house
-		// 				for(var l=0; l < boardSize; l++){
-		// 					var cell = house[l];
-		// 					var boardCell = board[cell];
-		// 					//if the digit only appears as a candidate in one slot, that's where it has to go
-		// 					if (contains(boardCell.candidates, digit)){
-		// 						possibleCells.push(cell);
-		// 						if(possibleCells.length > 1)
-		// 							break; //no we can't tell anything in this case
-		// 					}
-		// 				}
-
-		// 				if(possibleCells.length === 1){
-		// 					var cellIndex = possibleCells[0];
-
-		// 					return [cellIndex]; //one step at the time
-		// 				}
-		// 			}
-
-		// 		}
-		// 	}
-		// 	return false;
-		// }
-		
-
 		/* keyboardNumberInput - update our board model
 		 * -----------------------------------------------------------------*/
 		var keyboardNumberInput = function(input, id){
 			var val = parseInt(input.val());
 			
-			var candidates = getNullCandidatesList(); //[null,null....null];
+			// var candidates = getNullCandidatesList(); //[null,null....null];
 
 			if (val > 0) { //invalidates Nan
 				log("Zmajski input: "+val);
@@ -433,14 +366,14 @@
 
 				//remove candidates.
 				//update board
-				board[id].candidates = candidates;
+				// board[id].candidates = candidates;
 				board[id].val = val;
 
 			} else {
 				// boardError = false; //reset, in case they fixed board - otherwise, we'll find the error again
 				val = null;
 				//add back candidates to UI cell
-				candidates = boardNumbers.slice();
+				// candidates = boardNumbers.slice();
 				// input.siblings(".candidates").html(buildCandidatesString(candidates));
 
 				//needs to happen before we resetCandidates below
