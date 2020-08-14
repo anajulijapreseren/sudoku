@@ -17,7 +17,6 @@
 		 *-----------*/
 
 		var SOLVE_MODE_STEP = "step";
-		var SOLVE_MODE_ALL = "all";
 
 		/*
 		 * variables
@@ -763,10 +762,10 @@
 
 		/* toggleShowCandidates
 		 * -----------------------------------------------------------------*/
-		var toggleShowCandidates = function(){
-			$board.toggleClass("showCandidates");
-			candidatesShowing = !candidatesShowing;
-		};
+		// var toggleShowCandidates = function(){
+		// 	$board.toggleClass("showCandidates");
+		// 	candidatesShowing = !candidatesShowing;
+		// };
 
 		 var setBoardCellWithRandomCandidate = function(cellIndex, forceUIUpdate){
 			// CHECK still valid
@@ -867,7 +866,7 @@
 				difficulty = DIFFICULTY_EASY
 			}
 			generatingMode = true;
-			solveMode = SOLVE_MODE_ALL;
+			// solveMode = SOLVE_MODE_ALL;
 
 			// the board generated will possibly not be hard enough
 			// (if you asked for "hard", you most likely get "medium")
@@ -971,14 +970,14 @@
 			updateUIBoard(false);
 		};
 
-		var hideCandidates = function(){
-			$board.removeClass("showCandidates");
-			candidatesShowing = false;
-		};
-		var showCandidates = function(){
-			$board.addClass("showCandidates");
-			candidatesShowing = true;
-		};
+		// var hideCandidates = function(){
+		// 	$board.removeClass("showCandidates");
+		// 	candidatesShowing = false;
+		// };
+		// var showCandidates = function(){
+		// 	$board.addClass("showCandidates");
+		// 	candidatesShowing = true;
+		// };
 
 		var setEditingCandidates = function(newVal){
 			editingCandidates = newVal;
@@ -990,8 +989,8 @@
 			clearBoard : clearBoard,
 			getBoard : getBoard,
 			setBoard : setBoard,
-			hideCandidates : hideCandidates,
-			showCandidates : showCandidates,
+			//hideCandidates : hideCandidates,
+			//showCandidates : showCandidates,
 			setEditingCandidates: setEditingCandidates,
 			generateBoard : generateBoard
 		};
