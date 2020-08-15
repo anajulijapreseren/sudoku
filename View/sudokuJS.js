@@ -49,15 +49,7 @@
 		/* generateHouseIndexList
 		 * -----------------------------------------------------------------*/
 		var generateHouseIndexList = function(){
-        // reset houses
-        // houses = [
-		// 		//hor. rows
-		// 		[],
-		// 		//vert. rows
-		// 		[],
-		// 		//boxes
-		// 		[]
-		// 	]
+    
 			var boxSideSize = Math.sqrt(boardSize);
 
 			for(var i=0; i < boardSize; i++){
@@ -80,7 +72,6 @@
 								//Math.floor(i/boxSideSize)*boardSize*2
 								//skip across horizontally to next box
 								//+ i*boxSideSize;
-
 
 							box.push(boxStartIndex + boardSize*j + k);
 						}
@@ -106,8 +97,6 @@
 	
 			generateHouseIndexList();
 
-			// if(!alreadyEnhanced){
-			// 	//enhance board to handle candidates, and possibly other params
 				for(var j=0; j < boardSize*boardSize ; j++){
 					var cellVal = (typeof board[j] === "undefined") ? null : board[j];
 					var candidates = cellVal === null ? boardNumbers.slice() : nullCandidateList.slice();
@@ -116,7 +105,6 @@
 						candidates: candidates
 					};
 				}
-			// }
 		};
 
 		/* renderBoard
@@ -183,16 +171,16 @@
 		/* removeCandidatesFromCell
 		-----------------------------------------------------------------*/
 		var removeCandidatesFromCell = function(cell, candidates){
-			var boardCell = board[cell];
-			var c = boardCell.candidates;
-			var cellUpdated = false;
-			for(var i=0; i < candidates.length; i++){
-				//-1 because candidate '1' is at index 0 etc.
-				if(c[candidates[i]-1] !== null) {
-					c[candidates[i]-1] = null; //writes to board variable
-					cellUpdated = true;
-				}
-			}
+			// var boardCell = board[cell];
+			// var c = boardCell.candidates;
+			// var cellUpdated = false;
+			// for(var i=0; i < candidates.length; i++){
+			// 	//-1 because candidate '1' is at index 0 etc.
+			// 	if(c[candidates[i]-1] !== null) {
+			// 		c[candidates[i]-1] = null; //writes to board variable
+			// 		// cellUpdated = true;
+			// 	}
+			// }
 				updateUIBoardCell(cell, {mode: "only-candidates"});
 		};
 
@@ -257,8 +245,6 @@
 			var val = parseInt(input.val());
 
 			if (val > 0) { //invalidates Nan
-				log("Zmajski input: "+val);
-				log("celica:"+id);
 				$.post("/numentry", JSON.stringify({ "cellId": id, "number": val }))
 				//check that this doesn't make board incorrect
 			
@@ -295,14 +281,14 @@
 		}
 
 
-		$boardInputs.on("keyup", function(e){
-			var $this = $(this);
-			var id = parseInt($this.attr("id").replace("input-",""));
-			//allow keyboard movements
-			if(e.keyCode >=37 && e.keyCode <= 40){// || e.keyCode ===48){
-				keyboardMoveBoardFocus(id, e.keyCode);
-			}
-		});
+		// $boardInputs.on("keyup", function(e){
+		// 	var $this = $(this);
+		// 	var id = parseInt($this.attr("id").replace("input-",""));
+		// 	//allow keyboard movements
+		// 	if(e.keyCode >=37 && e.keyCode <= 40){// || e.keyCode ===48){
+		// 		keyboardMoveBoardFocus(id, e.keyCode);
+		// 	}
+		// });
 		//listen on change because val is incorrect all the time on keyup, because have to filter out all other keys.
 		$boardInputs.on("change", function(){
 			var $this = $(this);
@@ -320,7 +306,6 @@
 				var json = JSON.parse(data);
 				if (json["finished"] == true){
 					// show user that he has done his job
-					log("Yay!")
 					alert("Congrats!")
 				} else {
 					// fill the sudoku grid with colours to indicate which cells are wrong
