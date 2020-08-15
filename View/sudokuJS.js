@@ -62,16 +62,9 @@
 
 					if(j < boxSideSize){
 						for(var k=0; k < boxSideSize; k++){
-							//0, 0,0, 27, 27,27, 54, 54, 54 for a standard sudoku
 							var a = Math.floor(i/boxSideSize) * boardSize * boxSideSize;
-							//[0-2] for a standard sudoku
 							var b = (i%boxSideSize) * boxSideSize;
-							var boxStartIndex = a +b; //0 3 6 27 30 33 54 57 60
-
-								//every boxSideSize box, skip boardSize num rows to next box (on new horizontal row)
-								//Math.floor(i/boxSideSize)*boardSize*2
-								//skip across horizontally to next box
-								//+ i*boxSideSize;
+							var boxStartIndex = a +b; 
 
 							box.push(boxStartIndex + boardSize*j + k);
 						}
@@ -89,7 +82,6 @@
 		 *  inits board, variables.
 		 * -----------------------------------------------------------------*/
 		var initBoard = function(opts){
-			// var alreadyEnhanced = (board[0] !== null && typeof board[0] === "object");
 			var nullCandidateList = [];
       		boardNumbers = [];
 			boardSize = (!board.length && opts.boardSize) || Math.sqrt(board.length) || 9;
@@ -131,7 +123,7 @@
 		 * -----------------------------------------------------------------*/
 		var renderBoardCell = function(boardCell, id){
 			var val = (boardCell.val === null) ? "" : boardCell.val;
-			var candidates = boardCell.candidates || [];
+			// var candidates = boardCell.candidates || [];
 			var maxlength = (boardSize < 10) ? " maxlength='1'" : "";
 			return "<div class='sudoku-board-cell'>" +
 						//want to use type=number, but then have to prevent chrome scrolling and up down key behaviors..
@@ -171,17 +163,7 @@
 		/* removeCandidatesFromCell
 		-----------------------------------------------------------------*/
 		var removeCandidatesFromCell = function(cell, candidates){
-			// var boardCell = board[cell];
-			// var c = boardCell.candidates;
-			// var cellUpdated = false;
-			// for(var i=0; i < candidates.length; i++){
-			// 	//-1 because candidate '1' is at index 0 etc.
-			// 	if(c[candidates[i]-1] !== null) {
-			// 		c[candidates[i]-1] = null; //writes to board variable
-			// 		// cellUpdated = true;
-			// 	}
-			// }
-				updateUIBoardCell(cell, {mode: "only-candidates"});
+			updateUIBoardCell(cell, {mode: "only-candidates"});
 		};
 
 		/* resetCandidates
@@ -281,15 +263,6 @@
 		}
 
 
-		// $boardInputs.on("keyup", function(e){
-		// 	var $this = $(this);
-		// 	var id = parseInt($this.attr("id").replace("input-",""));
-		// 	//allow keyboard movements
-		// 	if(e.keyCode >=37 && e.keyCode <= 40){// || e.keyCode ===48){
-		// 		keyboardMoveBoardFocus(id, e.keyCode);
-		// 	}
-		// });
-		//listen on change because val is incorrect all the time on keyup, because have to filter out all other keys.
 		$boardInputs.on("change", function(){
 			var $this = $(this);
 			var id = parseInt($this.attr("id").replace("input-",""));
