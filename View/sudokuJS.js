@@ -62,16 +62,9 @@
 
 					if(j < boxSideSize){
 						for(var k=0; k < boxSideSize; k++){
-							//0, 0,0, 27, 27,27, 54, 54, 54 for a standard sudoku
 							var a = Math.floor(i/boxSideSize) * boardSize * boxSideSize;
-							//[0-2] for a standard sudoku
 							var b = (i%boxSideSize) * boxSideSize;
-							var boxStartIndex = a +b; //0 3 6 27 30 33 54 57 60
-
-								//every boxSideSize box, skip boardSize num rows to next box (on new horizontal row)
-								//Math.floor(i/boxSideSize)*boardSize*2
-								//skip across horizontally to next box
-								//+ i*boxSideSize;
+							var boxStartIndex = a +b; 
 
 							box.push(boxStartIndex + boardSize*j + k);
 						}
@@ -116,9 +109,9 @@
 			for(var i=0; i < boardSize*boardSize; i++){
 				htmlString += renderBoardCell(board[i], i);
 
-				if((i+1) % boardSize === 0) {
-					htmlString += "<br>";
-				}
+				// if((i+1) % boardSize === 0) {
+				// 	htmlString += "<br>";
+				// }
 			}
 			
 			$board.append(htmlString);
@@ -131,7 +124,7 @@
 		 * -----------------------------------------------------------------*/
 		var renderBoardCell = function(boardCell, id){
 			var val = (boardCell.val === null) ? "" : boardCell.val;
-			var candidates = boardCell.candidates || [];
+			// var candidates = boardCell.candidates || [];
 			var maxlength = (boardSize < 10) ? " maxlength='1'" : "";
 			return "<div class='sudoku-board-cell'>" +
 						//want to use type=number, but then have to prevent chrome scrolling and up down key behaviors..
@@ -164,37 +157,27 @@
 					.val(newVal)
 					.addClass("highlight-val");
 		
-			$("#input-"+cellIndex+"-candidates")
+			// $("#input-"+cellIndex+"-candidates")
 				
 		};
 
 		/* removeCandidatesFromCell
 		-----------------------------------------------------------------*/
 		var removeCandidatesFromCell = function(cell, candidates){
-			// var boardCell = board[cell];
-			// var c = boardCell.candidates;
-			// var cellUpdated = false;
-			// for(var i=0; i < candidates.length; i++){
-			// 	//-1 because candidate '1' is at index 0 etc.
-			// 	if(c[candidates[i]-1] !== null) {
-			// 		c[candidates[i]-1] = null; //writes to board variable
-			// 		// cellUpdated = true;
-			// 	}
-			// }
-				updateUIBoardCell(cell, {mode: "only-candidates"});
+			updateUIBoardCell(cell, {mode: "only-candidates"});
 		};
 
 		/* resetCandidates
 		-----------------------------------------------------------------*/
 		var resetCandidates = function(updateUI){
 			var resetCandidatesList = boardNumbers.slice(0);
-			for(var i=0; i <boardSize*boardSize;i++){
-				if(board[i].val === null){
-					board[i].candidates = resetCandidatesList.slice(); //otherwise same list (not reference!) on every cell
-				} else if(updateUI !== false) {
-						$("#input-"+i+"-candidates").html("");
-				}
-			}
+			// for(var i=0; i <boardSize*boardSize;i++){
+			// 	if(board[i].val === null){
+			// 		board[i].candidates = resetCandidatesList.slice(); //otherwise same list (not reference!) on every cell
+			// 	} else if(updateUI !== false) {
+			// 			$("#input-"+i+"-candidates").html("");
+			// 	}
+			// }
 		};
 
 		 /* numbersTaken
@@ -231,7 +214,7 @@
 					// for each cell..
 					for (var k=0; k < boardSize; k++){
 						var cell = house[k];
-						var candidates = board[cell].candidates;
+						// var candidates = board[cell].candidates;
 						removeCandidatesFromCell(cell, candidatesToRemove);
 					}
 				}
@@ -246,19 +229,17 @@
 
 			if (val > 0) { //invalidates Nan
 				$.post("/numentry", JSON.stringify({ "cellId": id, "number": val }))
-				//check that this doesn't make board incorrect
-			
-				//remove candidates.
+
 				//update board
 				board[id].val = val;
 
 			} else {
 				// boardError = false; //reset, in case they fixed board - otherwise, we'll find the error again
-				val = null;
+				// val = null;
 				//add back candidates to UI cell
 
 				//needs to happen before we resetCandidates below
-				board[id].val = val;
+				// board[id].val = val;
 
 				//update candidates (if we could reverse remove candidates from this cell and outwards, we wouldn't have to redo all board)
 				resetCandidates();
@@ -280,22 +261,11 @@
 			visualEliminationOfCandidates();
 		}
 
-
-		// $boardInputs.on("keyup", function(e){
-		// 	var $this = $(this);
-		// 	var id = parseInt($this.attr("id").replace("input-",""));
-		// 	//allow keyboard movements
-		// 	if(e.keyCode >=37 && e.keyCode <= 40){// || e.keyCode ===48){
-		// 		keyboardMoveBoardFocus(id, e.keyCode);
-		// 	}
-		// });
-		//listen on change because val is incorrect all the time on keyup, because have to filter out all other keys.
 		$boardInputs.on("change", function(){
 			var $this = $(this);
 			var id = parseInt($this.attr("id").replace("input-",""));
 			keyboardNumberInput($this, id);
 		});
-
 
 
 		/**
