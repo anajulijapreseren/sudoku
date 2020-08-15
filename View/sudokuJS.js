@@ -91,10 +91,10 @@
 
 				for(var j=0; j < boardSize*boardSize ; j++){
 					var cellVal = (typeof board[j] === "undefined") ? null : board[j];
-					var candidates = cellVal === null ? boardNumbers.slice() : nullCandidateList.slice();
+					// var candidates = cellVal === null ? boardNumbers.slice() : nullCandidateList.slice();
 					board[j] = {
 						val: cellVal,
-						candidates: candidates
+						// candidates: candidates
 					};
 				}
 		};
@@ -122,10 +122,9 @@
 		/* renderBoardCell
 		 * -----------------------------------------------------------------*/
 		var renderBoardCell = function(boardCell, id){
-			var val = (boardCell.val === null) //? "" : boardCell.val;
-			var maxlength = (boardSize < 10) //? " maxlength='1'" : "";
+			var val = (boardCell.val === null) 
+			var maxlength = (boardSize < 10) 
 			return "<div class='sudoku-board-cell'>" +
-						//want to use type=number, but then have to prevent chrome scrolling and up down key behaviors..
 						"<input type='text' pattern='\\d*' novalidate id='input-"+id+"' value='"+val+"'"+maxlength+">" +
 					"</div>";
 		};
@@ -134,7 +133,7 @@
 		* check the value in Board Cell and if it is not correct, mark it as error
 		* -----------------------------------------------------------------*/
 		var markBoardCellError = function(boardCell, id){
-			var val = (boardCell.val === null) //? "" : boardCell.val;
+			// var val = (boardCell.val === null) 
 			
 			$("#input-"+id)
 			.addClass("board-cell--error");
@@ -147,15 +146,12 @@
 		 *  updates ONE cell on the board with our latest values
 		 * -----------------------------------------------------------------*/
 		 var updateUIBoardCell = function(cellIndex, opts){
-			opts = opts || {};
+			// opts = opts || {};
 				var newVal = board[cellIndex].val;
 
-				//shouldn't always add hightlight-val class
 				$("#input-"+cellIndex)
 					.val(newVal);
-					// .addClass("highlight-val");
-		
-			// $("#input-"+cellIndex+"-candidates")
+					
 				
 		};
 
@@ -168,13 +164,9 @@
 		/* resetCandidates
 		-----------------------------------------------------------------*/
 		var resetCandidates = function(updateUI){
-			var resetCandidatesList = boardNumbers.slice(0);
+			// var resetCandidatesList = boardNumbers.slice(0);
 			for(var i=0; i <boardSize*boardSize;i++){
-				// if(board[i].val === null){
-				// 	board[i].candidates = resetCandidatesList.slice(); //otherwise same list (not reference!) on every cell
-				// } else if(updateUI !== false) {
-						$("#input-"+i+"-candidates").html("");
-				// }
+				$("#input-"+i+"-candidates").html("");
 			}
 		};
 
@@ -184,12 +176,6 @@
 		 * -----------------------------------------------------------------*/
 		 var numbersTaken = function(house){
 			var numbers = [];
-			// for(var i=0; i < house.length; i++){
-			// 	var n = board[house[i]].val;
-			// 	if(n !== null)
-			// 		numbers.push(n);
-			// }
-			//return remaining numbers
 			return numbers;
 		};
 
@@ -212,8 +198,8 @@
 					// for each cell..
 					for (var k=0; k < boardSize; k++){
 						var cell = house[k];
-						// var candidates = board[cell].candidates;
-						removeCandidatesFromCell(cell, candidatesToRemove);
+						//removeCandidatesFromCell(cell, candidatesToRemove);
+						updateUIBoardCell(cell, {mode: "only-candidates"});
 					}
 				}
 			}
@@ -229,14 +215,11 @@
 				$.post("/numentry", JSON.stringify({ "cellId": id, "number": val }))
 				//check that this doesn't make board incorrect
 			
-				//remove candidates.
 				//update board
 				board[id].val = val;
 
 			} else {
-				// boardError = false; //reset, in case they fixed board - otherwise, we'll find the error again
 				val = null;
-				//add back candidates to UI cell
 
 				//needs to happen before we resetCandidates below
 				board[id].val = val;
