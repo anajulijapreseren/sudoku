@@ -62,16 +62,9 @@
 
 					if(j < boxSideSize){
 						for(var k=0; k < boxSideSize; k++){
-							//0, 0,0, 27, 27,27, 54, 54, 54 for a standard sudoku
 							var a = Math.floor(i/boxSideSize) * boardSize * boxSideSize;
-							//[0-2] for a standard sudoku
 							var b = (i%boxSideSize) * boxSideSize;
-							var boxStartIndex = a +b; //0 3 6 27 30 33 54 57 60
-
-								//every boxSideSize box, skip boardSize num rows to next box (on new horizontal row)
-								//Math.floor(i/boxSideSize)*boardSize*2
-								//skip across horizontally to next box
-								//+ i*boxSideSize;
+							var boxStartIndex = a +b; 
 
 							box.push(boxStartIndex + boardSize*j + k);
 						}
@@ -89,8 +82,7 @@
 		 *  inits board, variables.
 		 * -----------------------------------------------------------------*/
 		var initBoard = function(opts){
-			// var alreadyEnhanced = (board[0] !== null && typeof board[0] === "object");
-			var nullCandidateList = [];
+			// var nullCandidateList = [];
       		boardNumbers = [];
 			boardSize = (!board.length && opts.boardSize) || Math.sqrt(board.length) || 9;
 			$board.attr("data-board-size", boardSize);
@@ -99,7 +91,7 @@
 
 				for(var j=0; j < boardSize*boardSize ; j++){
 					var cellVal = (typeof board[j] === "undefined") ? null : board[j];
-					var candidates = cellVal === null ? boardNumbers.slice() : nullCandidateList.slice();
+					var candidates = cellVal === null //? boardNumbers.slice() : nullCandidateList.slice();
 					board[j] = {
 						val: cellVal,
 						candidates: candidates
@@ -217,13 +209,10 @@
 				//for each such house
 				for(var j=0; j < boardSize; j++){
 					var house = houses[i][j];
-					// var candidatesToRemove = numbersTaken(house);
 
 					// for each cell..
 					for (var k=0; k < boardSize; k++){
 						var cell = house[k];
-						// var candidates = board[cell].candidates;
-						// removeCandidatesFromCell(cell, candidatesToRemove);
 						updateUIBoardCell(cell, {mode: "only-candidates"});
 					}
 				}
@@ -238,19 +227,8 @@
 
 			if (val > 0) { //invalidates Nan
 				$.post("/numentry", JSON.stringify({ "cellId": id, "number": val }))
-				//check that this doesn't make board incorrect
-
-				//update board
-				// board[id].val = val;
 
 			} else {
-				// // boardError = false; //reset, in case they fixed board - otherwise, we'll find the error again
-				// val = null;
-				// //add back candidates to UI cell
-
-				// //needs to happen before we resetCandidates below
-				// board[id].val = val;
-
 				//update candidates (if we could reverse remove candidates from this cell and outwards, we wouldn't have to redo all board)
 				resetCandidates();
 				visualEliminationOfCandidates();
