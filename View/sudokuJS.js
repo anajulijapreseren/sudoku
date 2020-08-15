@@ -122,9 +122,8 @@
 		/* renderBoardCell
 		 * -----------------------------------------------------------------*/
 		var renderBoardCell = function(boardCell, id){
-			var val = (boardCell.val === null) ? "" : boardCell.val;
-			// var candidates = boardCell.candidates || [];
-			var maxlength = (boardSize < 10) ? " maxlength='1'" : "";
+			var val = (boardCell.val === null) //? "" : boardCell.val;
+			var maxlength = (boardSize < 10) //? " maxlength='1'" : "";
 			return "<div class='sudoku-board-cell'>" +
 						//want to use type=number, but then have to prevent chrome scrolling and up down key behaviors..
 						"<input type='text' pattern='\\d*' novalidate id='input-"+id+"' value='"+val+"'"+maxlength+">" +
@@ -135,7 +134,7 @@
 		* check the value in Board Cell and if it is not correct, mark it as error
 		* -----------------------------------------------------------------*/
 		var markBoardCellError = function(boardCell, id){
-			var val = (boardCell.val === null) ? "" : boardCell.val;
+			var val = (boardCell.val === null) //? "" : boardCell.val;
 			
 			$("#input-"+id)
 			.addClass("board-cell--error");
@@ -153,10 +152,10 @@
 
 				//shouldn't always add hightlight-val class
 				$("#input-"+cellIndex)
-					.val(newVal)
-					.addClass("highlight-val");
+					.val(newVal);
+					// .addClass("highlight-val");
 		
-			$("#input-"+cellIndex+"-candidates")
+			// $("#input-"+cellIndex+"-candidates")
 				
 		};
 
