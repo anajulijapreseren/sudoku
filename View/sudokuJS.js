@@ -170,19 +170,10 @@
 
 		/* removeCandidatesFromCell
 		-----------------------------------------------------------------*/
-		var removeCandidatesFromCell = function(cell, candidates){
-			// var boardCell = board[cell];
-			// var c = boardCell.candidates;
-			// var cellUpdated = false;
-			// for(var i=0; i < candidates.length; i++){
-			// 	//-1 because candidate '1' is at index 0 etc.
-			// 	if(c[candidates[i]-1] !== null) {
-			// 		c[candidates[i]-1] = null; //writes to board variable
-			// 		// cellUpdated = true;
-			// 	}
-			// }
-				updateUIBoardCell(cell, {mode: "only-candidates"});
-		};
+		// var removeCandidatesFromCell = function(cell, candidates){
+		
+		// 	updateUIBoardCell(cell, {mode: "only-candidates"});
+		// };
 
 		/* resetCandidates
 		-----------------------------------------------------------------*/
@@ -226,13 +217,14 @@
 				//for each such house
 				for(var j=0; j < boardSize; j++){
 					var house = houses[i][j];
-					var candidatesToRemove = numbersTaken(house);
+					// var candidatesToRemove = numbersTaken(house);
 
 					// for each cell..
 					for (var k=0; k < boardSize; k++){
 						var cell = house[k];
-						var candidates = board[cell].candidates;
-						removeCandidatesFromCell(cell, candidatesToRemove);
+						// var candidates = board[cell].candidates;
+						// removeCandidatesFromCell(cell, candidatesToRemove);
+						updateUIBoardCell(cell, {mode: "only-candidates"});
 					}
 				}
 			}
@@ -247,18 +239,17 @@
 			if (val > 0) { //invalidates Nan
 				$.post("/numentry", JSON.stringify({ "cellId": id, "number": val }))
 				//check that this doesn't make board incorrect
-			
-				//remove candidates.
+
 				//update board
-				board[id].val = val;
+				// board[id].val = val;
 
 			} else {
-				// boardError = false; //reset, in case they fixed board - otherwise, we'll find the error again
-				val = null;
-				//add back candidates to UI cell
+				// // boardError = false; //reset, in case they fixed board - otherwise, we'll find the error again
+				// val = null;
+				// //add back candidates to UI cell
 
-				//needs to happen before we resetCandidates below
-				board[id].val = val;
+				// //needs to happen before we resetCandidates below
+				// board[id].val = val;
 
 				//update candidates (if we could reverse remove candidates from this cell and outwards, we wouldn't have to redo all board)
 				resetCandidates();
@@ -280,22 +271,12 @@
 			visualEliminationOfCandidates();
 		}
 
-
-		// $boardInputs.on("keyup", function(e){
-		// 	var $this = $(this);
-		// 	var id = parseInt($this.attr("id").replace("input-",""));
-		// 	//allow keyboard movements
-		// 	if(e.keyCode >=37 && e.keyCode <= 40){// || e.keyCode ===48){
-		// 		keyboardMoveBoardFocus(id, e.keyCode);
-		// 	}
-		// });
 		//listen on change because val is incorrect all the time on keyup, because have to filter out all other keys.
 		$boardInputs.on("change", function(){
 			var $this = $(this);
 			var id = parseInt($this.attr("id").replace("input-",""));
 			keyboardNumberInput($this, id);
 		});
-
 
 
 		/**
