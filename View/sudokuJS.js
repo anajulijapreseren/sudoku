@@ -50,14 +50,14 @@
 		 * -----------------------------------------------------------------*/
 		var generateHouseIndexList = function(){
         // reset houses
-        houses = [
-				//hor. rows
-				[],
-				//vert. rows
-				[],
-				//boxes
-				[]
-			]
+        // houses = [
+		// 		//hor. rows
+		// 		[],
+		// 		//vert. rows
+		// 		[],
+		// 		//boxes
+		// 		[]
+		// 	]
 			var boxSideSize = Math.sqrt(boardSize);
 
 			for(var i=0; i < boardSize; i++){
@@ -98,7 +98,7 @@
 		 *  inits board, variables.
 		 * -----------------------------------------------------------------*/
 		var initBoard = function(opts){
-			var alreadyEnhanced = (board[0] !== null && typeof board[0] === "object");
+			// var alreadyEnhanced = (board[0] !== null && typeof board[0] === "object");
 			var nullCandidateList = [];
       		boardNumbers = [];
 			boardSize = (!board.length && opts.boardSize) || Math.sqrt(board.length) || 9;
@@ -106,8 +106,8 @@
 	
 			generateHouseIndexList();
 
-			if(!alreadyEnhanced){
-				//enhance board to handle candidates, and possibly other params
+			// if(!alreadyEnhanced){
+			// 	//enhance board to handle candidates, and possibly other params
 				for(var j=0; j < boardSize*boardSize ; j++){
 					var cellVal = (typeof board[j] === "undefined") ? null : board[j];
 					var candidates = cellVal === null ? boardNumbers.slice() : nullCandidateList.slice();
@@ -116,7 +116,7 @@
 						candidates: candidates
 					};
 				}
-			}
+			// }
 		};
 
 		/* renderBoard
