@@ -170,11 +170,11 @@
 		var resetCandidates = function(updateUI){
 			var resetCandidatesList = boardNumbers.slice(0);
 			for(var i=0; i <boardSize*boardSize;i++){
-				if(board[i].val === null){
-					board[i].candidates = resetCandidatesList.slice(); //otherwise same list (not reference!) on every cell
-				} else if(updateUI !== false) {
+				// if(board[i].val === null){
+				// 	board[i].candidates = resetCandidatesList.slice(); //otherwise same list (not reference!) on every cell
+				// } else if(updateUI !== false) {
 						$("#input-"+i+"-candidates").html("");
-				}
+				// }
 			}
 		};
 
@@ -184,11 +184,11 @@
 		 * -----------------------------------------------------------------*/
 		 var numbersTaken = function(house){
 			var numbers = [];
-			for(var i=0; i < house.length; i++){
-				var n = board[house[i]].val;
-				if(n !== null)
-					numbers.push(n);
-			}
+			// for(var i=0; i < house.length; i++){
+			// 	var n = board[house[i]].val;
+			// 	if(n !== null)
+			// 		numbers.push(n);
+			// }
 			//return remaining numbers
 			return numbers;
 		};
@@ -212,7 +212,7 @@
 					// for each cell..
 					for (var k=0; k < boardSize; k++){
 						var cell = house[k];
-						var candidates = board[cell].candidates;
+						// var candidates = board[cell].candidates;
 						removeCandidatesFromCell(cell, candidatesToRemove);
 					}
 				}
