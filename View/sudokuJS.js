@@ -91,10 +91,10 @@
 
 				for(var j=0; j < boardSize*boardSize ; j++){
 					var cellVal = (typeof board[j] === "undefined") ? null : board[j];
-					var candidates = cellVal === null ? boardNumbers.slice() : nullCandidateList.slice();
+					// var candidates = cellVal === null ? boardNumbers.slice() : nullCandidateList.slice();
 					board[j] = {
 						val: cellVal,
-						candidates: candidates
+						// candidates: candidates
 					};
 				}
 		};
@@ -123,7 +123,6 @@
 		 * -----------------------------------------------------------------*/
 		var renderBoardCell = function(boardCell, id){
 			var val = (boardCell.val === null) ? "" : boardCell.val;
-			// var candidates = boardCell.candidates || [];
 			var maxlength = (boardSize < 10) ? " maxlength='1'" : "";
 			return "<div class='sudoku-board-cell'>" +
 						//want to use type=number, but then have to prevent chrome scrolling and up down key behaviors..
@@ -154,7 +153,7 @@
 				//shouldn't always add hightlight-val class
 				$("#input-"+cellIndex)
 					.val(newVal)
-					.addClass("highlight-val");
+					// .addClass("highlight-val");
 		
 			$("#input-"+cellIndex+"-candidates")
 				
@@ -172,7 +171,7 @@
 			var resetCandidatesList = boardNumbers.slice(0);
 			for(var i=0; i <boardSize*boardSize;i++){
 				if(board[i].val === null){
-					board[i].candidates = resetCandidatesList.slice(); //otherwise same list (not reference!) on every cell
+					board[i].candidates = resetCandidatesList.slice(); 
 				} else if(updateUI !== false) {
 						$("#input-"+i+"-candidates").html("");
 				}
@@ -228,21 +227,18 @@
 
 			if (val > 0) { //invalidates Nan
 				$.post("/numentry", JSON.stringify({ "cellId": id, "number": val }))
-				//check that this doesn't make board incorrect
-			
-				//remove candidates.
+
 				//update board
 				board[id].val = val;
 
 			} else {
-				// boardError = false; //reset, in case they fixed board - otherwise, we'll find the error again
 				val = null;
 				//add back candidates to UI cell
 
 				//needs to happen before we resetCandidates below
 				board[id].val = val;
 
-				//update candidates (if we could reverse remove candidates from this cell and outwards, we wouldn't have to redo all board)
+				//update candidates 
 				resetCandidates();
 				visualEliminationOfCandidates();
 			}
