@@ -91,10 +91,8 @@
 
 				for(var j=0; j < boardSize*boardSize ; j++){
 					var cellVal = (typeof board[j] === "undefined") ? null : board[j];
-					// var candidates = cellVal === null ? boardNumbers.slice() : nullCandidateList.slice();
 					board[j] = {
 						val: cellVal,
-						// candidates: candidates
 					};
 				}
 		};
@@ -150,10 +148,8 @@
 			opts = opts || {};
 				var newVal = board[cellIndex].val;
 
-				//shouldn't always add hightlight-val class
 				$("#input-"+cellIndex)
 					.val(newVal)
-					// .addClass("highlight-val");
 		
 			$("#input-"+cellIndex+"-candidates")
 				
@@ -182,16 +178,16 @@
 		 * --------------
 		 *  returns used numbers in a house
 		 * -----------------------------------------------------------------*/
-		 var numbersTaken = function(house){
-			var numbers = [];
-			for(var i=0; i < house.length; i++){
-				var n = board[house[i]].val;
-				if(n !== null)
-					numbers.push(n);
-			}
-			//return remaining numbers
-			return numbers;
-		};
+		//  var numbersTaken = function(house){
+		// 	var numbers = [];
+		// 	// for(var i=0; i < house.length; i++){
+		// 	// 	var n = board[house[i]].val;
+		// 	// 	if(n !== null)
+		// 	// 		numbers.push(n);
+		// 	// }
+		// 	//return remaining numbers
+		// 	return numbers;
+		// };
 
 		/* visualEliminationOfCandidates
 		 * --------------
@@ -207,7 +203,7 @@
 				//for each such house
 				for(var j=0; j < boardSize; j++){
 					var house = houses[i][j];
-					var candidatesToRemove = numbersTaken(house);
+					var candidatesToRemove = []//numbersTaken(house);
 
 					// for each cell..
 					for (var k=0; k < boardSize; k++){
