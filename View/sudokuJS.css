@@ -58,7 +58,7 @@
 			}
 			/*highligt incorrect input*/
 			.sudoku-board-cell .board-cell--error {
-				background: #d00;
+				background: rgb(243, 137, 142);
 				color: #eee;
 			}
 		/*wrapper that hold the candidates for each cell*/
