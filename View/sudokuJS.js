@@ -157,9 +157,9 @@
 
 		/* removeCandidatesFromCell
 		-----------------------------------------------------------------*/
-		var removeCandidatesFromCell = function(cell, candidates){
-			updateUIBoardCell(cell, {mode: "only-candidates"});
-		};
+		// var removeCandidatesFromCell = function(cell, candidates){
+		// 	updateUIBoardCell(cell, {mode: "only-candidates"});
+		// };
 
 		/* resetCandidates
 		-----------------------------------------------------------------*/
@@ -173,21 +173,6 @@
 				}
 			}
 		};
-
-		 /* numbersTaken
-		 * --------------
-		 *  returns used numbers in a house
-		 * -----------------------------------------------------------------*/
-		//  var numbersTaken = function(house){
-		// 	var numbers = [];
-		// 	// for(var i=0; i < house.length; i++){
-		// 	// 	var n = board[house[i]].val;
-		// 	// 	if(n !== null)
-		// 	// 		numbers.push(n);
-		// 	// }
-		// 	//return remaining numbers
-		// 	return numbers;
-		// };
 
 		/* visualEliminationOfCandidates
 		 * --------------
@@ -209,7 +194,8 @@
 					for (var k=0; k < boardSize; k++){
 						var cell = house[k];
 						var candidates = board[cell].candidates;
-						removeCandidatesFromCell(cell, candidatesToRemove);
+						//removeCandidatesFromCell(cell, candidatesToRemove);
+						updateUIBoardCell(cell, {mode: "only-candidates"});
 					}
 				}
 			}
@@ -223,8 +209,6 @@
 			//for this we use lenght of str because length of backspace is zero
 			var val = parseInt(input.val());
 			var n = str.length;
-			log("value is"+ val)
-			log("length is"+ n)
 
 			if (val > 0) { //invalidates Nan
 				$.post("/numentry", JSON.stringify({ "cellId": id, "number": val }))
@@ -234,7 +218,6 @@
 			
 			}else if (n == 0) {
 				$.post("/numentry", JSON.stringify({ "cellId": id, "number": "" }))
-				log("I am trying")
 
 			} else {
 				val = null;
