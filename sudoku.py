@@ -9,6 +9,11 @@ from bottle import request
 
 import json
 
+import Model.cookies as cookies
+
+COOKIE = 'oreo'
+SECRET = 'zmajisokul'
+
 #host css files which are invoked implicitly by html files.
 @route('/View/<cssFile>')
 def serve_css_files(cssFile):
@@ -29,17 +34,31 @@ def index():
 
 @bottle.get('/newsudoku')
 def new_sudoku():
-    # load random sudoku
-    # sudoku_tuple is list [0..1] that contains quiz and solution
-    sudoku_tuple = loadsudoku.load_sudoku(loadsudoku.FILE_PUZZLE_NAME)
-    logging.info("Sudoku quiz and solution loaded.")
-
-    # transform sudoku to GUI format of quiz
+    # define global varables
+    # TODO these 2 will probably not be global variables anymore
     global sudokuGUI
     global sudokuSolution
-    sudokuGUI = transformsudoku.transform_sudoku_for_GUI(sudoku_tuple[0])
-    sudokuSolution = transformsudoku.transform_sudoku_for_GUI(sudoku_tuple[1])
-   
+    # check for cookie in get. If cookie is present, then load sudoku from internal variable
+    # otherwise load new sudoku
+    cookie = bottle.request.get_cookie(COOKIE, secret=SECRET)
+    if cookie == None:
+        # create new coookie
+        cookie = cookies.get_random_cookie()
+        # set new cookie
+        bottle.response.set_cookie(COOKIE, cookie, path='/', secret=SECRET)
+        # load random sudoku
+        # sudoku_tuple is list [0..1] that contains quiz and solution
+        sudoku_tuple = loadsudoku.load_sudoku(loadsudoku.FILE_PUZZLE_NAME)
+        logging.info("Sudoku quiz and solution loaded.")
+
+        # transform sudoku to GUI format of quiz
+        sudokuGUI = transformsudoku.transform_sudoku_for_GUI(sudoku_tuple[0])
+        sudokuSolution = transformsudoku.transform_sudoku_for_GUI(sudoku_tuple[1])
+
+        # TODO save cookie, quiz and solution to sudoku field in all_sudokus
+    else:
+        # TODO take cookie and search all_sudokus for match and load quiz and solution
+        pass
     return json.dumps({"sudoku" : sudokuGUI})
 
 @bottle.post('/numentry')
