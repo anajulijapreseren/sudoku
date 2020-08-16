@@ -219,13 +219,22 @@
 		/* keyboardNumberInput - update our board model
 		 * -----------------------------------------------------------------*/
 		var keyboardNumberInput = function(input, id){
+			var str= input.val(); //when we use delete function we have to change state of our quiz-we use it for checkall
+			//for this we use lenght of str because length of backspace is zero
 			var val = parseInt(input.val());
+			var n = str.length;
+			log("value is"+ val)
+			log("length is"+ n)
 
 			if (val > 0) { //invalidates Nan
 				$.post("/numentry", JSON.stringify({ "cellId": id, "number": val }))
 
 				//update board
 				board[id].val = val;
+			
+			}else if (n == 0) {
+				$.post("/numentry", JSON.stringify({ "cellId": id, "number": "" }))
+				log("I am trying")
 
 			} else {
 				val = null;
