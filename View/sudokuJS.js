@@ -155,12 +155,6 @@
 				
 		};
 
-		/* removeCandidatesFromCell
-		-----------------------------------------------------------------*/
-		// var removeCandidatesFromCell = function(cell, candidates){
-		// 	updateUIBoardCell(cell, {mode: "only-candidates"});
-		// };
-
 		/* resetCandidates
 		-----------------------------------------------------------------*/
 		var resetCandidates = function(updateUI){
@@ -194,7 +188,6 @@
 					for (var k=0; k < boardSize; k++){
 						var cell = house[k];
 						var candidates = board[cell].candidates;
-						//removeCandidatesFromCell(cell, candidatesToRemove);
 						updateUIBoardCell(cell, {mode: "only-candidates"});
 					}
 				}
@@ -216,7 +209,7 @@
 				//update board
 				board[id].val = val;
 			
-			}else if (n == 0) {
+			} else if (n == 0) {
 				$.post("/numentry", JSON.stringify({ "cellId": id, "number": "" }))
 
 			} else {
