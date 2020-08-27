@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 Controller/LoadSudoku/sudoku.csv
 sudoku.csv
+.vscode/settings.json
