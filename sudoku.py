@@ -11,6 +11,8 @@ import json
 
 import Model.cookies as cookies
 
+import Model.globalvars as globalvars
+
 COOKIE = 'oreo'
 SECRET = 'zmajisokul'
 
@@ -32,12 +34,11 @@ def serve_js_files(jsFile):
 def index(): 
     return bottle.template('View/sudoku.html')
 
-@bottle.get('/newsudoku')
-def new_sudoku():
-    # define global varables
-    # TODO these 2 will probably not be global variables anymore
-    global sudokuGUI
-    global sudokuSolution
+@bottle.get('/getmysudoku')
+def getmy_sudoku():
+    # define local varables
+    # sudokuGUI
+    # sudokuSolution
     # check for cookie in get. If cookie is present, then load sudoku from internal variable
     # otherwise load new sudoku
     cookie = bottle.request.get_cookie(COOKIE, secret=SECRET)
@@ -55,20 +56,41 @@ def new_sudoku():
         sudokuGUI = transformsudoku.transform_sudoku_for_GUI(sudoku_tuple[0])
         sudokuSolution = transformsudoku.transform_sudoku_for_GUI(sudoku_tuple[1])
 
-        # TODO save cookie, quiz and solution to sudoku field in all_sudokus
+        #save cookie, quiz and solution to sudoku field in all_sudokus
+        if cookies.create_cookie_in_dictionary(cookie):
+            cookies.update_quiz_or_solution_in_dictionary(cookie, sudokuGUI, 0)
+            cookies.update_quiz_or_solution_in_dictionary(cookie, sudokuSolution, 1)
+        else:
+            logging.error("This cookie exists in dictionary. Something very wrong!")
+            sudokuGUI = []
     else:
-        # TODO take cookie and search all_sudokus for match and load quiz and solution
-        pass
-    return json.dumps({"sudoku" : sudokuGUI})
+        # get sudoku quiz for this user
+        sudokuGUI = cookies.read_quiz_or_solution_from_dictionary(cookie, 0)
+        if sudokuGUI == []:
+            logging.Error("Quiz not found for given user!")
+            # TODO how can I report to GUI there is an error and create user pop-up there
+    return json.dumps({"sudoku" : sudokuGUI}) 
 
 @bottle.post('/numentry')
 def num_entry():
-    postdata = request.body.read().decode("utf-8")
-    jsondata = json.loads(postdata)
-    cellId = jsondata["cellId"]
-    num = jsondata["number"]
-    # let´s update sudokuGUI with entered value
-    sudokuGUI[cellId] = num
+    cookie = bottle.request.get_cookie(COOKIE, secret=SECRET)
+    if cookie != None:
+        sudokuGUI = cookies.read_quiz_or_solution_from_dictionary(cookie,0)
+        if sudokuGUI != []:
+            postdata = request.body.read().decode("utf-8")
+            jsondata = json.loads(postdata)
+            cellId = jsondata["cellId"]
+            num = jsondata["number"]
+            # let´s update sudokuGUI with entered value
+            sudokuGUI[cellId] = num
+            cookies.update_quiz_or_solution_in_dictionary(cookie, sudokuGUI, 0)
+        else:
+            logging.error("Sudoku quiz not found for given cookie!")
+            # TODO - figure out the way to respond with error to POST to let the browser know it created a mess
+    else:
+        logging.error("Cookie is missing!")
+        # TODO respond with error to POST to let the browser know it created a mess
+
 
  # endpoint to verify the solution, does current state matches the solution
 @bottle.get('/checksolution') 
@@ -85,19 +107,21 @@ def check_solution():
                 checked_list.append(0)
     return json.dumps({"finished" : finished, "list" : checked_list})
 
-
-
-
-
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
     # TODO - define log name to be in the current module directory
     logging.basicConfig(file='sudoku.log')
     logging.info("Sudoku main started")
 
-    # start bottle
-    logging.info("Starting bottle. Why not flask?")   
-    bottle.run(reloader=True, debug=True) 
+    # initialize global variables
+    globalvars.init()
+    logging.info("Global vars loaded")
+
+    # start bottle 
+    bottle.run(reloader=True, debug=True)
+    logging.info("Starting bottle. Why not flask?")  
+
+
 
 
 

@@ -68,7 +68,7 @@
 		var board = [];
 		//NOTE: if last cell of board is empty 'undefined' has to be used as value!
 
-		$.get("/newsudoku", function(data){
+		$.get("/getmysudoku", function(data){
 			var json = JSON.parse(data);
 			console.log("Got JSON: "+String(json));
 			board = json["sudoku"];
