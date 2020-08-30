@@ -279,9 +279,28 @@
 			}
 		}
 
+		var newSudoku = function(){
+			$.get("/newsudoku", function(data){
+				var json = JSON.parse(data);
+				board = json["sudoku"];
+				
+				// reset current sudoku grid first
+				$("#sudoku").html("");
+				
+				var mySudokuJS = $("#sudoku").sudokuJS({
+				board: board
+				});
+
+				$(".js-check-btn").on("click", mySudokuJS.checkAll);
+				$(".js-clear-btn").on("click", mySudokuJS.clearChecks);
+				$(".js-new-btn").on("click", mySudokuJS.newSudoku);
+			});
+		};
+
 		return {
 			checkAll : checkAll,
 			clearChecks: clearChecks,
+			newSudoku : newSudoku
 		};
 	};
 

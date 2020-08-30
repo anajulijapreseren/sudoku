@@ -33,7 +33,7 @@
 
 		</style>
 
-		<title>SudokuJS - simple demo</title>
+		<title>Sudoku</title>
 
 		<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
 		<script type="text/javascript" src="View/sudokuJS.js"></script>
@@ -41,16 +41,15 @@
 
 	<body>
 	<div class="wrap">
-		<h1>SudokuJS simple demo</h1>
 		<!--the only required html-->
 		<div id="sudoku" class="sudoku-board">
 		</div>
 
-		<!--solve buttons-->
-		Check: <button type="button" class="js-check-btn">Gimme check!</button>
-		Clear: <button type="button" class="js-clear-btn">Clear check</button>
-		<!-- Solve: <button type="button" class="js-solve-step-btn">One Step</button>
-		<button type="button" class="js-solve-all-btn">All</button> -->
+		<!--buttons-->
+		<button type="button" class="js-check-btn">Check solution!</button>
+		<button type="button" class="js-clear-btn">Clear check</button>
+		<button type="button" class="js-new-btn">New sudoku</button>
+
 	</div>
 
 	<script>
@@ -80,8 +79,7 @@
 
 			$(".js-check-btn").on("click", mySudokuJS.checkAll);
 			$(".js-clear-btn").on("click", mySudokuJS.clearChecks);
-			// $(".js-solve-step-btn").on("click", mySudokuJS.solveStep);
-			// $(".js-solve-all-btn").on("click", mySudokuJS.solveAll);
+			$(".js-new-btn").on("click", mySudokuJS.newSudoku);
 		});
 
 	</script>
