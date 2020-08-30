@@ -35,7 +35,6 @@ def update_quiz_or_solution_in_dictionary(cookie, quiz_solution, qs):
     if temp != None:
         globalvars.dictionary[cookie][qs] = quiz_solution
         logging.info("Quiz or solution updated in dictionary.")
-        print(read_quiz_or_solution_from_dictionary(cookie, qs))
         return True
     else:
         logging.error("Quiz or solution for given cookie not found.")

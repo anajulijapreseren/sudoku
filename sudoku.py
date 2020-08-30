@@ -13,6 +13,9 @@ import Model.globalvars as globalvars
 
 import subprocess
 
+import datetime
+import time
+
 COOKIE = 'oreo'
 SECRET = 'zmajisokul'
 
@@ -43,8 +46,8 @@ def get_my_sudoku():
         # create new coookie
         cookie = cookies.get_random_cookie()
         # set new cookie
-        # TODO make cookie paramanent
-        bottle.response.set_cookie(COOKIE, cookie, path='/', secret=SECRET)
+        cookie_expires = time.mktime((datetime.datetime.now() + datetime.timedelta(days=365)).timetuple())
+        bottle.response.set_cookie(COOKIE, cookie, path='/', secret=SECRET, expires=cookie_expires)
         # load random sudoku
         # sudoku_tuple is list [0..1] that contains quiz and solution
         sudoku_tuple = loadsudoku.load_sudoku(loadsudoku.FILE_PUZZLE_NAME)
@@ -172,9 +175,12 @@ if __name__ == '__main__':
     logging.basicConfig(file='sudoku.log')
     logging.info("Sudoku main started")
 
-    # initialize global variables
-    # globalvars.init_globals()
-    # logging.info("Global vars loaded")
+    # try load dictionary
+    temp = globalvars.load_dictionary()
+    print ("Rok: ", temp)
+    if temp != {}:
+        globalvars.dictionary = temp
+        logging.info("Dictionary loaded from file")
 
     # start bottle 
     bottle.run(reloader=True, debug=True)
