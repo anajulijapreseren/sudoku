@@ -10,6 +10,7 @@ User access the game at localhost:8080
 
 ## How to run program
 - Have Python 3.x version installed
+- download sudoku.csv file from https://www.kaggle.com/bryanpark/sudoku/data and put it into root project directory
 - Run sudoku.py
 - Using web browser go to localhost:8080
 
