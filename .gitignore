@@ -130,3 +130,4 @@ dmypy.json
 Controller/LoadSudoku/sudoku.csv
 sudoku.csv
 .vscode/settings.json
+sudoku_dictionary.json

@@ -1,7 +1,7 @@
 import random
 import string
 import logging
-import globalvars
+import Model.globalvars as globalvars
 
 # this method is based on pynative https://pynative.com/python-generate-random-string/
 def get_random_cookie():
@@ -15,7 +15,8 @@ def get_random_cookie():
 def create_cookie_in_dictionary(cookie):
     temp = globalvars.dictionary.get(cookie)
     if temp == None:
-        globalvars.dictionary[cookie] = ["", ""]
+        globalvars.dictionary[cookie] = [[], []]
+        logging.info("Cookie added to dictionary.")
         return True
     else:
         logging.error("Cookie already exists in dictionary.")
@@ -33,6 +34,8 @@ def update_quiz_or_solution_in_dictionary(cookie, quiz_solution, qs):
     temp = globalvars.dictionary.get(cookie)
     if temp != None:
         globalvars.dictionary[cookie][qs] = quiz_solution
+        logging.info("Quiz or solution updated in dictionary.")
+        print(read_quiz_or_solution_from_dictionary(cookie, qs))
         return True
     else:
         logging.error("Quiz or solution for given cookie not found.")
