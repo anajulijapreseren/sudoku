@@ -262,7 +262,6 @@
 					alert("Congrats!")
 				} else {
 					// fill the sudoku grid with colours to indicate which cells are wrong
-					alert("Oh my god, this is so wrong!")
 					for (var i = 0; i < 81; i++) {
 						if (json["list"][i] == 0) {
 							markBoardCellError(board, i);

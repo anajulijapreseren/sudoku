@@ -7,7 +7,6 @@ import Model.globalvars as globalvars
 def get_random_cookie():
     letters = string.ascii_lowercase
     result_str = ''.join(random.choice(letters) for i in range(10))
-    # print("Random string of length", 10, "is:", result_str)
     return result_str
 
 # creates new empty dictionary entry with given cookie if cookie does not exist

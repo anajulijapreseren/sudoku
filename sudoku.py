@@ -33,10 +33,14 @@ def serve_js_files(jsFile):
 
 # POST and GET section
 
+# root path of our web server for GUI
+# gives back basic html view
 @bottle.get('/')
 def index(): 
     return bottle.template('View/sudoku.html')
 
+# GET call from sudoku.html
+# fetches sudoko for user
 @bottle.get('/getmysudoku')
 def get_my_sudoku():
     # check for cookie in get. If cookie is present, then load sudoku from internal variable
@@ -82,6 +86,7 @@ def get_my_sudoku():
             return json.dumps({'error': 'Empty sudoku found for user.'})
     return json.dumps({"sudoku" : sudokuGUI}) 
 
+# POST for user entering number in sudoku
 @bottle.post('/numentry')
 def num_entry():
     cookie = bottle.request.get_cookie(COOKIE, secret=SECRET)
@@ -116,6 +121,7 @@ def num_entry():
 
  # endpoint to verify the solution, does current state matches the solution
 
+# GET call to check if current sudoku is correct solution
 @bottle.get('/checksolution') 
 def check_solution():
     cookie = bottle.request.get_cookie(COOKIE, secret=SECRET)
@@ -141,6 +147,7 @@ def check_solution():
         response.content_type = 'application/json'
         return json.dumps({'error': 'Cookie is missing!'})
 
+# GET call when user requests new sudoku with button click
 @bottle.get('/newsudoku') 
 def new_sudoku():
     # check for cookie in get. If cookie is present, then load sudoku from sudoku game files
@@ -158,7 +165,9 @@ def new_sudoku():
         #quiz and solution to dictionary
         cookies.update_quiz_or_solution_in_dictionary(cookie, sudokuGUI, 0)
         cookies.update_quiz_or_solution_in_dictionary(cookie, sudokuSolution, 1)
-        # TODO store dictionary to disk
+        #store dictionary to disk
+        globalvars.store_dictionary(globalvars.dictionary)
+
         return json.dumps({"sudoku" : sudokuGUI}) 
     else:
         logging.error("Cookie is missing!")
@@ -177,15 +186,13 @@ if __name__ == '__main__':
 
     # try load dictionary
     temp = globalvars.load_dictionary()
-    print ("Rok: ", temp)
     if temp != {}:
         globalvars.dictionary = temp
         logging.info("Dictionary loaded from file")
 
     # start bottle 
     bottle.run(reloader=True, debug=True)
-    #bottle.run(server='sudoku', host = 'localhost', port = 8080,reloader=True, debug=True)
-    logging.info("Starting bottle. Why not flask?")  
+    logging.info("Starting bottle.")  
 
 
 

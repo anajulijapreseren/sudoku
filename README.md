@@ -25,6 +25,7 @@ Empty or wrong cells are marked with different colour
 
 3. Clear check
 Makes coloured cells white again
+Note: User has to use this function before clicking on Check button again.
 
 ## Cookies
 New user gets new cookie that exipires in a year from when it was assigned.

@@ -16,7 +16,6 @@ def load_dictionary()->dict:
         file_load.close()
         output = json.loads(output)
     else:
-        # TODO shall we create empty file?
         output = {}
     return output
     
