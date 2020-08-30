@@ -291,9 +291,9 @@
 				board: board
 				});
 
-/* 				$(".js-check-btn").on("click", mySudokuJS.checkAll);
+ 				// $(".js-check-btn").on("click", mySudokuJS.checkAll);
 				$(".js-clear-btn").on("click", mySudokuJS.clearChecks);
-				$(".js-new-btn").on("click", mySudokuJS.newSudoku); */
+				// $(".js-new-btn").on("click", mySudokuJS.newSudoku);
 			});
 		};
 
