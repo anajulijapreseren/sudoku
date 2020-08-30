@@ -1,5 +1,5 @@
 import logging
-import Controller.LoadSudoku.load_sudoku as loadsudoku
+import Model.load_sudoku as loadsudoku
 import Model.input_transform as transformsudoku
 
 import bottle
