@@ -18,14 +18,14 @@ User access the game at localhost:8080
 User inputs numbers in sudoku grid by clicking on selected cell and then pressing key. Program only allows number between 1 and 9, other inputs are deleted. User deletes numbers when he presses backspace. Numbers are saved in sudoku grid when user clicks on another cell or presses enter.
 
 ## Buttons
-1. **New sudoku**&nbsp;
+1. **New sudoku**<br/>
 If user clicks "New sudoku" button, he will get new sudoku
 
-2. **Check**&nbsp;
+2. **Check**<br/>
 Empty or wrong cells are marked with different colour
 
-3. **Clear check**&nbsp;
-Makes coloured cells white again\
+3. **Clear check**<br/>
+Makes coloured cells white again<br/>
 Note: User has to use this function before clicking on Check button again.
 
 ## Cookies
