@@ -18,7 +18,7 @@ User access the game at localhost:8080
 User inputs numbers in sudoku grid by clicking on selected cell and then pressing key. Program only allows number between 1 and 9, other inputs are deleted. User deletes numbers when he presses backspace. Numbers are saved in sudoku grid when user clicks on another cell or presses enter.
 
 ## Buttons
-1. **New sudoku** \ 
+1. **New sudoku**\ 
 If user clicks "New sudoku" button, he will get new sudoku
 
 2. **Check**\
